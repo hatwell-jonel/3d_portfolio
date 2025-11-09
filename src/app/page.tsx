@@ -600,13 +600,13 @@ export default function BoyRoomPortfolio() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     mountRef.current.appendChild(renderer.domElement);
     
-    const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+    const ambient = new THREE.AmbientLight(0xffffff, 1.5 );
     scene.add(ambient);
     const light = new THREE.PointLight(0xffbb77, 1.2, 100);
     light.position.set(0, 3, 0);
     scene.add(light);
     
-    const accentLight = new THREE.PointLight(0xffaa66, 0.8, 50);
+    const accentLight = new THREE.PointLight(0xffaa66, 1.5, 50);
     accentLight.position.set(3, 2, 0);
     scene.add(accentLight);
     
