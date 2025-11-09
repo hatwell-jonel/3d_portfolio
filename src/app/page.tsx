@@ -105,18 +105,19 @@ function ArcadeGame() {
 }
 
 function Tetris() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<null | HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     const BLOCK_SIZE = 30;
     const COLS = 10;
     const ROWS = 20;
     
-    let board = Array(ROWS).fill().map(() => Array(COLS).fill(0));
+    const board = Array(ROWS).fill(null).map(() => Array(COLS).fill(0));
     let currentPiece = { x: 3, y: 0, shape: [[1,1],[1,1]], color: '#ff00ff' };
     let dropCounter = 0;
     let lastTime = 0;
@@ -131,7 +132,7 @@ function Tetris() {
       { shape: [[1,1,1],[0,0,1]], color: '#0088ff' }
     ];
     
-    const keys = {};
+    const keys: Record<string, boolean> = {};
     window.addEventListener('keydown', e => {
       keys[e.key] = true;
       if (e.key === 'ArrowLeft') move(-1);
@@ -223,6 +224,7 @@ function Tetris() {
       }
       
       ctx.fillStyle = '#000';
+      if (!canvas) return;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       
       // Draw board
@@ -266,18 +268,19 @@ function Tetris() {
 }
 
 function Snake() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<null | HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
   
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const CELL = 20;
     const W = 400;
     const H = 400;
     
-    let snake = [{x: 10, y: 10}];
+    const snake = [{x: 10, y: 10}];
     let food = {x: 15, y: 15};
     let dx = 1, dy = 0;
     let currentScore = 0;
@@ -313,6 +316,7 @@ function Snake() {
         snake.pop();
       }
       
+      if(!ctx) return;
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, W, H);
       
@@ -358,7 +362,7 @@ function Sudoku() {
     return puzzle;
   });
   
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<{ row: number; col: number; } | null>(null);
   
   const handleClick = (row: number, col: number) => {
     setSelected({row, col});
@@ -443,23 +447,24 @@ function Sudoku() {
 }
 
 function SpaceDodger() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<null | HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-  const gameLoopRef = useRef(null);
+  const gameLoopRef = useRef(0);
   
   useEffect(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     
     let playerY = 250;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let obstacles: any[] = [];
     let frameCount = 0;
     let currentScore = 0;
     let isGameOver = false;
     
-    const keys = {};
-    
+    const keys: Record<string, boolean> = {};
     const handleKeyDown = (e: { key: string | number; }) => {
       keys[e.key] = true;
     };
@@ -473,7 +478,7 @@ function SpaceDodger() {
     
     function gameLoop() {
       if (isGameOver) return;
-      
+      if(!ctx) return;
       ctx.fillStyle = '#000';
       ctx.fillRect(0, 0, 600, 400);
       
@@ -585,7 +590,7 @@ function SpaceDodger() {
 }
 
 export default function BoyRoomPortfolio() {
-  const mountRef = useRef(null);
+  const mountRef = useRef<HTMLDivElement | null>(null);
   const [section, setSection] = useState('');
   const [showModal, setShowModal] = useState(null);
   
@@ -598,7 +603,7 @@ export default function BoyRoomPortfolio() {
     
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    mountRef?.current?.appendChild(renderer.domElement);
+    mountRef.current!.appendChild(renderer.domElement);
     
     const ambient = new THREE.AmbientLight(0xffffff, 1.5 );
     scene.add(ambient);
@@ -733,7 +738,7 @@ export default function BoyRoomPortfolio() {
       const canvas = document.createElement('canvas');
       canvas.width = 512;
       canvas.height = 512;
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
       
       ctx.fillStyle = '#0a0a0a';
       ctx.fillRect(0, 0, 512, 512);
@@ -761,7 +766,7 @@ export default function BoyRoomPortfolio() {
       return new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5), material);
     }
     
-    const keys = {};
+    const keys: { [key: string]: boolean } = {};
     const speed = 0.05;
     
     window.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
@@ -772,7 +777,7 @@ export default function BoyRoomPortfolio() {
     let isDragging = false;
     let dragStarted = false;
     
-    const onMouseDown = (e: any) => {
+    const onMouseDown = () => {
       isDragging = true;
       dragStarted = false;
       renderer.domElement.style.cursor = 'grabbing';
