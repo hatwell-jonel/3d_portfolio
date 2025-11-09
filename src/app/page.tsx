@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 function ArcadeGame() {
-  const [selectedGame, setSelectedGame] = useState('');
+  const [selectedGame, setSelectedGame] = useState<string | null>(null);
   
   if (!selectedGame) {
     return (
@@ -183,7 +183,7 @@ function Tetris() {
       }
     }
     
-    function move(dir) {
+    function move(dir: number) {
       currentPiece.x += dir;
       if (collide()) currentPiece.x -= dir;
     }
@@ -360,11 +360,11 @@ function Sudoku() {
   
   const [selected, setSelected] = useState(null);
   
-  const handleClick = (row, col) => {
+  const handleClick = (row: number, col: number) => {
     setSelected({row, col});
   };
   
-  const handleNumber = (num) => {
+  const handleNumber = (num: number) => {
     if (!selected) return;
     const newBoard = board.map(r => [...r]);
     newBoard[selected.row][selected.col] = num;
@@ -453,18 +453,18 @@ function SpaceDodger() {
     const ctx = canvas.getContext('2d');
     
     let playerY = 250;
-    let obstacles = [];
+    let obstacles: any[] = [];
     let frameCount = 0;
     let currentScore = 0;
     let isGameOver = false;
     
     const keys = {};
     
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: { key: string | number; }) => {
       keys[e.key] = true;
     };
     
-    const handleKeyUp = (e) => {
+    const handleKeyUp = (e: { key: string | number; }) => {
       keys[e.key] = false;
     };
     
@@ -598,7 +598,7 @@ export default function BoyRoomPortfolio() {
     
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    mountRef.current.appendChild(renderer.domElement);
+    mountRef?.current?.appendChild(renderer.domElement);
     
     const ambient = new THREE.AmbientLight(0xffffff, 1.5 );
     scene.add(ambient);
@@ -729,7 +729,7 @@ export default function BoyRoomPortfolio() {
     arcadeTop.position.set(-5, 1.35, 2.8);
     scene.add(arcadeTop);
     
-    function createPoster(text, color) {
+    function createPoster(text: string, color: number) {
       const canvas = document.createElement('canvas');
       canvas.width = 512;
       canvas.height = 512;
@@ -746,7 +746,7 @@ export default function BoyRoomPortfolio() {
       ctx.font = 'bold 36px Arial';
       ctx.textAlign = 'center';
       const lines = text.split('\n');
-      lines.forEach((line, i) => {
+      lines.forEach((line: string, i: number) => {
         if (i === 0) {
           ctx.font = 'bold 42px Arial';
           ctx.fillText(line, 256, 100);
@@ -772,13 +772,13 @@ export default function BoyRoomPortfolio() {
     let isDragging = false;
     let dragStarted = false;
     
-    const onMouseDown = (e) => {
+    const onMouseDown = (e: any) => {
       isDragging = true;
       dragStarted = false;
       renderer.domElement.style.cursor = 'grabbing';
     };
     
-    const onMouseUp = (e) => {
+    const onMouseUp = (e: { clientX: number; clientY: number; }) => {
       if (isDragging && !dragStarted) {
         const rect = renderer.domElement.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
@@ -800,7 +800,7 @@ export default function BoyRoomPortfolio() {
       renderer.domElement.style.cursor = 'grab';
     };
     
-    const onMouseMove = (e) => {
+    const onMouseMove = (e: { movementX: number; movementY: number; }) => {
       if (isDragging) {
         if (Math.abs(e.movementX) > 2 || Math.abs(e.movementY) > 2) {
           dragStarted = true;
@@ -959,13 +959,13 @@ export default function BoyRoomPortfolio() {
               <div style={{ color: 'white' }}>
                 <h1 style={{ color: '#ff6b35', marginBottom: '20px' }}>About Me</h1>
                 <p style={{ fontSize: '18px', lineHeight: '1.8' }}>
-                  Hi! I'm a passionate developer and designer with a love for creating 
+                  Hi! I&apos;m a passionate developer and designer with a love for creating 
                   interactive experiences. I specialize in web development, 3D graphics, 
                   and building cool stuff with code.
                 </p>
                 <p style={{ fontSize: '18px', lineHeight: '1.8', marginTop: '20px' }}>
-                  When I'm not coding, you can find me gaming, exploring new technologies, 
-                  or working on personal projects that push the boundaries of what's possible 
+                  When I&apos;m not coding, you can find me gaming, exploring new technologies, 
+                  or working on personal projects that push the boundaries of what&apos;s possible 
                   on the web.
                 </p>
               </div>
