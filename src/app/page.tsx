@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Tetris, Snake, Sudoku, SpaceDodger } from './arcade';
+import { ArcadeMachine } from './models';
 
 function ArcadeGame() {
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -141,7 +142,7 @@ export default function RoomPortfolio() {
     const mountRef = useRef<HTMLDivElement | null>(null);
     const keysRef = useRef<Record<string, boolean>>({});
     const [section, setSection] = useState('');
-    const [showModal, setShowModal] = useState(null);
+    const [showModal, setShowModal] = useState<string | null>(null);
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -258,29 +259,9 @@ export default function RoomPortfolio() {
         contactPoster.rotation.y = Math.PI;
         contactPoster.userData = { section: 'contact' };
         scene.add(contactPoster);
-        
-        const arcadeBase = new THREE.Mesh(
-        new THREE.BoxGeometry(0.6, 1.2, 0.5),
-        new THREE.MeshStandardMaterial({ color: 0x1a1a1a })
-        );
-        arcadeBase.position.set(-5, 0.6, 3);
-        scene.add(arcadeBase);
-        
-        const arcadeScreen = new THREE.Mesh(
-        new THREE.BoxGeometry(0.5, 0.4, 0.05),
-        new THREE.MeshStandardMaterial({ color: 0x0000ff, emissive: 0x0033ff, emissiveIntensity: 0.5 })
-        );
-        arcadeScreen.position.set(-5, 0.9, 2.75);
-        arcadeScreen.userData = { section: 'arcade' };
-        scene.add(arcadeScreen);
-        
-        const arcadeTop = new THREE.Mesh(
-        new THREE.BoxGeometry(0.6, 0.3, 0.4),
-        new THREE.MeshStandardMaterial({ color: 0xff0000 })
-        );
-        arcadeTop.position.set(-5, 1.35, 2.8);
-        scene.add(arcadeTop);
-        
+
+        // arcade
+        ArcadeMachine(scene, 'arcade');
         
         const keys: { [key: string]: boolean } = {};
         const speed = 0.05;
@@ -301,7 +282,8 @@ export default function RoomPortfolio() {
             const y = -((clientY - rect.top) / rect.height) * 2 + 1;
             
             raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
-            const intersects = raycaster.intersectObjects(scene.children);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            console.log(intersects);
             
             for (const intersect of intersects) {
                 if (intersect.object.userData.section) {

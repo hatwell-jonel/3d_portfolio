@@ -1,0 +1,1 @@
+export {ArcadeMachine}  from './ArcadeMachine';
