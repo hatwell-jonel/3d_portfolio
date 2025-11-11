@@ -47,3 +47,12 @@ https://sketchfab.com/3d-models/rusty-japanese-arcade-2938ae13a77c46e8afabb41eba
 
 room
 https://sketchfab.com/3d-models/room-blank-4a3b97905f9549218525e14c49403e28
+
+bed 
+https://sketchfab.com/3d-models/soho-bed-3d-model-97e361e8beda4112ac5b1b5bcd388cdf
+
+music player
+https://sketchfab.com/3d-models/classic-vinyl-player-2a4ddff30c784d459ea2882646da8700
+
+table for musci player
+https://sketchfab.com/3d-models/rococo-table-e3da6d2b83c5445ab6e47fd33f6b3ba5

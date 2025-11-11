@@ -28,6 +28,8 @@ export function ArcadeMachine(scene : THREE.Scene, modalKey : string) {
         return canvas;
     }
 
+    
+
     return loader.load(
                 'assets/3d/rusty_japanese_arcade.glb',
                 (gltf) => {
@@ -57,6 +59,19 @@ export function ArcadeMachine(scene : THREE.Scene, modalKey : string) {
                 label.scale.set(2.5, 1.2, 1);
                 label.name = 'arcadeLabel';
                 arcadeModel.add(label);
+
+                // --- Animation setup ---
+                const clock = new THREE.Clock();
+                const baseY = label.position.y;
+
+                function animateLabel() {
+                    requestAnimationFrame(animateLabel);
+                    const elapsed = clock.getElapsedTime();
+                    // Smooth up-down motion using sine wave
+                    label.position.y = baseY + Math.sin(elapsed * 1.5) * 0.1; 
+                    // ↑ 1.5 = speed multiplier, 0.2 = motion amplitude
+                }
+                animateLabel();
 
 
                 // Add to the scene
