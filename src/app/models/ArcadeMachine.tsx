@@ -19,16 +19,14 @@ export function ArcadeMachine(scene : THREE.Scene, modalKey : string) {
         canvas.width = 512;
         canvas.height = 256;
         ctx.font = 'bold 64px Arial';
-        ctx.fillStyle = '#ffffff';
+        ctx.fillStyle = '#000000';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.shadowColor = '#3399FF';
-        ctx.shadowBlur = 12;
+        ctx.shadowColor = '#7E7922';
+        ctx.shadowBlur = 15;
         ctx.fillText(text, canvas.width / 2, canvas.height / 2);
         return canvas;
     }
-
-    
 
     return loader.load(
                 'assets/3d/rusty_japanese_arcade.glb',

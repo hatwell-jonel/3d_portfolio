@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Tetris, Snake, Sudoku, SpaceDodger } from './arcade';
-import { ArcadeMachine } from './models';
+import { ArcadeMachine, BedModel } from './models';
 
 function ArcadeGame() {
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -138,6 +138,100 @@ function createPoster(text: string, color: number) {
     return new THREE.Mesh(new THREE.PlaneGeometry(1.5, 1.5), material);
 }
 
+function floorScene(scene: THREE.Scene) {
+    const textureLoader = new THREE.TextureLoader();
+    const woodFloorTexture = textureLoader.load('/assets/image/textured-floor.jpg');
+    woodFloorTexture.wrapS = THREE.RepeatWrapping;
+    woodFloorTexture.wrapT = THREE.RepeatWrapping;
+    woodFloorTexture.repeat.set(4, 4);
+
+    const floor = new THREE.Mesh(
+        new THREE.PlaneGeometry(12, 12),
+        new THREE.MeshStandardMaterial({ 
+            map: woodFloorTexture,
+            roughness: 0.9,
+            metalness: 0.05
+        })
+    );
+    floor.rotation.x = -Math.PI / 2;
+    floor.receiveShadow = true; 
+    scene.add(floor);
+}
+
+function wallScene(scene: THREE.Scene) {
+    const textureLoader = new THREE.TextureLoader();
+
+    const concreteTexture = textureLoader.load('/assets/image/textured-wall.jpg');
+      concreteTexture.wrapS = THREE.RepeatWrapping;
+      concreteTexture.wrapT = THREE.RepeatWrapping;
+      concreteTexture.repeat.set(1, 1);
+      
+      const wallMaterial = new THREE.MeshStandardMaterial({ 
+        map: concreteTexture,
+        roughness: 0.9,
+        metalness: 0.05
+      });
+      
+      const aboutWall = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.2), wallMaterial);
+      aboutWall.position.set(0, 2, -6);
+      aboutWall.receiveShadow = true; 
+      scene.add(aboutWall);
+
+      const portfolioWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 4, 12), wallMaterial);
+      portfolioWall.position.set(-6, 2, 0);
+      portfolioWall.receiveShadow = true; 
+      scene.add(portfolioWall);
+
+      const skillsWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 4, 12), wallMaterial);
+      skillsWall.position.set(6, 2, 0);
+      skillsWall.receiveShadow = true; 
+      scene.add(skillsWall);
+      
+      const contactWall = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.2), wallMaterial);
+      contactWall.position.set(0, 2, 6);
+      contactWall.receiveShadow = true; 
+      scene.add(contactWall);
+
+      // const aboutPoster = createPoster('ABOUT ME\n\nDeveloper & Designer\nPassionate about coding\nLove gaming & tech', 0xff6b35);
+      // aboutPoster.position.set(0, 2.5, -5.9);
+      // aboutPoster.userData = { section: 'about' };
+      // scene.add(aboutPoster);
+      
+
+      // const portfolioPoster = createPoster('MY PROJECTS\n\n• Cool Game\n• Website Design\n• Mobile App', 0xd62828);
+      // portfolioPoster.position.set(-5.9, 2.5, 0);
+      // portfolioPoster.rotation.y = Math.PI / 2;
+      // portfolioPoster.userData = { section: 'portfolio' };
+      // scene.add(portfolioPoster);
+      
+
+      // const skillsPoster = createPoster('SKILLS\n\nJavaScript\nReact & Three.js\nHTML/CSS\nGame Dev', 0x00ff41);
+      // skillsPoster.position.set(5.9, 2.5, 0);
+      // skillsPoster.rotation.y = -Math.PI / 2;
+      // skillsPoster.userData = { section: 'skills' };
+      // scene.add(skillsPoster);
+      
+      // const contactPoster = createPoster('CONTACT\n\nemail@example.com\nGitHub: username\nLinkedIn: yourname', 0xffa500);
+      // contactPoster.position.set(2, 2.5, 5.9);
+      // contactPoster.rotation.y = Math.PI;
+      // contactPoster.userData = { section: 'contact' };
+      // scene.add(contactPoster);
+}
+
+function ceilingScene(scene: THREE.Scene) {
+  const ceiling = new THREE.Mesh(
+      new THREE.PlaneGeometry(12, 12),
+      new THREE.MeshStandardMaterial({ 
+          color: 0x606060, 
+          roughness: 0.85,
+          metalness: 0.05
+      })
+  );
+  ceiling.rotation.x = Math.PI / 2;
+  ceiling.position.y = 4;
+  scene.add(ceiling);
+}
+
 export default function RoomPortfolio() {
     const mountRef = useRef<HTMLDivElement | null>(null);
     const keysRef = useRef<Record<string, boolean>>({});
@@ -160,105 +254,57 @@ export default function RoomPortfolio() {
     useEffect(() => {
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x606060);
-        
+
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 1.6, 0);
-        
+        camera.position.set(0, 1.6, 2);
+      
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.toneMappingExposure = 1;
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         mountRef.current!.appendChild(renderer.domElement);
-        
-        const ambient = new THREE.AmbientLight(0xffffff, 1.5 );
+
+
+        const ambient = new THREE.AmbientLight(0xffffff, .3);
         scene.add(ambient);
-        const light = new THREE.PointLight(0xffbb77, 1.2, 100);
-        light.position.set(0, 3, 0);
-        scene.add(light);
+
+        const mainLight = new THREE.DirectionalLight(0xffe6cc, 2);
+        mainLight.position.set(6, 8, 4);
+        mainLight.target.position.set(0, 0, 0);
+        mainLight.castShadow = true;
+        mainLight.shadow.mapSize.set(2048, 2048);
+        mainLight.shadow.camera.near = 0.5;
+        mainLight.shadow.camera.far = 20;
+        mainLight.shadow.camera.left = -10;
+        mainLight.shadow.camera.right = 10;
+        mainLight.shadow.camera.top = 10;
+        mainLight.shadow.camera.bottom = -10;
+        mainLight.shadow.bias = -0.0001;
+        scene.add(mainLight);
+        scene.add(mainLight.target);
+
+        const fillLight = new THREE.PointLight(0xffaa66, 1, 200);
+        fillLight.position.set(-4, 3, 0);
+        scene.add(fillLight);
+
+        const backLight = new THREE.PointLight(0x88aaff, .6, 100);
+        backLight.position.set(0, 4, -10);
+        scene.add(backLight);
+
+        const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x663300, 1);
+        scene.add(hemiLight);
+
+        renderer.toneMappingExposure = 1;
+
+        floorScene(scene);
+        ceilingScene(scene);
+        wallScene(scene);
         
-        const accentLight = new THREE.PointLight(0xffaa66, 1.5, 50);
-        accentLight.position.set(3, 2, 0);
-        scene.add(accentLight);
-        
-        const floor = new THREE.Mesh(
-            new THREE.PlaneGeometry(12, 12),
-            new THREE.MeshStandardMaterial({ 
-                color: 0x505050, 
-                roughness: 0.9,
-                metalness: 0.05
-            })
-        );
-        floor.rotation.x = -Math.PI / 2;
-        scene.add(floor);
-        
-        const ceiling = new THREE.Mesh(
-            new THREE.PlaneGeometry(12, 12),
-            new THREE.MeshStandardMaterial({ 
-                color: 0x606060, 
-                roughness: 0.85,
-                metalness: 0.05
-            })
-        );
-        ceiling.rotation.x = Math.PI / 2;
-        ceiling.position.y = 4;
-        scene.add(ceiling);
-        
-        const wallMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x808080,
-            roughness: 0.85,
-            metalness: 0.05
-        });
-        
-        const aboutWall = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.2), wallMaterial);
-        aboutWall.position.set(0, 2, -6);
-        scene.add(aboutWall);
-        
-        const aboutPoster = createPoster('ABOUT ME\n\nDeveloper & Designer\nPassionate about coding\nLove gaming & tech', 0xff6b35);
-        aboutPoster.position.set(0, 2.5, -5.9);
-        aboutPoster.userData = { section: 'about' };
-        scene.add(aboutPoster);
-        
-        const portfolioWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 4, 12), wallMaterial);
-        portfolioWall.position.set(-6, 2, 0);
-        scene.add(portfolioWall);
-        
-        const portfolioPoster = createPoster('MY PROJECTS\n\n• Cool Game\n• Website Design\n• Mobile App', 0xd62828);
-        portfolioPoster.position.set(-5.9, 2.5, 0);
-        portfolioPoster.rotation.y = Math.PI / 2;
-        portfolioPoster.userData = { section: 'portfolio' };
-        scene.add(portfolioPoster);
-        
-        const skillsWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 4, 12), wallMaterial);
-        skillsWall.position.set(6, 2, 0);
-        scene.add(skillsWall);
-        
-        const skillsPoster = createPoster('SKILLS\n\nJavaScript\nReact & Three.js\nHTML/CSS\nGame Dev', 0x00ff41);
-        skillsPoster.position.set(5.9, 2.5, 0);
-        skillsPoster.rotation.y = -Math.PI / 2;
-        skillsPoster.userData = { section: 'skills' };
-        scene.add(skillsPoster);
-        
-        const contactWall = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.2), wallMaterial);
-        contactWall.position.set(0, 2, 6);
-        scene.add(contactWall);
-        
-        const bed = new THREE.Mesh(
-        new THREE.BoxGeometry(2.5, 0.4, 2),
-        new THREE.MeshStandardMaterial({ color: 0x2d2d2d })
-        );
-        bed.position.set(-3, 0.4, 5);
-        scene.add(bed);
-        
-        const pillow = new THREE.Mesh(
-        new THREE.BoxGeometry(0.6, 0.2, 0.4),
-        new THREE.MeshStandardMaterial({ color: 0x1a1a1a })
-        );
-        pillow.position.set(-3, 0.7, 4.3);
-        scene.add(pillow);
-        
-        const contactPoster = createPoster('CONTACT\n\nemail@example.com\nGitHub: username\nLinkedIn: yourname', 0xffa500);
-        contactPoster.position.set(2, 2.5, 5.9);
-        contactPoster.rotation.y = Math.PI;
-        contactPoster.userData = { section: 'contact' };
-        scene.add(contactPoster);
+        // bed
+        BedModel(scene);
 
         // arcade
         ArcadeMachine(scene, 'arcade');
@@ -366,41 +412,41 @@ export default function RoomPortfolio() {
         const raycaster = new THREE.Raycaster();
         
         function animate() {
-        requestAnimationFrame(animate);
+          requestAnimationFrame(animate);
         
-        const forward = new THREE.Vector3(0, 0, -1);
-        forward.applyQuaternion(camera.quaternion);
-        forward.y = 0;
-        forward.normalize();
+          const forward = new THREE.Vector3(0, 0, -1);
+          forward.applyQuaternion(camera.quaternion);
+          forward.y = 0;
+          forward.normalize();
         
-        const right = new THREE.Vector3(1, 0, 0);
-        right.applyQuaternion(camera.quaternion);
-        right.y = 0;
-        right.normalize();
+          const right = new THREE.Vector3(1, 0, 0);
+          right.applyQuaternion(camera.quaternion);
+          right.y = 0;
+          right.normalize();
         
-        if (keys['w']) camera.position.addScaledVector(forward, speed);
-        if (keys['s']) camera.position.addScaledVector(forward, -speed);
-        if (keys['a']) camera.position.addScaledVector(right, -speed);
-        if (keys['d']) camera.position.addScaledVector(right, speed);
-        
-        camera.position.x = Math.max(-5.5, Math.min(5.5, camera.position.x));
-        camera.position.z = Math.max(-5.5, Math.min(5.5, camera.position.z));
-        
-        camera.rotation.set(pitch, yaw, 0, 'YXZ');
-        
-        raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
-        const intersects = raycaster.intersectObjects(scene.children);
-        
-        let currentSection = '';
-        for (const intersect of intersects) {
-            if (intersect.object.userData.section) {
-            currentSection = intersect.object.userData.section;
-            break;
-            }
-        }
-        setSection(currentSection);
-        
-        renderer.render(scene, camera);
+          if (keys['w']) camera.position.addScaledVector(forward, speed);
+          if (keys['s']) camera.position.addScaledVector(forward, -speed);
+          if (keys['a']) camera.position.addScaledVector(right, -speed);
+          if (keys['d']) camera.position.addScaledVector(right, speed);
+          
+          camera.position.x = Math.max(-5.5, Math.min(5.5, camera.position.x));
+          camera.position.z = Math.max(-5.5, Math.min(5.5, camera.position.z));
+          
+          camera.rotation.set(pitch, yaw, 0, 'YXZ');
+          
+          raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+          const intersects = raycaster.intersectObjects(scene.children);
+          
+          let currentSection = '';
+          for (const intersect of intersects) {
+              if (intersect.object.userData.section) {
+              currentSection = intersect.object.userData.section;
+              break;
+              }
+          }
+          setSection(currentSection);
+          
+          renderer.render(scene, camera);
         }
         
         animate();
