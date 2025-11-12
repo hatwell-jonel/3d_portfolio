@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { Tetris, Snake, Sudoku, SpaceDodger } from './arcade';
 import { ArcadeMachine, BedModel } from './models';
 import { RecordSetup } from './models/RecordSetup';
+import { AirConditioner } from './models/Airconditioner';
 
 function ArcadeGame() {
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -268,7 +269,6 @@ export default function RoomPortfolio() {
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         mountRef.current!.appendChild(renderer.domElement);
 
-
         const ambient = new THREE.AmbientLight(0xffffff, .3);
         scene.add(ambient);
 
@@ -312,6 +312,9 @@ export default function RoomPortfolio() {
 
         // music
         RecordSetup(scene, camera);
+
+        // air conditioner
+        AirConditioner(scene);
         
         const keys: { [key: string]: boolean } = {};
         const speed = 0.05;
@@ -450,7 +453,7 @@ export default function RoomPortfolio() {
           
           let currentSection = '';
           for (const intersect of intersects) {
-              if (intersect.object.userData.section) {
+            if (intersect.object.userData.section) {
                 currentSection = intersect.object.userData.section;
                 break;
               }
@@ -510,7 +513,6 @@ export default function RoomPortfolio() {
           <strong>{isMobile ? '📱 MOBILE MODE' : '🎮 Controls:'}</strong><br/>
           {isMobile ? '👆 Swipe - Look' : 'W/A/S/D - Move'}<br/>
           {isMobile ? '⬆️ Arrows - Move' : 'Drag Mouse - Look'}<br/>
-          {isMobile ? '👇 Tap poster' : 'Click Poster'}
         </div>
         {section && (
           <div style={{ 
