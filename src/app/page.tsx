@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Tetris, Snake, Sudoku, SpaceDodger } from './arcade';
 import { ArcadeMachine, BedModel } from './models';
+import { RecordSetup } from './models/RecordSetup';
 
 function ArcadeGame() {
   const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -308,6 +309,9 @@ export default function RoomPortfolio() {
 
         // arcade
         ArcadeMachine(scene, 'arcade');
+
+        // music
+        RecordSetup(scene, camera);
         
         const keys: { [key: string]: boolean } = {};
         const speed = 0.05;
@@ -332,9 +336,16 @@ export default function RoomPortfolio() {
             console.log(intersects);
             
             for (const intersect of intersects) {
-                if (intersect.object.userData.section) {
-                setShowModal(intersect.object.userData.section);
-                break;
+
+                const obj = intersect.object;
+                if (obj.parent?.userData?.interactive && obj.parent.userData.toggleMusic) {
+                  obj.parent.userData.toggleMusic();
+                  break;
+                }
+
+                if (obj.userData.section) {
+                  setShowModal(obj.userData.section);
+                  break;
                 }
             }
         };
@@ -440,8 +451,8 @@ export default function RoomPortfolio() {
           let currentSection = '';
           for (const intersect of intersects) {
               if (intersect.object.userData.section) {
-              currentSection = intersect.object.userData.section;
-              break;
+                currentSection = intersect.object.userData.section;
+                break;
               }
           }
           setSection(currentSection);

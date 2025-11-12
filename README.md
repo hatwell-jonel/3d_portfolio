@@ -52,7 +52,10 @@ bed
 https://sketchfab.com/3d-models/soho-bed-3d-model-97e361e8beda4112ac5b1b5bcd388cdf
 
 music player
-https://sketchfab.com/3d-models/classic-vinyl-player-2a4ddff30c784d459ea2882646da8700
+https://sketchfab.com/3d-models/record-player-5d903cf6f2b8433b9863f13959c04357
 
 table for musci player
-https://sketchfab.com/3d-models/rococo-table-e3da6d2b83c5445ab6e47fd33f6b3ba5
+https://sketchfab.com/3d-models/record-table-5f6a7f4de45b4c468b8934e7f0adebdd
+
+air conditioner
+https://sketchfab.com/3d-models/airconditioner-electrolux-monaco-c86ac3c2aea64986b13fb7dbdeabf9d6
