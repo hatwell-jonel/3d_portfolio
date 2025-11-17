@@ -59,3 +59,7 @@ https://sketchfab.com/3d-models/record-table-5f6a7f4de45b4c468b8934e7f0adebdd
 
 air conditioner
 https://sketchfab.com/3d-models/airconditioner-electrolux-monaco-c86ac3c2aea64986b13fb7dbdeabf9d6
+
+
+computer
+https://sketchfab.com/3d-models/computer-setup-129b010fb05a44e8a85497178e2dd5b3
