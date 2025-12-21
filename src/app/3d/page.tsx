@@ -161,31 +161,6 @@ function wallScene(scene: THREE.Scene) {
       contactWall.position.set(0, 2, 6);
       contactWall.receiveShadow = true; 
       scene.add(contactWall);
-
-      // const aboutPoster = createPoster('ABOUT ME\n\nDeveloper & Designer\nPassionate about coding\nLove gaming & tech', 0xff6b35);
-      // aboutPoster.position.set(0, 2.5, -5.9);
-      // aboutPoster.userData = { section: 'about' };
-      // scene.add(aboutPoster);
-      
-
-      // const portfolioPoster = createPoster('MY PROJECTS\n\n• Cool Game\n• Website Design\n• Mobile App', 0xd62828);
-      // portfolioPoster.position.set(-5.9, 2.5, 0);
-      // portfolioPoster.rotation.y = Math.PI / 2;
-      // portfolioPoster.userData = { section: 'portfolio' };
-      // scene.add(portfolioPoster);
-      
-
-      // const skillsPoster = createPoster('SKILLS\n\nJavaScript\nReact & Three.js\nHTML/CSS\nGame Dev', 0x00ff41);
-      // skillsPoster.position.set(5.9, 2.5, 0);
-      // skillsPoster.rotation.y = -Math.PI / 2;
-      // skillsPoster.userData = { section: 'skills' };
-      // scene.add(skillsPoster);
-      
-      // const contactPoster = createPoster('CONTACT\n\nemail@example.com\nGitHub: username\nLinkedIn: yourname', 0xffa500);
-      // contactPoster.position.set(2, 2.5, 5.9);
-      // contactPoster.rotation.y = Math.PI;
-      // contactPoster.userData = { section: 'contact' };
-      // scene.add(contactPoster);
 }
 
 function ceilingScene(scene: THREE.Scene) {
@@ -207,19 +182,6 @@ export default function RoomPortfolio() {
     const keysRef = useRef<Record<string, boolean>>({});
     const [section, setSection] = useState('');
     const [showModal, setShowModal] = useState<string | null>(null);
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        // Detect mobile
-        const checkMobile = () => {
-        setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
-        };
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-        
-        return () => window.removeEventListener('resize', checkMobile);
-    }, []);
-    
 
     useEffect(() => {
         const scene = new THREE.Scene();
@@ -289,13 +251,11 @@ export default function RoomPortfolio() {
         
         window.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
         window.addEventListener('keyup', (e) => keys[e.key.toLowerCase()] = false);
-        
+
         let yaw = 0;
         let pitch = 0;
         let isDragging = false;
         let dragStarted = false;
-        let touchStartX = 0;
-        let touchStartY = 0;
 
         const handleClick = (clientX : number, clientY : number) => {
             const rect = renderer.domElement.getBoundingClientRect();
@@ -346,49 +306,11 @@ export default function RoomPortfolio() {
                 pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch));
             }
         };
-
-        // Touch controls
-        const onTouchStart = (e : TouchEvent) => {
-            if (e.touches.length === 1) {
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-                isDragging = true;
-                dragStarted = false;
-            }
-        };
-
-        const onTouchMove = (e : TouchEvent) => {
-            if (e.touches.length === 1 && isDragging) {
-                const deltaX = e.touches[0].clientX - touchStartX;
-                const deltaY = e.touches[0].clientY - touchStartY;
-                
-                if (Math.abs(deltaX) > 5 || Math.abs(deltaY) > 5) {
-                dragStarted = true;
-                yaw -= deltaX * 0.005;
-                pitch -= deltaY * 0.005;
-                pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch));
-                }
-                
-                touchStartX = e.touches[0].clientX;
-                touchStartY = e.touches[0].clientY;
-            }
-        };
-
-        const onTouchEnd = (e : TouchEvent) => {
-            if (!dragStarted && e.changedTouches.length > 0) {
-                handleClick(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-            }
-            isDragging = false;
-            dragStarted = false;
-        };
         
         renderer.domElement.style.cursor = 'grab';
         renderer.domElement.addEventListener('mousedown', onMouseDown);
-        renderer.domElement.addEventListener('touchstart', onTouchStart, { passive: true });
         document.addEventListener('mouseup', onMouseUp);
-        document.addEventListener('touchend', onTouchEnd);
         document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('touchmove', onTouchMove, { passive: true });
         
         const raycaster = new THREE.Raycaster();
         
@@ -443,167 +365,49 @@ export default function RoomPortfolio() {
         return () => {
             window.removeEventListener('resize', handleResize);
             document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('touchmove', onTouchMove);
             document.removeEventListener('mouseup', onMouseUp);
-            document.removeEventListener('touchend', onTouchEnd);
             renderer.domElement.removeEventListener('mousedown', onMouseDown);
-            renderer.domElement.removeEventListener('touchstart', onTouchStart);
             if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
                 mountRef.current.removeChild(renderer.domElement);
             }
         };
     }, []);
 
-    const handleTouchButton = (key : string, isPressed : boolean) => {
-        keysRef.current[key] = isPressed;
-    };
-  
     return (
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
       <div ref={mountRef} />
       
       <div style={{
         position: 'absolute',
-        top: isMobile ? 10 : 20,
-        left: isMobile ? 10 : 20,
+        top: 20,
+        left: 20,
         color: 'white',
         fontFamily: 'Arial, sans-serif',
-        background: isMobile ? 'rgba(255, 107, 53, 0.95)' : 'rgba(0,0,0,0.8)',
-        padding: isMobile ? '12px' : '15px',
+        background: 'rgba(0,0,0,0.8)',
+        padding: '15px',
         borderRadius: '10px',
-        border: isMobile ? '3px solid #ffaa00' : '2px solid #3498db',
-        fontSize: isMobile ? '12px' : '14px',
-        maxWidth: isMobile ? '160px' : 'auto',
-        boxShadow: isMobile ? '0 4px 15px rgba(255,107,53,0.5)' : 'none'
+        border: '2px solid #3498db',
+        fontSize: '14px',
+        maxWidth: 'auto',
+        boxShadow:'none'
       }}>
         <div style={{ marginBottom: '10px' }}>
-          <strong>{isMobile ? '📱 MOBILE MODE' : '🎮 Controls:'}</strong><br/>
-          {isMobile ? '👆 Swipe - Look' : 'W/A/S/D - Move'}<br/>
-          {isMobile ? '⬆️ Arrows - Move' : 'Drag Mouse - Look'}<br/>
+          <strong>🎮 Controls:</strong><br/>
+          W/A/S/D - Move<br/>
+          Drag Mouse - Look<br/>
         </div>
         {section && (
           <div style={{ 
-            fontSize: isMobile ? '14px' : '18px', 
-            color: isMobile ? '#fff' : '#3498db',
+            fontSize: '18px', 
+            color: '#3498db',
             marginTop: '10px',
             fontWeight: 'bold',
-            textShadow: isMobile ? '0 2px 4px rgba(0,0,0,0.5)' : 'none'
+            textShadow:'none'
           }}>
             📍 {section.toUpperCase()}
           </div>
         )}
       </div>
-      
-      {/* Mobile movement controls */}
-      {isMobile && (
-        <>
-          {/* Mobile indicator banner */}
-          <div style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            background: 'linear-gradient(180deg, rgba(255,107,53,0.9) 0%, rgba(255,107,53,0) 100%)',
-            padding: '8px',
-            textAlign: 'center',
-            color: 'white',
-            fontSize: '11px',
-            fontWeight: 'bold',
-            pointerEvents: 'none',
-            zIndex: 5
-          }}>
-            📱 MOBILE VERSION - Swipe to Look Around
-          </div>
-          
-          {/* Movement controls */}
-          <div style={{
-            position: 'absolute',
-            bottom: 20,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 70px)',
-            gridTemplateRows: 'repeat(2, 70px)',
-            gap: '12px',
-            filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.4))'
-          }}>
-            <div></div>
-            <button
-              onTouchStart={() => handleTouchButton('w', true)}
-              onTouchEnd={() => handleTouchButton('w', false)}
-              style={{
-                background: 'linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9))',
-                border: '3px solid #3498db',
-                borderRadius: '15px',
-                color: 'white',
-                fontSize: '28px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                touchAction: 'none',
-                boxShadow: '0 4px 12px rgba(52, 152, 219, 0.5)',
-                transition: 'transform 0.1s'
-              }}
-            >
-              ↑
-            </button>
-            <div></div>
-            <button
-              onTouchStart={() => handleTouchButton('a', true)}
-              onTouchEnd={() => handleTouchButton('a', false)}
-              style={{
-                background: 'linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9))',
-                border: '3px solid #3498db',
-                borderRadius: '15px',
-                color: 'white',
-                fontSize: '28px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                touchAction: 'none',
-                boxShadow: '0 4px 12px rgba(52, 152, 219, 0.5)',
-                transition: 'transform 0.1s'
-              }}
-            >
-              ←
-            </button>
-            <button
-              onTouchStart={() => handleTouchButton('s', true)}
-              onTouchEnd={() => handleTouchButton('s', false)}
-              style={{
-                background: 'linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9))',
-                border: '3px solid #3498db',
-                borderRadius: '15px',
-                color: 'white',
-                fontSize: '28px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                touchAction: 'none',
-                boxShadow: '0 4px 12px rgba(52, 152, 219, 0.5)',
-                transition: 'transform 0.1s'
-              }}
-            >
-              ↓
-            </button>
-            <button
-              onTouchStart={() => handleTouchButton('d', true)}
-              onTouchEnd={() => handleTouchButton('d', false)}
-              style={{
-                background: 'linear-gradient(135deg, rgba(52, 152, 219, 0.9), rgba(41, 128, 185, 0.9))',
-                border: '3px solid #3498db',
-                borderRadius: '15px',
-                color: 'white',
-                fontSize: '28px',
-                fontWeight: 'bold',
-                cursor: 'pointer',
-                touchAction: 'none',
-                boxShadow: '0 4px 12px rgba(52, 152, 219, 0.5)',
-                transition: 'transform 0.1s'
-              }}
-            >
-              →
-            </button>
-          </div>
-        </>
-      )}
       
       {showModal && (
         <div style={{
@@ -620,121 +424,35 @@ export default function RoomPortfolio() {
         }}>
           <div style={{
             background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
-            padding: isMobile ? '25px' : '40px',
+            padding: '40px',
             borderRadius: '20px',
-            maxWidth: isMobile ? '95%' : '600px',
+            maxWidth: '600px',
             width: '90%',
             maxHeight: '80vh',
             overflow: 'auto',
-            border: isMobile ? '4px solid #ff6b35' : '3px solid #ff6b35',
-            boxShadow: isMobile ? '0 8px 32px rgba(255,107,53,0.6)' : '0 20px 60px rgba(255,107,53,0.3)',
+            border: '3px solid #ff6b35',
+            boxShadow: '0 20px 60px rgba(255,107,53,0.3)',
             position: 'relative'
           }}>
-            {isMobile && (
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                background: '#ff6b35',
-                color: 'white',
-                padding: '8px',
-                textAlign: 'center',
-                fontSize: '12px',
-                fontWeight: 'bold',
-                borderRadius: '17px 17px 0 0'
-              }}>
-                📱 MOBILE VIEW
-              </div>
-            )}
             <button 
               onClick={() => setShowModal(null)}
               style={{
                 position: 'absolute',
-                top: isMobile ? '50px' : '20px',
+                top:'20px',
                 right: '20px',
                 background: '#ff6b35',
                 border: 'none',
                 color: 'white',
-                fontSize: isMobile ? '28px' : '24px',
-                width: isMobile ? '45px' : '40px',
-                height: isMobile ? '45px' : '40px',
+                fontSize: '24px',
+                width: '40px',
+                height: '40px',
                 borderRadius: '50%',
                 cursor: 'pointer',
                 fontWeight: 'bold',
-                boxShadow: isMobile ? '0 4px 12px rgba(0,0,0,0.4)' : 'none'
               }}
             >
               ×
             </button>
-            
-            {showModal === 'about' && (
-              <div style={{ color: 'white', marginTop: isMobile ? '35px' : '0' }}>
-                <h1 style={{ color: '#ff6b35', marginBottom: '20px', fontSize: isMobile ? '24px' : '32px' }}>About Me</h1>
-                <p style={{ fontSize: isMobile ? '16px' : '18px', lineHeight: '1.8' }}>
-                  Hi! I&apos;m a passionate developer and designer with a love for creating 
-                  interactive experiences. I specialize in web development, 3D graphics, 
-                  and building cool stuff with code.
-                </p>
-                <p style={{ fontSize: isMobile ? '16px' : '18px', lineHeight: '1.8', marginTop: '20px' }}>
-                  When I&apos;m not coding, you can find me gaming, exploring new technologies, 
-                  or working on personal projects that push the boundaries of what&apos;s possible 
-                  on the web.
-                </p>
-              </div>
-            )}
-            
-            {showModal === 'portfolio' && (
-              <div style={{ color: 'white', marginTop: isMobile ? '35px' : '0' }}>
-                <h1 style={{ color: '#d62828', marginBottom: '20px', fontSize: isMobile ? '24px' : '32px' }}>My Projects</h1>
-                <div style={{ fontSize: isMobile ? '14px' : '16px', lineHeight: '1.8' }}>
-                  <h3 style={{ color: '#ff6b35' }}>🎮 Cool Game</h3>
-                  <p>An interactive 3D game built with Three.js and React. Features real-time physics and multiplayer support.</p>
-                  
-                  <h3 style={{ color: '#ff6b35', marginTop: '20px' }}>🌐 Website Design</h3>
-                  <p>Modern, responsive websites with stunning animations and user experiences.</p>
-                  
-                  <h3 style={{ color: '#ff6b35', marginTop: '20px' }}>📱 Mobile App</h3>
-                  <p>Cross-platform mobile application with seamless performance and intuitive design.</p>
-                </div>
-              </div>
-            )}
-            
-            {showModal === 'skills' && (
-              <div style={{ color: 'white', marginTop: isMobile ? '35px' : '0' }}>
-                <h1 style={{ color: '#00ff41', marginBottom: '20px', fontSize: isMobile ? '24px' : '32px' }}>Skills & Tech</h1>
-                <div style={{ fontSize: isMobile ? '14px' : '16px', lineHeight: '1.8' }}>
-                  <h3 style={{ color: '#ff6b35' }}>💻 Languages</h3>
-                  <p>JavaScript, TypeScript, Python, HTML, CSS</p>
-                  
-                  <h3 style={{ color: '#ff6b35', marginTop: '20px' }}>⚛️ Frameworks</h3>
-                  <p>React, Three.js, Node.js, Next.js</p>
-                  
-                  <h3 style={{ color: '#ff6b35', marginTop: '20px' }}>🎨 Design</h3>
-                  <p>UI/UX, 3D Modeling, Animation, Graphic Design</p>
-                  
-                  <h3 style={{ color: '#ff6b35', marginTop: '20px' }}>🔧 Tools</h3>
-                  <p>Git, VS Code, Figma, Blender</p>
-                </div>
-              </div>
-            )}
-            
-            {showModal === 'contact' && (
-              <div style={{ color: 'white', marginTop: isMobile ? '35px' : '0' }}>
-                <h1 style={{ color: '#ffa500', marginBottom: '20px', fontSize: isMobile ? '24px' : '32px' }}>Contact Me</h1>
-                <div style={{ fontSize: isMobile ? '16px' : '18px', lineHeight: '2' }}>
-                  <p><strong>📧 Email:</strong> your.email@example.com</p>
-                  <p><strong>💼 LinkedIn:</strong> linkedin.com/in/yourname</p>
-                  <p><strong>🐙 GitHub:</strong> github.com/yourusername</p>
-                  <p><strong>🐦 Twitter:</strong> @yourhandle</p>
-                  <p style={{ marginTop: '30px', fontSize: isMobile ? '14px' : '16px', color: '#aaa' }}>
-                    Feel free to reach out for collaborations, job opportunities, 
-                    or just to chat about tech!
-                  </p>
-                </div>
-              </div>
-            )}
-            
             {showModal === 'arcade' && <ArcadeGame />}
           </div>
         </div>
