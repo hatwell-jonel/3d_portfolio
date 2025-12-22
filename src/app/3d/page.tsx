@@ -1,112 +1,17 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { Tetris, Snake, Sudoku, SpaceDodger } from './arcade';
 import { ArcadeMachine, BedModel } from './models';
 import { RecordSetup } from './models/RecordSetup';
 import { AirConditioner } from './models/Airconditioner';
-
-function ArcadeGame() {
-  const [selectedGame, setSelectedGame] = useState<string | null>(null);
-  
-  if (!selectedGame) {
-    return (
-      <div style={{ color: 'white', textAlign: 'center' }}>
-        <h1 style={{ color: '#00ff00', marginBottom: '30px' }}>🕹️ ARCADE GAMES</h1>
-        <p style={{ fontSize: '18px', marginBottom: '30px' }}>Select a game to play:</p>
-        <div style={{ display: 'grid', gap: '15px', maxWidth: '400px', margin: '0 auto' }}>
-          <button
-            onClick={() => setSelectedGame('spaceDodger')}
-            style={{
-              padding: '20px',
-              fontSize: '20px',
-              background: 'linear-gradient(135deg, #00ff00, #00aa00)',
-              border: 'none',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              color: '#000'
-            }}
-          >
-            🚀 SPACE DODGER
-          </button>
-          <button
-            onClick={() => setSelectedGame('tetris')}
-            style={{
-              padding: '20px',
-              fontSize: '20px',
-              background: 'linear-gradient(135deg, #ff00ff, #aa00aa)',
-              border: 'none',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              color: '#fff'
-            }}
-          >
-            🟦 TETRIS
-          </button>
-          <button
-            onClick={() => setSelectedGame('snake')}
-            style={{
-              padding: '20px',
-              fontSize: '20px',
-              background: 'linear-gradient(135deg, #ffff00, #aaaa00)',
-              border: 'none',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              color: '#000'
-            }}
-          >
-            🐍 SNAKE
-          </button>
-          <button
-            onClick={() => setSelectedGame('sudoku')}
-            style={{
-              padding: '20px',
-              fontSize: '20px',
-              background: 'linear-gradient(135deg, #00ffff, #0088aa)',
-              border: 'none',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              fontWeight: 'bold',
-              color: '#000'
-            }}
-          >
-            🔢 SUDOKU
-          </button>
-        </div>
-      </div>
-    );
-  }
-  
-  return (
-    <div>
-      <button
-        onClick={() => setSelectedGame(null)}
-        style={{
-          position: 'absolute',
-          top: '10px',
-          left: '10px',
-          padding: '10px 20px',
-          background: '#ff6b35',
-          border: 'none',
-          borderRadius: '5px',
-          color: 'white',
-          cursor: 'pointer',
-          fontWeight: 'bold',
-          zIndex: 10
-        }}
-      >
-        ← BACK
-      </button>
-      {selectedGame === 'spaceDodger' && <SpaceDodger />}
-      {selectedGame === 'tetris' && <Tetris />}
-      {selectedGame === 'snake' && <Snake />}
-      {selectedGame === 'sudoku' && <Sudoku />}
-    </div>
-  );
-}
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import ArcadeGame from '@/components/features/ArcadeGames';
 
 function floorScene(scene: THREE.Scene) {
     const textureLoader = new THREE.TextureLoader();
@@ -391,9 +296,9 @@ export default function RoomPortfolio() {
         maxWidth: 'auto',
         boxShadow:'none'
       }}>
-        <div style={{ marginBottom: '10px' }}>
+        <div style={{ marginBottom: '10px'}}>
           <strong>🎮 Controls:</strong><br/>
-          W/A/S/D - Move<br/>
+          W / A / S / D - Move<br/>
           Drag Mouse - Look<br/>
         </div>
         {section && (
@@ -408,55 +313,31 @@ export default function RoomPortfolio() {
           </div>
         )}
       </div>
-      
-      {showModal && (
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'rgba(0,0,0,0.9)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 1000
-        }}>
-          <div style={{
-            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
-            padding: '40px',
-            borderRadius: '20px',
-            maxWidth: '600px',
-            width: '90%',
-            maxHeight: '80vh',
-            overflow: 'auto',
-            border: '3px solid #ff6b35',
-            boxShadow: '0 20px 60px rgba(255,107,53,0.3)',
-            position: 'relative'
-          }}>
-            <button 
-              onClick={() => setShowModal(null)}
-              style={{
-                position: 'absolute',
-                top:'20px',
-                right: '20px',
-                background: '#ff6b35',
-                border: 'none',
-                color: 'white',
-                fontSize: '24px',
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                fontWeight: 'bold',
-              }}
-            >
-              ×
-            </button>
-            {showModal === 'arcade' && <ArcadeGame />}
-          </div>
-        </div>
-      )}
+
+      <Dialog
+        open={!!showModal}
+        onOpenChange={(open) => {
+          if (!open) setShowModal(null);
+        }}
+      >
+        <DialogContent 
+          className="max-w-3xl bg-gray-900 border-[#ff6b6b] shadow-[0_0_40px_rgba(255,107,107,0.98)]"
+          showCloseButton={false}
+        >
+
+          <DialogHeader className='sr-only'>
+            <DialogTitle className="text-3xl font-bold text-center">
+              🕹 <span className='bg-linear-to-b from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent'>ARCADE</span> 
+            </DialogTitle>
+            <DialogDescription className="text-neutral-400 text-center">
+              Choose your game and let the fun begin!
+            </DialogDescription>
+          </DialogHeader> 
+
+          {showModal === 'arcade' && <ArcadeGame />}
+        </DialogContent>
+      </Dialog>
+        
     </div>
   );
 }

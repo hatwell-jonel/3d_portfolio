@@ -36,6 +36,14 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 
+TODOS:
+Arcade games 
+gotchu link
+portrait pictures
+computer 3d - project list
+About me - chat AI https://www.tiktok.com/@fullstackkai/video/7576299623753518343?_r=1&_t=ZS-92R1b5X6lko
+music playlist
+2d
 
 SOURCE
 
@@ -59,7 +67,6 @@ https://sketchfab.com/3d-models/record-table-5f6a7f4de45b4c468b8934e7f0adebdd
 
 air conditioner
 https://sketchfab.com/3d-models/airconditioner-electrolux-monaco-c86ac3c2aea64986b13fb7dbdeabf9d6
-
 
 computer
 https://sketchfab.com/3d-models/computer-setup-129b010fb05a44e8a85497178e2dd5b3
