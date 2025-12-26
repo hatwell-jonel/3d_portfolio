@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import { Snake, Sudoku, Tetris } from "@/app/3d/arcade";
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogTitle,
 } from "@/components/ui/dialog"
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { SpaceDodger } from "@jonelhatwell/arcade-games";
+import { SpaceDodger, MemoryGame} from "@jonelhatwell/arcade-games";
 
 export default function ArcadeGame() {
     const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -112,6 +112,13 @@ const games: Game[] = [
         component: <SpaceDodger />
     },
     {
+        name: 'Memory Game',
+        value: 'memoryGame',
+        image: '🧠',
+        description: 'Memorize and click the numbers in order. Levels get harder as the speed and count increase.', 
+        component: <MemoryGame />
+    },
+    {
         name: 'Tetris',
         value: 'tetris',
         image: '🟦',
@@ -131,5 +138,5 @@ const games: Game[] = [
         image: '🔢',
         description: 'Sudoku is a classic arcade game where you have to fill in the numbers to complete the grid.', 
         component: <Sudoku />
-    }
+    },
 ]
