@@ -9,6 +9,17 @@ Title: Rusty Japanese Arcade
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
+const addSetupLighting = (model: THREE.Object3D) => {
+    const ambient = new THREE.PointLight(0xff7E7922, .75, 2);
+    ambient.position.set(0, 4, 0);
+    model.add(ambient);
+
+    const accent = new THREE.PointLight(0xff7E7922, .5, 1.5);
+    accent.position.set(0, 1, 0);
+    model.add(accent);
+};
+
+
 export function ArcadeMachine(scene : THREE.Scene, modalKey : string) {
     const loader = new GLTFLoader();
 
@@ -46,6 +57,7 @@ export function ArcadeMachine(scene : THREE.Scene, modalKey : string) {
                         child.userData.section = modalKey;
                     }
                 });
+                addSetupLighting(arcadeModel);
 
                 // Add floating “Click Me” label
                 const spriteMaterial = new THREE.SpriteMaterial({

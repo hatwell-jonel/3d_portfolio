@@ -10,6 +10,17 @@ Title: Spiderman
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
+
+const addSetupLighting = (model: THREE.Object3D) => {
+    const ambient = new THREE.PointLight(0xffD22B2B, .75, 2);
+    ambient.position.set(0, .25, 0);
+    model.add(ambient);
+
+    const accent = new THREE.PointLight(0xffD22B2B, .3, 1.5);
+    accent.position.set(0, 0.1, 0);
+    model.add(accent);
+};
+
 export function Spiderman(scene: THREE.Scene, modalKey : string) {
     const loader = new GLTFLoader();
 
@@ -61,7 +72,7 @@ export function Spiderman(scene: THREE.Scene, modalKey : string) {
             label.scale.set(.14, .1, .4);
             label.name = 'aboutMeLabel';
             model.add(label);
-
+            addSetupLighting(model);
             // --- Animation setup ---
             const clock = new THREE.Clock();
             const baseY = label.position.y;

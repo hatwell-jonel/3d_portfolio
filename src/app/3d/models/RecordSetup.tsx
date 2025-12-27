@@ -20,6 +20,26 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 
+const addSetupLighting = (model : THREE.Object3D) => {
+	// Soft overhead light (like a small spotlight)
+	const spot = new THREE.SpotLight(0xffddaa, 0.051, 1, Math.PI / 2, 0.2, 0);
+	spot.position.set(0, 2, 1);
+	spot.target.position.set(0, 0.8, 0.3); // focus on the record player
+	spot.castShadow = true;
+	model.add(spot);
+	model.add(spot.target);
+
+	// Warm subtle ambient glow
+	const ambient = new THREE.PointLight(0xffFF9FCF, 0.1, 3);
+	ambient.position.set(0, 1, 0.2);
+	model.add(ambient);
+
+	// Optional: colored accent light under table edge
+	const accent = new THREE.PointLight(0xffFF9FCF,  0.1, 3);
+	accent.position.set(0, 0.3, 0);
+	model.add(accent);
+};
+
 export function RecordSetup(scene: THREE.Scene, camera: THREE.Camera) {
 	const loader = new GLTFLoader();
 	const recordSetup = new THREE.Group();
@@ -109,6 +129,7 @@ export function RecordSetup(scene: THREE.Scene, camera: THREE.Camera) {
 		obj.children.forEach(makeInteractive);
 	};
 
+	addSetupLighting(recordSetup);
 
 	// --- Load the record table ---
 	loader.load(

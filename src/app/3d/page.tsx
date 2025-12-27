@@ -67,6 +67,9 @@ function wallScene(scene: THREE.Scene) {
       scene.add(contactWall);
 }
 
+
+
+
 function ceilingScene(scene: THREE.Scene) {
   const ceiling = new THREE.Mesh(
       new THREE.PlaneGeometry(12, 12),
@@ -81,6 +84,82 @@ function ceilingScene(scene: THREE.Scene) {
   scene.add(ceiling);
 }
 
+// NEON STRIPS
+function createNeonStrip(
+  width: number,
+  height: number,
+  depth: number,
+  position: THREE.Vector3,
+  rotation?: THREE.Euler
+) {
+
+  function createNeonMaterial(color = 0xff6b6b, intensity = 2.5) {
+    return new THREE.MeshStandardMaterial({
+      color,
+      emissive: color,
+      emissiveIntensity: intensity,
+      roughness: 0.5,
+      metalness: 0.0,
+      toneMapped: false, 
+    });
+  }
+
+  const geometry = new THREE.BoxGeometry(width, height, depth);
+  const material = createNeonMaterial();
+  const strip = new THREE.Mesh(geometry, material);
+
+  strip.position.copy(position);
+  if (rotation) strip.rotation.copy(rotation);
+
+  return strip;
+}
+
+function neonWallStrips(scene: THREE.Scene) {
+  const strips: THREE.Mesh[] = [];
+
+  const upwardPosition = 3.8;
+  const length = 12; 
+  const thickness = 0.02;
+
+  // BACK WALL (behind Spiderman / About)
+  strips.push(
+    createNeonStrip(
+      length, thickness, thickness,
+      new THREE.Vector3(0, upwardPosition, -5.9)
+    )
+  );
+
+  // FRONT WALL
+  strips.push(
+    createNeonStrip(
+      length, thickness, thickness,
+      new THREE.Vector3(0, upwardPosition, 5.9)
+    )
+  );
+
+  // LEFT WALL
+  strips.push(
+    createNeonStrip(
+      thickness, thickness, length,
+      new THREE.Vector3(-5.9, upwardPosition, 0)
+    )
+  );
+
+  // RIGHT WALL
+  strips.push(
+    createNeonStrip(
+      thickness, thickness, length,
+      new THREE.Vector3(5.9, upwardPosition, 0)
+    )
+  );
+
+  strips.forEach(strip => {
+    strip.castShadow = false;
+    strip.receiveShadow = false;
+    scene.add(strip);
+  });
+}
+
 export default function RoomPortfolio() {
     const mountRef = useRef<HTMLDivElement | null>(null);
     const keysRef = useRef<Record<string, boolean>>({});
@@ -89,8 +168,8 @@ export default function RoomPortfolio() {
 
     useEffect(() => {
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x606060);
-
+        // scene.background = new THREE.Color(0x606060);
+        scene.background = new THREE.Color('#0a0a0a');
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 1.6, 2);
       
@@ -103,10 +182,11 @@ export default function RoomPortfolio() {
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         mountRef.current!.appendChild(renderer.domElement);
 
-        const ambient = new THREE.AmbientLight(0xffffff, .3);
+        // const ambient = new THREE.AmbientLight(0xffffff, .3);
+        const ambient = new THREE.AmbientLight(0xff6b6b, 0.08);
         scene.add(ambient);
 
-        const mainLight = new THREE.DirectionalLight(0xffe6cc, 2);
+        const mainLight = new THREE.DirectionalLight(0xffe6cc, 1.2);
         mainLight.position.set(6, 8, 4);
         mainLight.target.position.set(0, 0, 0);
         mainLight.castShadow = true;
@@ -121,23 +201,15 @@ export default function RoomPortfolio() {
         scene.add(mainLight);
         scene.add(mainLight.target);
 
-        const fillLight = new THREE.PointLight(0xffaa66, 1, 200);
-        fillLight.position.set(-4, 3, 0);
-        scene.add(fillLight);
-
-        const backLight = new THREE.PointLight(0x88aaff, .6, 100);
-        backLight.position.set(0, 4, -10);
-        scene.add(backLight);
-
-        const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x663300, 1);
+        const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x663300,  0.5);
         scene.add(hemiLight);
-
-        renderer.toneMappingExposure = 1;
+        renderer.toneMappingExposure = .9;
 
         floorScene(scene);
         ceilingScene(scene);
         wallScene(scene);
-        
+        neonWallStrips(scene);
+              
         // bed
         BedModel(scene);
 
@@ -329,11 +401,8 @@ export default function RoomPortfolio() {
 
           <DialogHeader className='sr-only'>
             <DialogTitle className="text-3xl font-bold text-center">
-              🕹 <span className='bg-linear-to-b from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent'>ARCADE</span> 
+              TITLE
             </DialogTitle>
-            <DialogDescription className="text-neutral-400 text-center">
-              Choose your game and let the fun begin!
-            </DialogDescription>
           </DialogHeader> 
 
           {showModal === 'arcade' && <ArcadeGame />}
