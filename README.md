@@ -70,3 +70,6 @@ https://sketchfab.com/3d-models/airconditioner-electrolux-monaco-c86ac3c2aea6498
 
 computer
 https://sketchfab.com/3d-models/computer-setup-129b010fb05a44e8a85497178e2dd5b3
+
+spiderman
+https://sketchfab.com/3d-models/spiderman-50f26cc035454aa6820ff695a1c769d0

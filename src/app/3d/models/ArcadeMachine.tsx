@@ -18,7 +18,7 @@ export function ArcadeMachine(scene : THREE.Scene, modalKey : string) {
         const ctx = canvas.getContext('2d')!;
         canvas.width = 512;
         canvas.height = 256;
-        ctx.font = 'bold 64px Arial';
+        ctx.font = 'bold 90px Arial';
         ctx.fillStyle = '#000000';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';

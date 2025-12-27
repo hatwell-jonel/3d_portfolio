@@ -1,9 +1,7 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { ArcadeMachine, BedModel } from './models';
-import { RecordSetup } from './models/RecordSetup';
-import { AirConditioner } from './models/Airconditioner';
+import { ArcadeMachine, BedModel, RecordSetup, AirConditioner, Spiderman } from './models';
 import {
   Dialog,
   DialogContent,
@@ -12,6 +10,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import ArcadeGame from '@/components/features/ArcadeGames';
+import AboutMe from '@/components/features/AboutMe';
 
 function floorScene(scene: THREE.Scene) {
     const textureLoader = new THREE.TextureLoader();
@@ -150,6 +149,9 @@ export default function RoomPortfolio() {
 
         // air conditioner
         AirConditioner(scene);
+
+        // about me
+        Spiderman(scene, 'aboutme');
         
         const keys: { [key: string]: boolean } = {};
         const speed = 0.05;
@@ -335,6 +337,7 @@ export default function RoomPortfolio() {
           </DialogHeader> 
 
           {showModal === 'arcade' && <ArcadeGame />}
+          {showModal === 'aboutme' && <AboutMe />}
         </DialogContent>
       </Dialog>
         
