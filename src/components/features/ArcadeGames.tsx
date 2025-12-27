@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from "react";
-import { Snake, Sudoku, Tetris } from "@/app/3d/arcade";
+import { Sudoku, Tetris} from "@/app/3d/arcade";
 import {
     Dialog,
     DialogContent,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { SpaceDodger, MemoryGame} from "@jonelhatwell/arcade-games";
+import { SpaceDodger, MemoryGame, Snake} from "@jonelhatwell/arcade-games";
 
 export default function ArcadeGame() {
     const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -75,8 +75,8 @@ export default function ArcadeGame() {
 
 
                 {/* Game Area */}
-                <div className="relative h-full w-full overflow-hidden text-white">
-                {activeGame?.component}
+                <div className="relative h-full w-full overflow-hidden">
+                    {activeGame?.component}
                 </div>
 
                 {/* Footer */}
