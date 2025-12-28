@@ -11,6 +11,7 @@ import {
 import ArcadeGame from '@/components/features/ArcadeGames';
 import AboutMe from '@/components/features/AboutMe';
 import MyWorks from '@/components/features/MyWorks';
+import BackButton from '@/components/ui/back-button';
 
 function floorScene(scene: THREE.Scene) {
     const textureLoader = new THREE.TextureLoader();
@@ -359,21 +360,23 @@ export default function RoomPortfolio() {
     <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
       <div ref={mountRef} />
       
-      <div style={{
-        position: 'absolute',
-        top: 20,
-        left: 20,
-        color: 'white',
-        fontFamily: 'Arial, sans-serif',
-        background: 'rgba(0,0,0,0.8)',
-        padding: '15px',
-        borderRadius: '10px',
-        border: '2px solid #3498db',
-        fontSize: '14px',
-        maxWidth: 'auto',
-        boxShadow:'none'
-      }}>
-        <div style={{ marginBottom: '10px'}}>
+      <div 
+        className='
+          absolute
+          top-5
+          right-5
+          text-white
+          font-sans
+          bg-black/80
+          p-1.75
+          rounded-[10px]
+          border-2
+          border-[#ff6b6b]
+          text-[14px]
+          shadow-none
+        '
+      >
+        <div className='mb-2'>
           <strong>🎮 Controls:</strong><br/>
           W / A / S / D - Move<br/>
           Drag Mouse - Look<br/>
@@ -381,7 +384,7 @@ export default function RoomPortfolio() {
         {section && (
           <div style={{ 
             fontSize: '18px', 
-            color: '#3498db',
+            color: '#ff6b6b',
             marginTop: '10px',
             fontWeight: 'bold',
             textShadow:'none'
@@ -390,6 +393,8 @@ export default function RoomPortfolio() {
           </div>
         )}
       </div>
+
+      <BackButton/>
 
       <Dialog
         open={!!showModal}
