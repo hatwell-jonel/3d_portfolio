@@ -12,154 +12,7 @@ import ArcadeGame from '@/components/features/ArcadeGames';
 import AboutMe from '@/components/features/AboutMe';
 import MyWorks from '@/components/features/MyWorks';
 import BackButton from '@/components/ui/back-button';
-
-function floorScene(scene: THREE.Scene) {
-    const textureLoader = new THREE.TextureLoader();
-    const woodFloorTexture = textureLoader.load('/assets/image/textured-floor.jpg');
-    woodFloorTexture.wrapS = THREE.RepeatWrapping;
-    woodFloorTexture.wrapT = THREE.RepeatWrapping;
-    woodFloorTexture.repeat.set(4, 4);
-
-    const floor = new THREE.Mesh(
-        new THREE.PlaneGeometry(12, 12),
-        new THREE.MeshStandardMaterial({ 
-            map: woodFloorTexture,
-            roughness: 0.9,
-            metalness: 0.05
-        })
-    );
-    floor.rotation.x = -Math.PI / 2;
-    floor.receiveShadow = true; 
-    scene.add(floor);
-}
-
-function wallScene(scene: THREE.Scene) {
-    const textureLoader = new THREE.TextureLoader();
-
-    const concreteTexture = textureLoader.load('/assets/image/textured-wall.jpg');
-      concreteTexture.wrapS = THREE.RepeatWrapping;
-      concreteTexture.wrapT = THREE.RepeatWrapping;
-      concreteTexture.repeat.set(1, 1);
-      
-      const wallMaterial = new THREE.MeshStandardMaterial({ 
-        map: concreteTexture,
-        roughness: 0.9,
-        metalness: 0.05
-      });
-      
-      const aboutWall = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.2), wallMaterial);
-      aboutWall.position.set(0, 2, -6);
-      aboutWall.receiveShadow = true; 
-      scene.add(aboutWall);
-
-      const portfolioWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 4, 12), wallMaterial);
-      portfolioWall.position.set(-6, 2, 0);
-      portfolioWall.receiveShadow = true; 
-      scene.add(portfolioWall);
-
-      const skillsWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 4, 12), wallMaterial);
-      skillsWall.position.set(6, 2, 0);
-      skillsWall.receiveShadow = true; 
-      scene.add(skillsWall);
-      
-      const contactWall = new THREE.Mesh(new THREE.BoxGeometry(12, 4, 0.2), wallMaterial);
-      contactWall.position.set(0, 2, 6);
-      contactWall.receiveShadow = true; 
-      scene.add(contactWall);
-}
-
-
-
-
-function ceilingScene(scene: THREE.Scene) {
-  const ceiling = new THREE.Mesh(
-      new THREE.PlaneGeometry(12, 12),
-      new THREE.MeshStandardMaterial({ 
-          color: 0x606060, 
-          roughness: 0.85,
-          metalness: 0.05
-      })
-  );
-  ceiling.rotation.x = Math.PI / 2;
-  ceiling.position.y = 4;
-  scene.add(ceiling);
-}
-
-// NEON STRIPS
-function createNeonStrip(
-  width: number,
-  height: number,
-  depth: number,
-  position: THREE.Vector3,
-  rotation?: THREE.Euler
-) {
-
-  function createNeonMaterial(color = 0xff6b6b, intensity = 2.5) {
-    return new THREE.MeshStandardMaterial({
-      color,
-      emissive: color,
-      emissiveIntensity: intensity,
-      roughness: 0.5,
-      metalness: 0.0,
-      toneMapped: false, 
-    });
-  }
-
-  const geometry = new THREE.BoxGeometry(width, height, depth);
-  const material = createNeonMaterial();
-  const strip = new THREE.Mesh(geometry, material);
-
-  strip.position.copy(position);
-  if (rotation) strip.rotation.copy(rotation);
-
-  return strip;
-}
-
-function neonWallStrips(scene: THREE.Scene) {
-  const strips: THREE.Mesh[] = [];
-
-  const upwardPosition = 3.8;
-  const length = 12; 
-  const thickness = 0.02;
-
-  // BACK WALL (behind Spiderman / About)
-  strips.push(
-    createNeonStrip(
-      length, thickness, thickness,
-      new THREE.Vector3(0, upwardPosition, -5.9)
-    )
-  );
-
-  // FRONT WALL
-  strips.push(
-    createNeonStrip(
-      length, thickness, thickness,
-      new THREE.Vector3(0, upwardPosition, 5.9)
-    )
-  );
-
-  // LEFT WALL
-  strips.push(
-    createNeonStrip(
-      thickness, thickness, length,
-      new THREE.Vector3(-5.9, upwardPosition, 0)
-    )
-  );
-
-  // RIGHT WALL
-  strips.push(
-    createNeonStrip(
-      thickness, thickness, length,
-      new THREE.Vector3(5.9, upwardPosition, 0)
-    )
-  );
-
-  strips.forEach(strip => {
-    strip.castShadow = false;
-    strip.receiveShadow = false;
-    scene.add(strip);
-  });
-}
+import { ceilingScene, floorScene, neonWallStripsScene, wallScene } from './scenes';
 
 export default function RoomPortfolio() {
     const mountRef = useRef<HTMLDivElement | null>(null);
@@ -169,7 +22,6 @@ export default function RoomPortfolio() {
 
     useEffect(() => {
         const scene = new THREE.Scene();
-        // scene.background = new THREE.Color(0x606060);
         scene.background = new THREE.Color('#0a0a0a');
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 1.6, 2);
@@ -183,7 +35,6 @@ export default function RoomPortfolio() {
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         mountRef.current!.appendChild(renderer.domElement);
 
-        // const ambient = new THREE.AmbientLight(0xffffff, .3);
         const ambient = new THREE.AmbientLight(0xff6b6b, 0.08);
         scene.add(ambient);
 
@@ -209,27 +60,16 @@ export default function RoomPortfolio() {
         floorScene(scene);
         ceilingScene(scene);
         wallScene(scene);
-        neonWallStrips(scene);
+        neonWallStripsScene(scene);
               
-        // bed
         BedModel(scene);
-
-        // arcade
-        ArcadeMachine(scene, 'arcade');
-
-        // music
         RecordSetup(scene, camera);
-
-        // air conditioner
         AirConditioner(scene);
-
-        // about me
+        ArcadeMachine(scene, 'arcade');
         Spiderman(scene, 'aboutme');
-
-        // my works
         ComputerSet(scene, 'myworks');
         
-        const keys: { [key: string]: boolean } = {};
+        const keys = keysRef.current;
         const speed = 0.05;
         
         window.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
@@ -357,7 +197,7 @@ export default function RoomPortfolio() {
     }, []);
 
     return (
-    <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', position: 'relative' }}>
+    <div className="w-screen h-screen overflow-hidden relative">
       <div ref={mountRef} />
       
       <div 
@@ -382,13 +222,7 @@ export default function RoomPortfolio() {
           Drag Mouse - Look<br/>
         </div>
         {section && (
-          <div style={{ 
-            fontSize: '18px', 
-            color: '#ff6b6b',
-            marginTop: '10px',
-            fontWeight: 'bold',
-            textShadow:'none'
-          }}>
+          <div className="text-[18px] text-[#ff6b6b] mt-2.5 font-bold text-shadow-none">
             📍 {section.toUpperCase()}
           </div>
         )}
