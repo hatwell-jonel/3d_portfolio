@@ -14,21 +14,47 @@ import MyWorks from '@/components/features/MyWorks';
 import BackButton from '@/components/ui/back-button';
 import { ceilingScene, floorScene, neonWallStripsScene, wallScene } from './scenes';
 
+const CAMERA_CONFIG = {
+  fov: 75, // field of view
+  near: 0.1, // how near
+  far: 1000, // far
+  position: { x: 0, y: 1.6, z: 2 }
+};
+
+// Tone mapping exposure controls overall scene brightness
+const TONE_MAPPING_EXPOSURE = 0.75;
+
 export default function RoomPortfolio() {
     const mountRef = useRef<HTMLDivElement | null>(null);
     const keysRef = useRef<Record<string, boolean>>({});
+    const controlsRef = useRef({
+      yaw: 0,
+      pitch: 0,
+      isDragging: false,
+      dragStarted: false,
+    });
     const [section, setSection] = useState('');
     const [showModal, setShowModal] = useState<string | null>(null);
 
     useEffect(() => {
         const scene = new THREE.Scene();
         scene.background = new THREE.Color('#0a0a0a');
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 1.6, 2);
+
+        const camera = new THREE.PerspectiveCamera(
+          CAMERA_CONFIG.fov, 
+          window.innerWidth / window.innerHeight, 
+          CAMERA_CONFIG.near, 
+          CAMERA_CONFIG.far
+        );
+        camera.position.set(
+          CAMERA_CONFIG.position.x,
+          CAMERA_CONFIG.position.y,
+          CAMERA_CONFIG.position.z
+        );
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         WebGLRenderer(renderer, mountRef);
-        renderer.toneMappingExposure = .75;
+        renderer.toneMappingExposure = TONE_MAPPING_EXPOSURE;
         RoomLightings(scene);
 
         floorScene(scene);
@@ -44,22 +70,20 @@ export default function RoomPortfolio() {
         ComputerSet(scene, 'myworks');
         
         const keys = keysRef.current;
-        const speed = 0.05;
+        const speed = 0.05; // how fast the camera moves
         
         window.addEventListener('keydown', (e) => keys[e.key.toLowerCase()] = true);
         window.addEventListener('keyup', (e) => keys[e.key.toLowerCase()] = false);
 
-        let yaw = 0;
-        let pitch = 0;
-        let isDragging = false;
-        let dragStarted = false;
+        const raycaster = new THREE.Raycaster();
 
         const handleClick = (clientX : number, clientY : number) => {
             const rect = renderer.domElement.getBoundingClientRect();
-            const x = ((clientX - rect.left) / rect.width) * 2 - 1;
-            const y = -((clientY - rect.top) / rect.height) * 2 + 1;
-            
-            raycaster.setFromCamera(new THREE.Vector2(x, y), camera);
+            const mouse = new THREE.Vector2(
+              ((clientX - rect.left) / rect.width) * 2 - 1,
+              -((clientY - rect.top) / rect.height) * 2 + 1
+            );
+            raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(scene.children, true);
             
             for (const intersect of intersects) {
@@ -78,29 +102,29 @@ export default function RoomPortfolio() {
         };
         
         const onMouseDown = () => {
-            isDragging = true;
-            dragStarted = false;
+            controlsRef.current.isDragging = true;
+            controlsRef.current.dragStarted = false;
             renderer.domElement.style.cursor = 'grabbing';
         };
 
         const onMouseUp = (e : MouseEvent) => {
-            if (isDragging && !dragStarted) {
+            if (controlsRef.current.isDragging && !controlsRef.current.dragStarted) {
                 handleClick(e.clientX, e.clientY);
             }
-            
-            isDragging = false;
-            dragStarted = false;
+
+            controlsRef.current.isDragging = false;
+            controlsRef.current.dragStarted = false;
             renderer.domElement.style.cursor = 'grab';
         };
         
         const onMouseMove = (e: { movementX: number; movementY: number; }) => {
-            if (isDragging) {
+            if (controlsRef.current.isDragging) {
                 if (Math.abs(e.movementX) > 2 || Math.abs(e.movementY) > 2) {
-                dragStarted = true;
+                  controlsRef.current.dragStarted = true;
                 }
-                yaw -= e.movementX * 0.003;
-                pitch -= e.movementY * 0.003;
-                pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, pitch));
+                controlsRef.current.yaw -= e.movementX * 0.003;
+                controlsRef.current.pitch -= e.movementY * 0.003;
+                controlsRef.current.pitch = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, controlsRef.current.pitch));
             }
         };
         
@@ -108,8 +132,6 @@ export default function RoomPortfolio() {
         renderer.domElement.addEventListener('mousedown', onMouseDown);
         document.addEventListener('mouseup', onMouseUp);
         document.addEventListener('mousemove', onMouseMove);
-        
-        const raycaster = new THREE.Raycaster();
         
         function animate() {
           requestAnimationFrame(animate);
@@ -132,7 +154,7 @@ export default function RoomPortfolio() {
           camera.position.x = Math.max(-5.5, Math.min(5.5, camera.position.x));
           camera.position.z = Math.max(-5.5, Math.min(5.5, camera.position.z));
           
-          camera.rotation.set(pitch, yaw, 0, 'YXZ');
+          camera.rotation.set(controlsRef.current.pitch, controlsRef.current.yaw, 0, 'YXZ');
           
           raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
           const intersects = raycaster.intersectObjects(scene.children);
@@ -163,22 +185,9 @@ export default function RoomPortfolio() {
     <div className="w-screen h-screen overflow-hidden relative">
       <div ref={mountRef} />
       
+      <BackButton/>
       <div 
-        className='
-          absolute
-          top-5
-          right-5
-          text-white
-          font-sans
-          bg-black/80
-          p-1.75
-          rounded-[10px]
-          border-2
-          border-[#ff6b6b]
-          text-[14px]
-          shadow-none
-        '
-      >
+        className='absolute top-5 right-5 text-white font-sans bg-black/80 p-1.75 rounded-[10px] border-2 border-[#ff6b6b] text-[14px] shadow-none'>
         <div className='mb-2'>
           <strong>🎮 Controls:</strong><br/>
           W / A / S / D - Move<br/>
@@ -191,7 +200,6 @@ export default function RoomPortfolio() {
         )}
       </div>
 
-      <BackButton/>
 
       <Dialog
         open={!!showModal}
@@ -248,8 +256,6 @@ function RoomLightings(scene: THREE.Scene) {
     mainLight.shadow.bias = -0.0001;
     scene.add(mainLight);
     scene.add(mainLight.target);
-
-    
     const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x663300,  0.5);
     scene.add(hemiLight);
 }
