@@ -25,37 +25,11 @@ export default function RoomPortfolio() {
         scene.background = new THREE.Color('#0a0a0a');
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 1.6, 2);
-      
+
         const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.outputColorSpace = THREE.SRGBColorSpace;
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.toneMappingExposure = 1;
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-        mountRef.current!.appendChild(renderer.domElement);
-
-        const ambient = new THREE.AmbientLight(0xff6b6b, 0.08);
-        scene.add(ambient);
-
-        const mainLight = new THREE.DirectionalLight(0xffe6cc, 1.2);
-        mainLight.position.set(6, 8, 4);
-        mainLight.target.position.set(0, 0, 0);
-        mainLight.castShadow = true;
-        mainLight.shadow.mapSize.set(2048, 2048);
-        mainLight.shadow.camera.near = 0.5;
-        mainLight.shadow.camera.far = 20;
-        mainLight.shadow.camera.left = -10;
-        mainLight.shadow.camera.right = 10;
-        mainLight.shadow.camera.top = 10;
-        mainLight.shadow.camera.bottom = -10;
-        mainLight.shadow.bias = -0.0001;
-        scene.add(mainLight);
-        scene.add(mainLight.target);
-
-        const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x663300,  0.5);
-        scene.add(hemiLight);
-        renderer.toneMappingExposure = .9;
+        WebGLRenderer(renderer, mountRef);
+        renderer.toneMappingExposure = .75;
+        RoomLightings(scene);
 
         floorScene(scene);
         ceilingScene(scene);
@@ -174,7 +148,6 @@ export default function RoomPortfolio() {
           
           renderer.render(scene, camera);
         }
-        
         animate();
         
         const handleResize = () => {
@@ -184,16 +157,6 @@ export default function RoomPortfolio() {
         };
         
         window.addEventListener('resize', handleResize);
-        
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-            renderer.domElement.removeEventListener('mousedown', onMouseDown);
-            if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
-                mountRef.current.removeChild(renderer.domElement);
-            }
-        };
     }, []);
 
     return (
@@ -255,4 +218,38 @@ export default function RoomPortfolio() {
         
     </div>
   );
+}
+
+function WebGLRenderer(renderer: THREE.WebGLRenderer, ref : React.RefObject<HTMLDivElement | null>) {
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    ref.current!.appendChild(renderer.domElement);
+}
+
+function RoomLightings(scene: THREE.Scene) {
+    const ambient = new THREE.AmbientLight(0xff6b6b, 0.08);
+    scene.add(ambient);
+
+    const mainLight = new THREE.DirectionalLight(0xffe6cc, 1.2);
+    mainLight.position.set(6, 8, 4);
+    mainLight.target.position.set(0, 0, 0);
+    mainLight.castShadow = true;
+    mainLight.shadow.mapSize.set(2048, 2048);
+    mainLight.shadow.camera.near = 0.5;
+    mainLight.shadow.camera.far = 20;
+    mainLight.shadow.camera.left = -10;
+    mainLight.shadow.camera.right = 10;
+    mainLight.shadow.camera.top = 10;
+    mainLight.shadow.camera.bottom = -10;
+    mainLight.shadow.bias = -0.0001;
+    scene.add(mainLight);
+    scene.add(mainLight.target);
+
+    
+    const hemiLight = new THREE.HemisphereLight(0xffffbb, 0x663300,  0.5);
+    scene.add(hemiLight);
 }
