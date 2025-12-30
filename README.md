@@ -1,21 +1,21 @@
-___
 # PORTFOLIO
+
+## 🧪 TESTS 
 ___
 
-### 🧪 TESTS 
-___
-
-#### ✅ Lighthouse (DEC 30, 2025)
+### ✅ Lighthouse (DEC 30, 2025)
 ![Lighthouse Report](/public/assets/image/test/lighthouse.png)<br>
 
-#### ✅ [PageSpeed Insights](https://pagespeed.web.dev/) (DEC 30, 2025)
+### ✅ [PageSpeed Insights](https://pagespeed.web.dev/) (DEC 30, 2025)
 ![PageSpeed Insights1](/public/assets/image/test/pagespeed_desktop.png)
 ![PageSpeed Insights2](/public/assets/image/test/pagespeed_mobile.png)<br>
 
 ### ✅ [Security Headers](https://securityheaders.com/) (DEC 30, 2025)
 ![Security Headers](/public/assets/image/test/securtyheaders.png)<br>
 
-#### 🌐 Useful resources
+
+## 🌐 Useful resources
+___
 
 Sites: 
 [gltf](https://gltf.pmnd.rs/) - Where view my 3d models
@@ -32,20 +32,20 @@ Sites:
 ___
 
 
-TODOS:
-gotchu link
-portrait pictures
-About me - chat AI https://www.tiktok.com/@fullstackkai/video/7576299623753518343?_r=1&_t=ZS-92R1b5X6lko
-music playlist
-2d
+TODOS: \
+gotchu link \
+portrait pictures \
+About me - chat AI https://www.tiktok.com/@fullstackkai/video/7576299623753518343?_r=1&_t=ZS-92R1b5X6lko\
+music playlist\
+2d\
 
 
 
-test
+test\
 
-Cross-Browser & Device Testing 
-Motion & Performance Balance
-prefers-reduced-motion
+Cross-Browser & Device Testing  \
+Motion & Performance Balance \
+prefers-reduced-motion \
 
 
 
