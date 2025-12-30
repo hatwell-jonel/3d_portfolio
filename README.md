@@ -85,8 +85,14 @@ prefers-reduced-motion
 
 
 
-# 🧪 TEST RESULTS (DEC 29, 2025)
+# 🧪 TESTS 
 ___
 
-### ✅ Lighthouse
-![Lighthouse Report](/public/assets/image/test/lighthouse.png)
+### ✅ Lighthouse (DEC 30, 2025)
+![Lighthouse Report](/public/assets/image/test/lighthouse.png)<br>
+
+### ✅ [PageSpeed Insights](https://pagespeed.web.dev/) (DEC 30, 2025)
+![PageSpeed Insights1](/public/assets/image/test/pagespeed_desktop.png)
+![PageSpeed Insights2](/public/assets/image/test/pagespeed_mobile.png)<br>
+
+### ✅ [Security Headers](https://securityheaders.com/) (DEC 30, 2025)
