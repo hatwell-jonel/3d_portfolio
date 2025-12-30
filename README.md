@@ -76,9 +76,17 @@ https://sketchfab.com/3d-models/spiderman-50f26cc035454aa6820ff695a1c769d0
 
 
 test
-lighthouse
+
 https://pagespeed.web.dev/
 https://securityheaders.com/
 Cross-Browser & Device Testing 
 Motion & Performance Balance
 prefers-reduced-motion
+
+
+
+# 🧪 TEST RESULTS (DEC 29, 2025)
+___
+
+### ✅ Lighthouse
+![Lighthouse Report](/public/assets/image/test/lighthouse.png)
