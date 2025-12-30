@@ -4,20 +4,6 @@ import Link from "next/link"
 import { useState } from "react"
 import { twMerge as tw } from "tailwind-merge";
 
-
-/**
- * 375px is the breakpoint for mobile devices
- * 768px is the breakpoint for tablets
- * 1024px is the breakpoint for desktops
- * 1280px is the breakpoint for large screens
- */
-const screenBreakpoint = "min-[375px]:w-full min-[768px]:w-[85%] min-[1024px]:w-[80%] min-[1280px]:w-[60%]"
-
-const stylePositon = {
-	classViewText: "absolute top-[37%] left-[42%] transition-all duration-500 ",
-}
-
-
 export default function LandingPage() {
 	const [hoveredSide, setHoveredSide] = useState<"3d" | "2d" | null>(null)
 
@@ -25,8 +11,8 @@ export default function LandingPage() {
 		<div className="relative h-screen w-full overflow-hidden bg-[#0a0a0a]" style={{ perspective: "1000px" }}>
 
 			<div className="absolute top-6 md:top-10 left-0 right-0 z-20 text-center px-4">
-				<h1 className="font-bold text-[#ff6b6b] text-[clamp(1.8rem,5vw,3.5rem)] mb-2">Welcome to my portfolio</h1>
-				<p className="text-[#ff6b6b]/70 text-[clamp(0.9rem,2.5vw,1.1rem)]">Choose your viewing experience</p>
+				<h1 className="font-bold text-primary text-[clamp(1.8rem,5vw,3.5rem)] mb-2">Welcome to my portfolio</h1>
+				<h2 className="text-[#ff9090] leading text-[clamp(0.9rem,2.5vw,1.1rem)]">Choose your viewing experience</h2>
 			</div>
 
 			{/* Diagonal Split Container */}
@@ -46,7 +32,7 @@ export default function LandingPage() {
 				>
 				
 					<div
-						className={`absolute inset-0 bg-linear-to-br from-[#ff6b6b]/20 via-transparent to-transparent transition-opacity duration-700 ${
+						className={`absolute inset-0 bg-linear-to-br from-primary/20 via-transparent to-transparent transition-opacity duration-700 ${
 						hoveredSide === "3d" ? "opacity-100" : "opacity-0"
 						}`}
 					/>
@@ -68,7 +54,7 @@ export default function LandingPage() {
 						}}
 						>
 							<span
-								className={`text-[120px]  md:text-[170px] lg:text-[200px] xl:text-[220px] font-bold text-[#ff6b6b] transition-all duration-700 block ${
+								className={`text-[120px]  md:text-[170px] lg:text-[200px] xl:text-[220px] font-bold text-primary transition-all duration-700 block ${
 								hoveredSide === "3d"
 									? "scale-110 drop-shadow-[0_0_30px_rgba(255,107,107,0.8)]"
 									: "scale-100 drop-shadow-[0_0_10px_rgba(255,107,107,0.3)]"
@@ -108,7 +94,7 @@ export default function LandingPage() {
 
 					{/* Animated gradient overlay */}
 					<div
-						className={`absolute inset-0 bg-linear-to-tl from-[#ff6b6b]/75 via-transparent to-transparent transition-opacity duration-700 ${
+						className={`absolute inset-0 bg-linear-to-tl from-primary/75 via-transparent to-transparent transition-opacity duration-700 ${
 						hoveredSide === "2d" ? "opacity-100" : "opacity-0"
 						}`}
 					/>
@@ -135,7 +121,7 @@ export default function LandingPage() {
 
 			{/* Mobile hint */}
 			<div className="absolute bottom-8 left-0 right-0 z-20 text-center px-4 md:hidden">
-				<p className="text-sm text-[#ff6b6b]/50">Tap to choose</p>
+				<p className="text-sm text-[#ffd1d1]">Tap to choose</p>
 			</div>
 		</div>
 	)
