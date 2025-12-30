@@ -77,8 +77,6 @@ https://sketchfab.com/3d-models/spiderman-50f26cc035454aa6820ff695a1c769d0
 
 test
 
-https://pagespeed.web.dev/
-https://securityheaders.com/
 Cross-Browser & Device Testing 
 Motion & Performance Balance
 prefers-reduced-motion
@@ -96,3 +94,4 @@ ___
 ![PageSpeed Insights2](/public/assets/image/test/pagespeed_mobile.png)<br>
 
 ### ✅ [Security Headers](https://securityheaders.com/) (DEC 30, 2025)
+![Security Headers](/public/assets/image/test/securtyheaders.png)<br>

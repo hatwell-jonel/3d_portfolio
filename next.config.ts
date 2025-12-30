@@ -26,17 +26,6 @@ const nextConfig: NextConfig = {
                 key: 'Permissions-Policy',
                 value: 'geolocation=(), camera=(), microphone=()',
               },
-              {
-                key: 'Content-Security-Policy',
-                value: `
-                  default-src 'self';
-                  script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-                  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-                  img-src 'self' data:;
-                  font-src 'self' https://fonts.gstatic.com;
-                  frame-ancestors 'none';
-                `.replace(/\s{2,}/g, ' ').trim(),
-              },
             ],
           },
         ]
