@@ -58,7 +58,6 @@ export function Spiderman(scene: THREE.Scene, modalKey : string) {
                     child.castShadow = true;
                     child.receiveShadow = true;
                     child.userData.section = modalKey;
-                    console.log(child.userData.section);
                 }
             });
 
