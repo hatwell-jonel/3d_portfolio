@@ -13,6 +13,7 @@ import AboutMe from '@/components/features/AboutMe';
 import MyWorks from '@/components/features/MyWorks';
 import BackButton from '@/components/ui/back-button';
 import { ceilingScene, floorScene, neonWallStripsScene, wallScene } from './scenes';
+import { twMerge } from 'tailwind-merge';
 
 const CAMERA_CONFIG = {
   fov: 75, // field of view
@@ -23,6 +24,12 @@ const CAMERA_CONFIG = {
 
 // Tone mapping exposure controls overall scene brightness
 const TONE_MAPPING_EXPOSURE = 0.75;
+
+const dialogSizeMap: Record<string, string> = {
+  arcade: "max-w-[100px]",
+  aboutme: "!max-w-2xl !max-h-[90vh] !overflow-y-auto no-scrollbar no-scrollbar-x",
+  myworks: "max-w-4xl",
+}
 
 export default function RoomPortfolio() {
     const mountRef = useRef<HTMLDivElement | null>(null);
@@ -63,7 +70,7 @@ export default function RoomPortfolio() {
         neonWallStripsScene(scene);
               
         BedModel(scene);
-        RecordSetup(scene, camera);
+        // RecordSetup(scene, camera);
         AirConditioner(scene);
         ArcadeMachine(scene, 'arcade');
         Spiderman(scene, 'aboutme');
@@ -208,7 +215,12 @@ export default function RoomPortfolio() {
         }}
       >
         <DialogContent 
-          className="max-w-3xl bg-gray-900 border-[#ff6b6b] shadow-[0_0_40px_rgba(255,107,107,0.98)]"
+          className={
+            twMerge(
+              "max-w-3xl bg-gray-900 border-primary shadow-[0_0_40px_rgba(255,107,107,0.98)] transition-all duration-300 max-h-[90vh] overflow-hidden",
+              showModal ? dialogSizeMap[showModal] : "",
+            )
+          }
           showCloseButton={false}
         >
 
@@ -219,7 +231,7 @@ export default function RoomPortfolio() {
           </DialogHeader> 
 
           {showModal === 'arcade' && <ArcadeGame />}
-          {showModal === 'aboutme' && <AboutMe />}
+          {showModal === "aboutme" && <AboutMe />}
           {showModal === 'myworks' && <MyWorks />}
         </DialogContent>
       </Dialog>

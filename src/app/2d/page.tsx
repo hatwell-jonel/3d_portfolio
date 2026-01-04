@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import { aboutMe, experiences, projects, techStack } from "../data"
 import Image from "next/image"
+import ChatWithMe from "@/components/features/ChatWithMe"
 
 export default function PortfolioPage() {
 	const [activeSection, setActiveSection] = useState("about")
@@ -191,8 +192,8 @@ export default function PortfolioPage() {
 						<footer className="max-w-md pb-16 text-sm text-muted-foreground sm:pb-0">
 							<blockquote className="italic">
 								<p>
-								“The bridge between knowledge and skill is practice.
-								The bridge between skill and mastery is time.”
+									“The bridge between knowledge and skill is practice.
+									The bridge between skill and mastery is time.”
 								</p>
 								<footer className="mt-2 not-italic">
 								<cite>Jim Bouchard</cite>
@@ -222,13 +223,8 @@ function AboutSection() {
 				))
 				}
 			</div>
+			<ChatWithMe />
 
-			<div className="mt-12">
-				<Button variant="ghost" className="p-0 hover:bg-transparent hover:text-primary group cursor-pointer">
-					<span>Chat with me</span>
-					<BotMessageSquare  className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 motion-reduce:transition-none" />
-				</Button>
-			</div>
 		</section>
 	)
 }
