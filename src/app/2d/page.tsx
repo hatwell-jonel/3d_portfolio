@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
-import { aboutMe, experiences, projects, techStack } from "../data"
+import { aboutMe, experiences, projects, techStack } from "../../lib/data"
 import Image from "next/image"
 import ChatWithMe from "@/components/features/ChatWithMe"
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { aboutMe, experiences } from "@/app/data";
+import { aboutMe, experiences } from "@/lib/data";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import ChatWithMe from "./ChatWithMe";
