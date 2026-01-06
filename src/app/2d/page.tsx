@@ -1,6 +1,6 @@
 "use client"
 
-import { Github, Linkedin, Mail, ArrowUpRight, Phone, BotMessageSquare } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowUpRight, Phone } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,24 +11,25 @@ import { aboutMe, experiences, projects, techStack } from "../../lib/data"
 import Image from "next/image"
 import ChatWithMe from "@/components/features/ChatWithMe"
 
+
 export default function PortfolioPage() {
 	const [activeSection, setActiveSection] = useState("about")
 
 	useEffect(() => {
 		const handleScroll = () => {
-		const sections = ["about", "experiences", "techstack", "works"]
-		const scrollPosition = window.scrollY + 200
+			const sections = ["about", "experiences", "techstack", "works"]
+			const scrollPosition = window.scrollY + 200
 
-		for (const section of sections) {
-			const element = document.getElementById(section)
-			if (element) {
-			const { offsetTop, offsetHeight } = element
-			if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-				setActiveSection(section)
-				break
+			for (const section of sections) {
+				const element = document.getElementById(section)
+				if (element) {
+				const { offsetTop, offsetHeight } = element
+				if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+					setActiveSection(section)
+					break
+				}
+				}
 			}
-			}
-		}
 		}
 
 		window.addEventListener("scroll", handleScroll)
@@ -115,7 +116,6 @@ export default function PortfolioPage() {
 								</ul>
 							</nav>
 						</div>
-
 						<ul className="ml-1 mt-8 flex items-center" aria-label="Social media">
 							<TooltipProvider>
 								<li className="mr-5 text-xs">
@@ -223,7 +223,10 @@ function AboutSection() {
 				))
 				}
 			</div>
-			<ChatWithMe />
+
+			<div className="my-16">
+				<ChatWithMe />
+			</div>
 
 		</section>
 	)

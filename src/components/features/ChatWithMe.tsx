@@ -111,19 +111,17 @@ const ChatWithMe: React.FC = () => {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
-                <div className="mt-12">
                 <Button
                     variant="ghost"
-                    className="text-xl p-0 hover:bg-transparent hover:text-primary group"
+                    className="text-xl p-0 hover:bg-transparent hover:text-primary group on"
                 >
                     <span>Chat with me</span>
                     <BotMessageSquare className="ml-1 h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
                 </Button>
-                </div>
             </DialogTrigger>
 
             <DialogContent
-                className="sm:max-w-150 h-150 flex flex-col p-0"
+                className="sm:max-w-150 h-150 flex flex-col p-0 bg:sidebar"
                 onInteractOutside={(e) => e.preventDefault()}
                 showCloseButton={false}
             >

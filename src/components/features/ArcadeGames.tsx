@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from "react";
-import { Sudoku, Tetris} from "@/app/3d/arcade";
 import {
     Dialog,
     DialogContent,
@@ -9,7 +8,7 @@ import {
 } from "@/components/ui/dialog"
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { SpaceDodger, MemoryGame, Snake} from "@jonelhatwell/arcade-games";
+import { games } from "@/lib/data";
 
 export default function ArcadeGame() {
     const [selectedGame, setSelectedGame] = useState<string | null>(null);
@@ -19,29 +18,27 @@ export default function ArcadeGame() {
         <>
             <div>
                 <div className="text-3xl font-bold text-center">
-                🕹 <span className='bg-linear-to-b from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent'>ARCADE</span> 
+                    <span className='bg-linear-to-b from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent'>ARCADE</span> 
                 </div>
-                <div className="text-neutral-400 text-center">
-                Choose your game and let the fun begin!
-                </div>
+                <div className="text-foreground text-center">Choose your game and let the fun begin!</div>
             </div>
-            <ScrollArea className="h-[400px] w-full pt-2">
+            <ScrollArea className="h-100 w-full pt-2">
                 <div>
                     {games.map((game) => (
                     <React.Fragment key={game.name}>
                         <div
-                        onClick={() => setSelectedGame(game.value)}
-                        className={
-                            cn(
-                            "group relative overflow-hidden bg-gray-800 p-4 transition-all duration-300 cursor-pointer",
-                            "hover:scale-[1.01] hover:shadow-lg hover:border-b-4 hover:border-[#ff6b6b]"
-                            )
-                        }
+                            onClick={() => setSelectedGame(game.value)}
+                            className={
+                                cn(
+                                    "group relative overflow-hidden p-4 transition-all duration-300 cursor-pointer",
+                                    "hover:scale-[1.01] hover:shadow-lg hover:border-b-4 hover:border-[#ff6b6b]"
+                                )
+                            }
                         >
                         <div className="flex items-start gap-4">
                             <div className="text-4xl transition-transform duration-300 group-hover:scale-110">{game.image}</div>
                             <div className="flex-1">
-                            <h3 className="font-semibold text-lg text-white mb-1 group-hover:text-[#ff6b6b] transition-colors">
+                            <h3 className="font-semibold text-lg text-white mb-1 group-hover:text-primary transition-colors">
                                 {game.name}
                             </h3>
                             <p className="text-sm text-gray-400 line-clamp-2">{game.description}</p>
@@ -92,51 +89,3 @@ export default function ArcadeGame() {
         </Dialog>
     )
 }
-
-
-type Game = {
-    name: string
-    value: string;
-    image: string
-    description: string
-    component: React.ReactNode
-}
-
-
-const games: Game[] = [
-    {
-        name: 'Space Dodger',
-        value: 'spaceDodger',
-        image: '🚀',
-        description: 'Space Dodger is a classic arcade game where you have to dodge asteroids and collect power-ups to score points.',
-        component: <SpaceDodger />
-    },
-    {
-        name: 'Memory Game',
-        value: 'memoryGame',
-        image: '🧠',
-        description: 'Memorize and click the numbers in order. Levels get harder as the speed and count increase.', 
-        component: <MemoryGame />
-    },
-    {
-        name: 'Tetris',
-        value: 'tetris',
-        image: '🟦',
-        description: 'Tetris is a classic arcade game where you have to clear lines of falling blocks to score points.',
-        component: <Tetris />
-    },
-    {
-        name: 'Snake',
-        value: 'snake',
-        image: '🐍',
-        description: 'Snake is a classic arcade game where you have to eat apples and avoid obstacles to grow and grow.',
-        component: <Snake />
-    },
-    {
-        name: 'Sudoku',
-        value: 'sudoku',
-        image: '🔢',
-        description: 'Sudoku is a classic arcade game where you have to fill in the numbers to complete the grid.', 
-        component: <Sudoku />
-    },
-]

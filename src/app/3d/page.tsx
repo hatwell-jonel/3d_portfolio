@@ -217,7 +217,7 @@ export default function RoomPortfolio() {
         <DialogContent 
           className={
             twMerge(
-              "max-w-3xl bg-gray-900 border-primary shadow-[0_0_40px_rgba(255,107,107,0.98)] transition-all duration-300 max-h-[90vh] overflow-hidden",
+              "max-w-3xl bg-sidebar! border-primary shadow-[0_0_40px_rgba(255,107,107,0.98)] transition-all duration-300 max-h-[90vh] overflow-hidden",
               showModal ? dialogSizeMap[showModal] : "",
             )
           }

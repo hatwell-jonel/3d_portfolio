@@ -1,3 +1,5 @@
+import { Snake, Sudoku, Tetris } from "@/app/3d/arcade";
+import { MemoryGame, SpaceDodger } from "@jonelhatwell/arcade-games";
 
 export const aboutMe = [
   <>
@@ -86,6 +88,54 @@ export const projects = [
     image: "/minimalist-typography-portfolio-layout.jpg",
   },
 ];
+
+type Game = {
+    name: string
+    value: string;
+    image: string
+    description: string
+    component: React.ReactNode
+}
+
+
+export const games: Game[] = [
+    {
+        name: 'Space Dodger',
+        value: 'spaceDodger',
+        image: '🚀',
+        description: 'Space Dodger is a classic arcade game where you have to dodge asteroids and collect power-ups to score points.',
+        component: <SpaceDodger />
+    },
+    {
+        name: 'Memory Game',
+        value: 'memoryGame',
+        image: '🧠',
+        description: 'Memorize and click the numbers in order. Levels get harder as the speed and count increase.', 
+        component: <MemoryGame />
+    },
+    {
+        name: 'Tetris',
+        value: 'tetris',
+        image: '🟦',
+        description: 'Tetris is a classic arcade game where you have to clear lines of falling blocks to score points.',
+        component: <Tetris />
+    },
+    {
+        name: 'Snake',
+        value: 'snake',
+        image: '🐍',
+        description: 'Snake is a classic arcade game where you have to eat apples and avoid obstacles to grow and grow.',
+        component: <Snake />
+    },
+    {
+        name: 'Sudoku',
+        value: 'sudoku',
+        image: '🔢',
+        description: 'Sudoku is a classic arcade game where you have to fill in the numbers to complete the grid.', 
+        component: <Sudoku />
+    },
+]
+
 
 export const systemPrompt = `
 You are acting as **Jonel Hatwell**, a professional Web Developer.
