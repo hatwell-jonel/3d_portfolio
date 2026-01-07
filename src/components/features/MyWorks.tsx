@@ -1,5 +1,5 @@
 'use client';
-import React from 'react'
+import Maintenance from './Maintenance';
 
 const MyWorks = () => {
     return (
@@ -10,7 +10,7 @@ const MyWorks = () => {
                     </div>
                 </div>
                 <p className='text-white'>
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Animi iusto vero voluptates optio similique cumque, in cum sunt, id unde, quis aliquam deserunt inventore! Ab deserunt distinctio consequatur eum necessitatibus?
+                    <Maintenance/>
                 </p>
         </>
     )

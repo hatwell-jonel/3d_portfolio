@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import { aboutMe, experiences, projects, techStack } from "../../lib/data"
 import Image from "next/image"
 import ChatWithMe from "@/components/features/ChatWithMe"
+import Maintenance from "@/components/features/Maintenance"
 
 
 export default function PortfolioPage() {
@@ -336,7 +337,8 @@ function MyWorksSection() {
 				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">My Works</h2>
 			</div>
 			<div>
-				<ul className="group/list">
+				<Maintenance/>
+				{/* <ul className="group/list">
 				{projects.map((project, index) => (
 					<li key={index} className="mb-12">
 						<Card className="group relative border-none bg-transparent shadow-none transition-all lg:hover:opacity-100! lg:group-hover/list:opacity-50">
@@ -393,7 +395,7 @@ function MyWorksSection() {
 						<span>View Full Project Archive</span>
 						<ArrowUpRight className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 motion-reduce:transition-none" />
 					</Button>
-				</div>
+				</div> */}
 			</div>
 		</section>
 	)		

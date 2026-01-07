@@ -17,7 +17,7 @@ const AboutMe = () => {
 		<>
 					<div>
 						<div className="text-3xl font-bold text-center">
-							<span className="text-white font-bold text-center">ABOUT ME</span>
+                    		<span className='bg-linear-to-b from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent'>ABOUT ME</span> 
 						</div>
 					</div>
 					<>
@@ -33,7 +33,7 @@ const AboutMe = () => {
 						<ChatWithMe />
 					</div>
 
-					<div>
+					<div className="my-10">
 						<p className={style.sectionTitle}>Tech Stack</p>
 						<div>
 							<div className="grid grid-cols-1 gap-8">

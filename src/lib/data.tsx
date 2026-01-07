@@ -53,16 +53,24 @@ export const experiences  = [
 export const techStack = [
   {
     category: "Frontend",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
+    skills: ["React", "Next.js", "TypeScript", "Tanstack Query", "Zustand", "Apollo Client"],
+  },  
+  {
+    category: "Backend/APIs",
+    skills: ["Laravel (PHP)", "CodeIgniter", "RESTful APIs", "GraphQL", "AI Integration"],
   },
   {
-    category: "Backend & Tools",
-    skills: ["Node.js", "PostgreSQL", "Prisma", "AWS", "Docker", "Git"],
+    category: "Validation & Tools",
+    skills: ["Zod", "React-Hook-Form", "OpenAI API/Gemini API", "Vercel"],
   },
-  // {
-  //   category: "Design",
-  //   skills: ["Figma", "Adobe Creative Suite", "UI/UX Design", "Motion Graphics"],
-  // },
+  {
+    category: "Styling & UI",
+    skills: ["TailwindCSS", "SASS/SCSS", "ShadcnUI", "Bootstrap"],
+  },
+  {
+    category: "Practices",
+    skills: ["Git", "Agile/Scrum", "Monorepo Architecture", "Github Actions"],
+  }
 ];
 
 export const projects = [
