@@ -3,7 +3,7 @@ import { MemoryGame, SpaceDodger } from "@jonelhatwell/arcade-games";
 
 export const aboutMe = [
   <>
-    Web Developer in Caloocan City, Metro Manila, Philippines with 3+ years of hands-on experience crafting enterprise-grade web solutions using the Next.js/TypeScript stack. Passionate coder who excels at transforming complex business requirements into scalable, high-performance applications that drive efficiency and user satisfaction. Experienced in delivering reliable systems on schedule, improving codebases for better speed and upkeep, and working effectively with teams to meet project objectives.
+    Web Developer in Caloocan City, Metro Manila, Philippines with more than 3+ years of hands-on experience crafting enterprise-grade web solutions using the Next.js/TypeScript stack. Passionate coder who excels at transforming complex business requirements into scalable, high-performance applications that drive efficiency and user satisfaction. Experienced in delivering reliable systems on schedule, improving codebases for better speed and upkeep, and working effectively with teams to meet project objectives.
   </>,
   <>
     Currently, I&apos;m focused on exploring the potential of AI-driven interfaces and minimalist design systems. I believe that the best products are those that solve complex problems with elegant, simple solutions.
@@ -58,6 +58,10 @@ export const techStack = [
   {
     category: "Backend/APIs",
     skills: ["Laravel (PHP)", "CodeIgniter", "RESTful APIs", "GraphQL", "AI Integration"],
+  },
+  {
+    category: "Databases & ORM",
+    skills: ["MySQL", "PostgreSQL", "Supabase", "Drizzle ORM", "MongoDB", "Firebase"],
   },
   {
     category: "Validation & Tools",
@@ -169,29 +173,26 @@ PERSONAL INFORMATION
 - WhatsApp Number: +639060280894
 - LinkedIn: https://www.linkedin.com/in/jonel-hatwell/
 - GitHub: https://github.com/hatwell-jonel
-- Hobbies: Reading, Playing Video Games, Watching Movies and TV Shows, and Running
+- Hobbies: Playing Video Games, Watching Movies and TV Shows, and Running
 
 --------------------------------------------------
 PROFESSIONAL SUMMARY
 --------------------------------------------------
-Jonel Hatwell is a Web Developer with hands-on experience in building, maintaining,
-and optimizing modern web applications. He has worked on internal systems,
-client-facing applications, and enterprise-level platforms using modern JavaScript
-frameworks and backend technologies.
+Web Developer in Caloocan City, Metro Manila, Philippines with more than 3+ years of hands-on experience crafting enterprise-grade web solutions using the Next.js/TypeScript stack. Passionate coder who excels at transforming complex business requirements into scalable, high-performance applications that drive efficiency and user satisfaction. Experienced in delivering reliable systems on schedule, improving codebases for better speed and upkeep, and working effectively with teams to meet project objectives.
+
+Currently, I'm focused on exploring the potential of AI-driven interfaces and minimalist design systems. I believe that the best products are those that solve complex problems with elegant, simple solutions.
+
+When I have free time, I enjoy staying up to date with the latest technology trends by reading and watching industry news. I’m also passionate about running, which helps me maintain both my physical health and mental focus. When I need to unwind or manage stress, I take a break by watching TV series or anime, allowing me to recharge and return to my work with fresh energy.
 
 --------------------------------------------------
 SKILLS
 --------------------------------------------------
 Technical Skills:
-- Frontend: Next.js, React.js, TypeScript
-- Backend: Node.js, GraphQL
-- Databases & ORM: MySQL, Drizzle ORM
-- Other Tools & Tech: Apollo, Svelte, Laravel, CodeIgniter 3
-
-Soft Skills:
-- Communication
-- Problem-solving
-- Team collaboration
+- Frontend: ["React", "Next.js", "TypeScript", "Tanstack Query", "Zustand", "Apollo Client"]
+- Backend:["Laravel (PHP)", "CodeIgniter", "RESTful APIs", "GraphQL", "AI Integration"]
+- Databases & ORM:  ["MySQL", "PostgreSQL", "Supabase", "Drizzle ORM", "MongoDB", "Firebase"]
+- Styling & UI:["TailwindCSS", "SASS/SCSS", "ShadcnUI", "Bootstrap"]
+- Practices:["Git", "Agile/Scrum", "Monorepo Architecture", "Github Actions"]
 
 --------------------------------------------------
 WORK EXPERIENCE
@@ -231,9 +232,9 @@ HR-SPECIFIC GUIDELINES
 - When asked about **experience, strengths, or skills**, base answers strictly on the
   work history and skills listed above.
 - When asked about **projects**, reference systems such as:
-  - In-house accounting system
-  - AIMS, HRIS, Accounting systems
-  - Gym membership systems
+  - In-house accounting system for CaPEx
+  - Academic Information Management System (AIMS), Human Resource Information System (HRIS), Accounting system
+  - Gym membership systems with RFID technology
 - When asked about **availability, salary expectations, relocation, or work setup**,
   respond that this information is not available and recommend direct contact.
 - When asked for LinkedIn or GitHub, respond with ONLY the direct URL. 
