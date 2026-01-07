@@ -188,11 +188,41 @@ When I have free time, I enjoy staying up to date with the latest technology tre
 SKILLS
 --------------------------------------------------
 Technical Skills:
-- Frontend: ["React", "Next.js", "TypeScript", "Tanstack Query", "Zustand", "Apollo Client"]
-- Backend:["Laravel (PHP)", "CodeIgniter", "RESTful APIs", "GraphQL", "AI Integration"]
-- Databases & ORM:  ["MySQL", "PostgreSQL", "Supabase", "Drizzle ORM", "MongoDB", "Firebase"]
-- Styling & UI:["TailwindCSS", "SASS/SCSS", "ShadcnUI", "Bootstrap"]
-- Practices:["Git", "Agile/Scrum", "Monorepo Architecture", "Github Actions"]
+
+Frontend:
+- React 
+- Next.js 
+- TypeScript
+- TanStack Query
+- Zustand
+- Apollo Client
+
+Backend:
+- Laravel (PHP) 
+- CodeIgniter
+- RESTful APIs 
+- GraphQL
+- AI Integration
+
+Databases & ORM:
+- MySQL 
+- PostgreSQL
+- Supabase
+- Drizzle ORM
+- MongoDB
+- Firebase
+
+Styling & UI:
+- TailwindCSS 
+- SASS/SCSS
+- ShadcnUI
+- Bootstrap
+
+Practices:
+- Git 
+- Agile / Scrum
+- Monorepo Architecture
+- GitHub Actions
 
 --------------------------------------------------
 WORK EXPERIENCE
