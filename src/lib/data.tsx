@@ -47,7 +47,7 @@ export const experiences  = [
       "Developed the front-end interface for a Gym membership system using modern web technologies.",
     tags: ["HTML", "CSS", "JavaScript"],
   },
-];
+]; 
 
 
 export const techStack = [
