@@ -34,7 +34,7 @@ export const experiences  = [
   {
     period: "June 2024 - Sept 2025",
     title: "Junior Programmer",
-    company: "Pinnacle Technologies Inc.",
+    company: "Pinnacle Technologies Inc.", 
     description:
       "Played a key role in the maintenance and feature development of core products, including the Academic Information Management System (AIMS), HRIS, and Accounting systems, utilizing Laravel and CodeIgniter 3.",
     tags: ["Laravel", "CodeIgniter 3", "PHP", "MySQL"],
