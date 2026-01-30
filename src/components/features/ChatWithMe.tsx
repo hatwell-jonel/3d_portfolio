@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { BotMessageSquare, Send, XIcon } from "lucide-react";
+import { BotMessageSquare, MessageCircle, Send, XIcon } from "lucide-react";
 import {
     Dialog,
     DialogClose,
@@ -112,8 +112,7 @@ const ChatWithMe: React.FC = () => {
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button
-                    variant="ghost"
-                    className="text-xl p-0 hover:bg-transparent hover:text-primary group on"
+                    className="text-xl p-0  group on"
                 >
                     <span>Chat with me</span>
                     <BotMessageSquare className="ml-1 h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />

@@ -1,6 +1,6 @@
 "use client"
 
-import { Github, Linkedin, Mail, ArrowUpRight, Phone } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowUpRight, Phone, MessageCircle } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -215,7 +215,7 @@ function AboutSection() {
 			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
 				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">About Me</h2>
 			</div>
-			<div>
+			<div className="mb-12">
 				{
 				aboutMe.map((text, index) => (
 					<p key={index} className="mb-4 text-muted-foreground leading-relaxed">
@@ -225,11 +225,25 @@ function AboutSection() {
 				}
 			</div>
 
-			<div className="my-16">
-				<ChatWithMe />
-			</div>
-
+			<ChatSection />
 		</section>
+	)
+}
+
+function ChatSection() {
+	return (
+		<Card className="border-primary/20 bg-primary/5">
+			<CardContent >
+				<div className="flex items-center justify-between">
+					<div>
+						<h3 className="font-semibold text-foreground mb-1">Want to chat?</h3>
+						<p className="text-sm text-muted-foreground">  Let&apos;s start a quick conversation.</p>
+					</div>
+
+					<ChatWithMe />
+				</div>
+			</CardContent>
+		</Card>
 	)
 }
 

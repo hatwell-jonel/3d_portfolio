@@ -109,7 +109,6 @@ type Game = {
     component: React.ReactNode
 }
 
-
 export const games: Game[] = [
     {
         name: 'Space Dodger',
