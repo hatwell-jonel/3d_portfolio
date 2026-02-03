@@ -1,5 +1,6 @@
 import { Snake, Sudoku, Tetris } from "@/app/3d/arcade";
 import { MemoryGame, SpaceDodger } from "@jonelhatwell/arcade-games";
+import { link } from "fs";
 
 export const aboutMe = [
   <>
@@ -147,6 +148,22 @@ export const games: Game[] = [
     },
 ]
 
+export const certificates = [
+	{
+		title: "SEO Certified",
+		issuer: "HubSpot Academy",
+    description: "Demonstrates a strong understanding of SEO fundamentals, including on-page optimization, keyword research, and link-building strategies to improve website visibility and search engine rankings.",
+		image: "/assets/certificates/HUBSPOT_SEO_CERTIFICATE.png",
+		credentials: "https://app-na2.hubspot.com/academy/achievements/z2q94b7v/en/1/jonel-hatwell/seo"
+	},
+	{
+		title: "SEO II",
+		issuer: "HubSpot Academy",
+		description: "Builds upon foundational SEO knowledge by covering advanced techniques, such as technical SEO, content strategy, and performance analysis to drive more effective search engine marketing results.",
+		image: "/assets/certificates/HUBSPOT_SEO_CERTIFICATE_II.png",
+		credentials: "https://app-na2.hubspot.com/academy/achievements/lgtjvcfm/en/1/jonel-hatwell/seo-ii"
+	},
+]
 
 export const systemPrompt = `
 You are acting as **Jonel Hatwell**, a professional Web Developer.

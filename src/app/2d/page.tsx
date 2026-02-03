@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
-import { aboutMe, experiences, projects, techStack } from "../../lib/data"
+import { aboutMe, certificates, experiences, projects, techStack } from "../../lib/data"
 import Image from "next/image"
 import ChatWithMe from "@/components/features/ChatWithMe"
 import Maintenance from "@/components/features/Maintenance"
@@ -18,7 +18,7 @@ export default function PortfolioPage() {
 
 	useEffect(() => {
 		const handleScroll = () => {
-			const sections = ["about", "experiences", "techstack", "works"]
+			const sections = ["about", "experiences", "techstack", "certificates", "works"]
 			const scrollPosition = window.scrollY + 200
 
 			for (const section of sections) {
@@ -96,6 +96,21 @@ export default function PortfolioPage() {
 										className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors group-hover:text-foreground group-focus-visible:text-foreground ${activeSection === "techstack" ? "text-foreground" : "text-muted-foreground"}`}
 									>
 										Tech Stack
+									</span>
+									</a>
+								</li>
+								<li>
+									<a
+									className={`group flex items-center py-3 ${activeSection === "certificates" ? "active" : ""}`}
+									href="#certificates"
+									>
+									<span
+										className={`nav-indicator mr-4 h-px transition-all group-hover:w-16 group-hover:bg-foreground group-focus-visible:w-16 group-focus-visible:bg-foreground motion-reduce:transition-none ${activeSection === "certificates" ? "w-16 bg-foreground" : "w-8 bg-muted-foreground"}`}
+									></span>
+									<span
+										className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors group-hover:text-foreground group-focus-visible:text-foreground ${activeSection === "certificates" ? "text-foreground" : "text-muted-foreground"}`}
+									>
+										Certificates
 									</span>
 									</a>
 								</li>
@@ -185,10 +200,11 @@ export default function PortfolioPage() {
 					{/* Content Area */}
 					<main id="content" className="pt-24 lg:w-1/2 lg:py-24">
 
-						<AboutSection />
-						<ExperienceSection />
-						<TechStackSection />
-						<MyWorksSection />
+					<AboutSection />
+					<ExperienceSection />
+					<TechStackSection />
+					<CertificatesSection />
+					<MyWorksSection />
 
 						<footer className="max-w-md pb-16 text-sm text-muted-foreground sm:pb-0">
 							<blockquote className="italic">
@@ -340,6 +356,63 @@ function TechStackSection() {
 	)
 }
 
+function CertificatesSection() {
+	return (
+		<section
+			id="certificates"
+			className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+			aria-label="My certificates"
+		>
+			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
+				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">Certificates</h2>
+			</div>
+			<ul className="group/list">
+				{certificates.map((cert, index) => (
+					<li key={index} className="mb-12">
+						<a
+							href={cert.credentials}
+							target="_blank"
+							rel="noreferrer"
+							className="block"
+						>
+							<Card className="group relative border-none bg-transparent shadow-none transition-all lg:hover:opacity-100! lg:group-hover/list:opacity-50">
+								<div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-muted/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+								<CardHeader className="p-0 z-10 grid gap-4 sm:grid-cols-8 sm:gap-8 md:gap-4">
+									<div className="z-10 sm:order-2 sm:col-span-6">
+										<CardTitle>
+											<h3 className="font-medium leading-snug text-foreground">
+												<span>{cert.title}</span>
+												<span className="inline-block text-primary ms-4"> · {cert.issuer}</span>
+												<span className="inline-block ml-1">
+													<ArrowUpRight className="inline-block h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
+												</span>
+											</h3>
+										</CardTitle>
+										<CardDescription className="mt-2 text-sm leading-normal text-muted-foreground">
+											{cert.description}
+										</CardDescription>
+									</div>
+									<div className="z-10 sm:order-1 sm:col-span-2">
+										<Image
+											alt={cert.title}
+											loading="lazy"
+											width="200"
+											height="48"
+											decoding="async"
+											className="rounded border-2 border-muted/50 transition group-hover:border-primary/50 sm:translate-y-1"
+											src={cert.image || "/placeholder.svg"}
+										/>
+									</div>
+								</CardHeader>
+							</Card>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}
+
 function MyWorksSection() {
 	return (
 		<section
@@ -352,64 +425,6 @@ function MyWorksSection() {
 			</div>
 			<div>
 				<Maintenance/>
-				{/* <ul className="group/list">
-				{projects.map((project, index) => (
-					<li key={index} className="mb-12">
-						<Card className="group relative border-none bg-transparent shadow-none transition-all lg:hover:opacity-100! lg:group-hover/list:opacity-50">
-							<div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-muted/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
-							<CardHeader className="p-0 z-10 grid gap-4 sm:grid-cols-8 sm:gap-8 md:gap-4">
-								<div className="z-10 sm:order-2 sm:col-span-6">
-									<CardTitle>
-									<Link
-										className="inline-flex items-baseline font-medium leading-tight text-foreground hover:text-primary focus-visible:text-primary group/link text-base"
-										href="#"
-									>
-										<span className="absolute -inset-x-4 -inset-y-4 hidden rounded md:-inset-x-6 md:-inset-y-6 lg:block"></span>
-										<span>
-										{project.title}{" "}
-										<span className="inline-block">
-											<ArrowUpRight className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 group-focus-visible/link:-translate-y-1 group-focus-visible/link:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
-										</span>
-										</span>
-									</Link>
-									</CardTitle>
-									<CardDescription className="mt-2 text-sm leading-normal text-muted-foreground">
-									{project.description}
-									</CardDescription>
-									<CardContent className="p-0 mt-2 flex flex-wrap gap-1.5" aria-label="Technologies used">
-									{project.tags.map((tag) => (
-										<Badge
-										key={tag}
-										variant="secondary"
-										className="bg-primary/10 text-primary hover:bg-primary/20"
-										>
-										{tag}
-										</Badge>
-									))}
-									</CardContent>
-								</div>
-								<div className="z-10 sm:order-1 sm:col-span-2">
-									<Image
-										alt={project.title}
-										loading="lazy"
-										width="200"
-										height="48"
-										decoding="async"
-										className="rounded border-2 border-muted/50 transition group-hover:border-primary/50 sm:translate-y-1"
-										src={project.image || "/placeholder.svg"}
-									/>
-								</div>
-							</CardHeader>
-						</Card>
-					</li>
-				))}
-				</ul>
-				<div className="mt-12">
-					<Button variant="ghost" className="p-0 hover:bg-transparent hover:text-primary group">
-						<span>View Full Project Archive</span>
-						<ArrowUpRight className="ml-1 inline-block h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 motion-reduce:transition-none" />
-					</Button>
-				</div> */}
 			</div>
 		</section>
 	)		
