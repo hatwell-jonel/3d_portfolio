@@ -25,7 +25,7 @@ export const experiences  = [
     tags: ["Next.js", "Svelte", "TypeScript", "GraphQL", "Apollo"],
   },
   {
-    period: "June 2024 - Sept 2025",
+    period: "Jun 2024 - Sep 2025",
     title: "Web Developer",
     company: "Cargo Padala Express",
     description:
@@ -33,7 +33,7 @@ export const experiences  = [
     tags: ["Next.js", "DrizzleORM", "MySQL", "TypeScript"],
   },
   {
-    period: "June 2024 - Sept 2025",
+    period: "Sep 2022 - Apr 2024",
     title: "Junior Programmer",
     company: "Pinnacle Technologies Inc.",  
     description:
@@ -41,7 +41,7 @@ export const experiences  = [
     tags: ["Laravel", "CodeIgniter 3", "PHP", "MySQL"],
   },
   {
-    period: "Sept 2022 - Apr 2024",
+    period: "Apr 2022 - Jun 2022",
     title: "Internship",
     company: "Innovative Technical Institute Inc.",
     description:
