@@ -1,163 +1,431 @@
 "use client"
 
+import { Github, Linkedin, Mail, ArrowUpRight, Phone, MessageCircle } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
-import { twMerge as tw } from "tailwind-merge";
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import ChatWithMe from "@/components/features/ChatWithMe"
+import Maintenance from "@/components/features/Maintenance"
+import { aboutMe, certificates, experiences, projects, techStack } from "@/lib/data"
 
-export default function LandingPage() {
-	const [hoveredSide, setHoveredSide] = useState<"3d" | "2d" | null>(null)
+
+export default function PortfolioPage() {
+	const [activeSection, setActiveSection] = useState("about")
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const sections = ["about", "experiences", "techstack", "certificates", "works"]
+			const scrollPosition = window.scrollY + 200
+
+			for (const section of sections) {
+				const element = document.getElementById(section)
+				if (element) {
+				const { offsetTop, offsetHeight } = element
+				if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+					setActiveSection(section)
+					break
+				}
+				}
+			}
+		}
+
+		window.addEventListener("scroll", handleScroll)
+		return () => window.removeEventListener("scroll", handleScroll)
+	}, [])
 
 	return (
-		<div className="relative h-screen w-full overflow-hidden bg-[#0a0a0a]" style={{ perspective: "1000px" }}>
+		<div className="min-h-screen bg-background text-foreground selection:bg-primary/30 selection:text-primary">
+			<div className="mx-auto max-w-7xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0">
+				<div className="lg:flex lg:justify-between lg:gap-4">
+					{/* Sidebar / Navigation */}
+					<header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
+						<div>
+							<h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+								<Link href="/">Jonel Hatwell</Link>
+							</h1>
+							<h2 className="mt-3 text-lg font-medium tracking-tight text-primary sm:text-xl">Web Developer</h2>
+							<p className="mt-4 max-w-xs leading-normal text-muted-foreground">
+								I build websites that work smoothly, look sharp, and make users smile.
+							</p>
 
-			<div className="absolute top-6 md:top-10 left-0 right-0 z-20 text-center px-4">
-				<h1 className="font-bold text-primary text-[clamp(1.8rem,5vw,3.5rem)] mb-2">Welcome to my portfolio</h1>
-				<h2 className="text-[#ff9090] leading text-[clamp(0.9rem,2.5vw,1.1rem)]">Choose your viewing experience</h2>
-			</div>
-
-			{/* Diagonal Split Container */}
-			<div className="@container not-visited:relative h-full w-full" style={{ transformStyle: "preserve-3d" }}>
-
-				{/* 3D Side */}
-				<Link
-					href="/3d"
-					onMouseEnter={() => setHoveredSide("3d")}
-					onMouseLeave={() => setHoveredSide(null)}
-					className="absolute inset-0 group cursor-pointer block"
-					style={{
-						clipPath: "polygon(0 100%, 0 0, 100% 0)",
-						transformStyle: "preserve-3d",
-					}}
-					aria-label="View 3D Portfolio"
-				>
-				
-					<div
-						className={`absolute inset-0 bg-linear-to-br from-primary/20 via-transparent to-transparent transition-opacity duration-700 ${
-						hoveredSide === "3d" ? "opacity-100" : "opacity-0"
-						}`}
-					/>
-
-					<div
-						className="absolute inset-0 flex items-center justify-center"
-						style={{
-						transformStyle: "preserve-3d",
-						}}
-					>
-						<div
-						className="relative -translate-y-20 md:-translate-x-30 lg:-translate-x-50 xl:-translate-x-70 transition-transform duration-700"
-						style={{
-							transformStyle: "preserve-3d",
-							transform:
-							hoveredSide === "3d"
-								? "translateY(-5rem) translateX(-5rem) translateZ(80px) rotateX(-8deg) rotateY(8deg)"
-								: "translateY(-5rem) translateX(-5rem) translateZ(0) rotateX(0) rotateY(0)",
-						}}
-						>
-							<span
-								className={`text-[120px]  md:text-[170px] lg:text-[200px] xl:text-[220px] font-bold text-primary transition-all duration-700 block ${
-								hoveredSide === "3d"
-									? "scale-110 drop-shadow-[0_0_30px_rgba(255,107,107,0.8)]"
-									: "scale-100 drop-shadow-[0_0_10px_rgba(255,107,107,0.3)]"
-								}`}
-								style={{
-								textShadow:
-									hoveredSide === "3d"
-									? "0 0 30px rgba(255,107,107,0.8), 5px 5px 0 rgba(255,107,107,0.3), 10px 10px 0 rgba(255,107,107,0.2)"
-									: "0 0 10px rgba(255,107,107,0.3)",
-								}}
-							>
-								3D
-							</span>
+							<nav className="nav hidden lg:block" aria-label="In-page jump links">
+								<ul className="mt-16 w-max">
+								<li>
+									<a
+									className={`group flex items-center py-3 ${activeSection === "about" ? "active" : ""}`}
+									href="#about"
+									>
+									<span
+										className={`nav-indicator mr-4 h-px transition-all group-hover:w-16 group-hover:bg-foreground group-focus-visible:w-16 group-focus-visible:bg-foreground motion-reduce:transition-none ${activeSection === "about" ? "w-16 bg-foreground" : "w-8 bg-muted-foreground"}`}
+									></span>
+									<span
+										className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors group-hover:text-foreground group-focus-visible:text-foreground ${activeSection === "about" ? "text-foreground" : "text-muted-foreground"}`}
+									>
+										About Me
+									</span>
+									</a>
+								</li>
+								<li>
+									<a
+									className={`group flex items-center py-3 ${activeSection === "experiences" ? "active" : ""}`}
+									href="#experiences"
+									>
+									<span
+										className={`nav-indicator mr-4 h-px transition-all group-hover:w-16 group-hover:bg-foreground group-focus-visible:w-16 group-focus-visible:bg-foreground motion-reduce:transition-none ${activeSection === "experiences" ? "w-16 bg-foreground" : "w-8 bg-muted-foreground"}`}
+									></span>
+									<span
+										className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors group-hover:text-foreground group-focus-visible:text-foreground ${activeSection === "experiences" ? "text-foreground" : "text-muted-foreground"}`}
+									>
+										Experiences
+									</span>
+									</a>
+								</li>
+								<li>
+									<a
+									className={`group flex items-center py-3 ${activeSection === "techstack" ? "active" : ""}`}
+									href="#techstack"
+									>
+									<span
+										className={`nav-indicator mr-4 h-px transition-all group-hover:w-16 group-hover:bg-foreground group-focus-visible:w-16 group-focus-visible:bg-foreground motion-reduce:transition-none ${activeSection === "techstack" ? "w-16 bg-foreground" : "w-8 bg-muted-foreground"}`}
+									></span>
+									<span
+										className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors group-hover:text-foreground group-focus-visible:text-foreground ${activeSection === "techstack" ? "text-foreground" : "text-muted-foreground"}`}
+									>
+										Tech Stack
+									</span>
+									</a>
+								</li>
+								<li>
+									<a
+									className={`group flex items-center py-3 ${activeSection === "certificates" ? "active" : ""}`}
+									href="#certificates"
+									>
+									<span
+										className={`nav-indicator mr-4 h-px transition-all group-hover:w-16 group-hover:bg-foreground group-focus-visible:w-16 group-focus-visible:bg-foreground motion-reduce:transition-none ${activeSection === "certificates" ? "w-16 bg-foreground" : "w-8 bg-muted-foreground"}`}
+									></span>
+									<span
+										className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors group-hover:text-foreground group-focus-visible:text-foreground ${activeSection === "certificates" ? "text-foreground" : "text-muted-foreground"}`}
+									>
+										Certificates
+									</span>
+									</a>
+								</li>
+								<li>
+									<a
+									className={`group flex items-center py-3 ${activeSection === "works" ? "active" : ""}`}
+									href="#works"
+									>
+									<span
+										className={`nav-indicator mr-4 h-px transition-all group-hover:w-16 group-hover:bg-foreground group-focus-visible:w-16 group-focus-visible:bg-foreground motion-reduce:transition-none ${activeSection === "works" ? "w-16 bg-foreground" : "w-8 bg-muted-foreground"}`}
+									></span>
+									<span
+										className={`nav-text text-xs font-bold uppercase tracking-widest transition-colors group-hover:text-foreground group-focus-visible:text-foreground ${activeSection === "works" ? "text-foreground" : "text-muted-foreground"}`}
+									>
+										My Works
+									</span>
+									</a>
+								</li>
+								</ul>
+							</nav>
 						</div>
-					</div>
+						<ul className="ml-1 mt-8 flex items-center" aria-label="Social media">
+							<TooltipProvider>
+								<li className="mr-5 text-xs">
+									<Tooltip>
+										<TooltipTrigger asChild>
+										<a
+											className="block hover:text-primary transition-colors"
+											href="https://github.com/hatwell-jonel"
+											target="_blank"
+											rel="noreferrer"
+										>
+											<span className="sr-only">GitHub</span>
+											<Github className="h-6 w-6" />
+										</a>
+										</TooltipTrigger>
+										<TooltipContent className="font-bold text-primary">GitHub</TooltipContent>
+									</Tooltip>
+								</li>
+								<li className="mr-5 text-xs">
+									<Tooltip>
+										<TooltipTrigger asChild>
+										<a
+											className="block hover:text-primary transition-colors"
+											href="https://www.linkedin.com/in/jonel-hatwell/"
+											target="_blank"
+											rel="noreferrer"
+										>
+											<span className="sr-only">LinkedIn</span>
+											<Linkedin className="h-6 w-6" />
+										</a>
+										</TooltipTrigger>
+										<TooltipContent className="font-bold text-primary">LinkedIn</TooltipContent>
+									</Tooltip>
+								</li>
+								<li className="mr-5 text-xs">
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<a
+												className="block hover:text-primary transition-colors"
+												href="mailto:jonelhatwell@gmail.com"
+												target="_blank"
+												rel="noreferrer"
+											>
+												<span className="sr-only">Email</span>
+												<Mail className="h-6 w-6" />
+											</a>
+										</TooltipTrigger>
+										<TooltipContent className="font-bold text-primary">Gmail | jonelhatwell@gmail.com</TooltipContent>
+									</Tooltip>
+								</li>
+								<li>
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<div className="cursor-pointer hover:text-primary transition-colors">
+												<span className="sr-only">Phone</span>
+												<Phone className="h-6 w-6" />
+											</div>
+										</TooltipTrigger>
+										<TooltipContent className="font-bold text-primary">(+63) 906-0280-894</TooltipContent>
+									</Tooltip>
+								</li>
+							</TooltipProvider>
+						</ul>
+					</header>
 
-					<ParticleEffect color="#ff6b6b" hoveredSide={hoveredSide} side="3d" />
-				</Link>
+					{/* Content Area */}
+					<main id="content" className="pt-24 lg:w-1/2 lg:py-24">
 
-				{/* 2D Side */}
-				<Link
-					href="/2d"
-					onMouseEnter={() => setHoveredSide("2d")}
-					onMouseLeave={() => setHoveredSide(null)}
-					className="absolute inset-0 group cursor-pointer block bg-red-500"
-					style={{
-						clipPath: "polygon(100% 0, 100% 100%, 0 100%)",
-					}}
-					aria-label="View 2D Portfolio"
-				>
-					{/* Background overlay */}
-					<div
-						className={`absolute inset-0 bg-[#2b0e1f] transition-all duration-700 ${
-							hoveredSide === "2d" ? "opacity-100" : hoveredSide === "3d" ? "opacity-40" : "opacity-60"
-						}`}
-					/>
+					<AboutSection />
+					<ExperienceSection />
+					<TechStackSection />
+					<CertificatesSection />
+					<MyWorksSection />
 
-					{/* Animated gradient overlay */}
-					<div
-						className={`absolute inset-0 bg-linear-to-tl from-primary/75 via-transparent to-transparent transition-opacity duration-700 ${
-						hoveredSide === "2d" ? "opacity-100" : "opacity-0"
-						}`}
-					/>
-
-					{/* 2D Text */}
-					<div className="absolute inset-0 flex items-center justify-center">
-						<div className="relative translate-y-50 translate-x-16 md:translate-x-50 lg:translate-x-80 xl:translate-x-90 ">
-							<span
-								className={`text-[150px] md:text-[170px] lg:text-[200px] xl:text-[220px] font-bold text-[#0a0a0a] transition-all duration-700 ${
-								hoveredSide === "2d"
-									? "scale-110 drop-shadow-[0_0_30px_rgba(255,107,107,0.8)]"
-									: "scale-100 drop-shadow-[0_0_10px_rgba(255,107,107,0.3)]"
-								}`}
-							>
-								2D
-							</span>
-						</div>
-					</div>
-
-					<ParticleEffect color="#ff6b6b" hoveredSide={hoveredSide} side="2d" />
-				
-				</Link>
-			</div>
-
-			{/* Mobile hint */}
-			<div className="absolute bottom-8 left-0 right-0 z-20 text-center px-4 md:hidden">
-				<p className="text-sm text-[#ffd1d1]">Tap to choose</p>
+						<footer className="max-w-md pb-16 text-sm text-muted-foreground sm:pb-0">
+							<blockquote className="italic">
+								<p>
+									“The bridge between knowledge and skill is practice.
+									The bridge between skill and mastery is time.”
+								</p>
+								<footer className="mt-2 not-italic">
+								<cite>Jim Bouchard</cite>
+								</footer>
+							</blockquote>
+						</footer>
+					</main>
+				</div>
 			</div>
 		</div>
 	)
 }
 
-interface ParticleEffectProps {
-	color: string
-	hoveredSide: "3d" | "2d" | null
-	side: "3d" | "2d"
+
+function AboutSection() {
+	return (
+		<section id="about" className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24" aria-label="About me">
+			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
+				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">About Me</h2>
+			</div>
+			<div className="mb-12">
+				{
+				aboutMe.map((text, index) => (
+					<p key={index} className="mb-4 text-muted-foreground leading-relaxed">
+					{text}
+					</p>
+				))
+				}
+			</div>
+
+			<ChatSection />
+		</section>
+	)
 }
-function ParticleEffect({color, hoveredSide, side}: ParticleEffectProps) {
 
-	if (side === "3d") {
-		return (
-			<div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${hoveredSide === "3d" ? "opacity-100" : "opacity-0"}`}>
-				{/* medium ping */}
-				<div className={tw(`absolute top-1/4 left-1/4 w-4 h-4 bg-[${color}] rounded-full animate-ping`)} />
-				{/* Small pulse */}
-				<div className={tw(`absolute top-1/3 left-1/3 w-3 h-3 bg-[${color}] rounded-full animate-pulse`)} style={{ animationDelay: "0.2s" }} />
-				{/* Small ping */}
-				<div className={tw(`absolute top-1/2 left-1/5 w-1.5 h-1.5 bg-[${color}] rounded-full animate-ping`)} style={{ animationDelay: "0.4s" }} />
+function ChatSection() {
+	return (
+		<Card className="border-primary/20 bg-primary/5">
+			<CardContent >
+				<div className="flex items-center justify-between">
+					<div>
+						<h3 className="font-semibold text-foreground mb-1">Want to chat?</h3>
+						<p className="text-sm text-muted-foreground">  Let&apos;s start a quick conversation.</p>
+					</div>
+
+					<ChatWithMe />
+				</div>
+			</CardContent>
+		</Card>
+	)
+}
+
+function ExperienceSection() {
+	return (       
+		<section
+			id="experiences"
+			className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+			aria-label="My experiences"
+		>
+			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
+				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">Experiences</h2>
 			</div>
-		)
-	}
+			<div className="relative ml-3 border-l-2 border-muted-foreground/20 pl-8">
+				{/* Timeline dot */}
+				{experiences.map((job, index) => (
+					<div key={index} className="relative mb-12 last:mb-0">
+						{/* Timeline dot */}
+						<div className="absolute -left-10.25 top-1.5 h-4 w-4 rounded-full border-2 border-primary bg-background ring-4 ring-background"></div>
 
-	if(side === "2d") {
-
-		return (
-			<div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ${hoveredSide === "2d" ? "opacity-100" : "opacity-0"}`}>
-				{/* medium ping */}
-				<div className={tw(`absolute bottom-1/4 right-1/4 w-4 h-4 bg-[${color}] rounded-full animate-ping`)} />
-				{/* Small pulse */}
-				<div className={tw(`absolute bottom-1/3 right-1/3 w-3 h-3 bg-[${color}] rounded-full animate-pulse`)} style={{ animationDelay: "0.2s" }} />
-				{/* Small ping */}
-				<div className={tw(`absolute bottom-1/2 right-1/5 w-2.5 h-2.5 bg-[${color}] rounded-full animate-ping`)} style={{ animationDelay: "0.4s" }}/>
+						<Card className="group relative border-none bg-transparent shadow-none transition-all lg:hover:opacity-100!">
+							<div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-muted/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+							<CardHeader className="z-10 p-0">
+								<div className="z-10 mb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+									{job.period}
+								</div>
+								<div className="z-10">
+									<CardTitle>
+										<h3 className="font-medium leading-snug text-foreground">
+											<div>
+												<span className="text-base">{job.title}</span>{" "}
+												<span className="inline-block text-primary">· {job.company}</span>
+											</div>
+										</h3>
+									</CardTitle>
+									<CardDescription className="mt-2 text-sm leading-normal text-muted-foreground">
+										{job.description}
+									</CardDescription>
+									<CardContent className="mt-2 flex flex-wrap gap-1.5 p-0" aria-label="Technologies used">
+										{job.tags.map((tag) => (
+											<Badge
+											key={tag}
+											variant="secondary"
+											className="bg-primary/10 text-primary hover:bg-primary/20"
+											>
+											{tag}
+											</Badge>
+										))}
+									</CardContent>
+								</div>
+							</CardHeader>
+						</Card>
+					</div>
+				))}
 			</div>
-		)
-	}
+		</section>
+	)
+}
+
+function TechStackSection() {
+	return (
+		<section
+			id="techstack"
+			className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+			aria-label="tech stack"
+		>
+			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
+				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">Tech Stack</h2>
+			</div>
+			<div>
+				<div className="grid grid-cols-1 gap-8">
+				{techStack.map((group) => (
+					<div key={group.category}>
+					<h3 className="text-xs uppercase tracking-wider text-foreground mb-4">
+						{group.category}
+					</h3>
+					<ul className="flex flex-wrap gap-2" aria-label={`${group.category} skills`}>
+						{group.skills.map((skill) => (
+						<li key={skill}>
+							<Badge
+							variant="secondary"
+							className="px-3 py-1 text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-all cursor-default"
+							>
+							{skill}
+							</Badge>
+						</li>
+						))}
+					</ul>
+					</div>
+				))}
+				</div>
+			</div>
+		</section>
+	)
+}
+
+function CertificatesSection() {
+	return (
+		<section
+			id="certificates"
+			className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+			aria-label="My certificates"
+		>
+			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
+				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">Certificates</h2>
+			</div>
+			<ul className="group/list">
+				{certificates.map((cert, index) => (
+					<li key={index} className="mb-12">
+						<a
+							href={cert.credentials}
+							target="_blank"
+							rel="noreferrer"
+							className="block"
+						>
+							<Card className="group relative border-none bg-transparent shadow-none transition-all lg:hover:opacity-100! lg:group-hover/list:opacity-50">
+								<div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition motion-reduce:transition-none lg:-inset-x-6 lg:block lg:group-hover:bg-muted/50 lg:group-hover:shadow-[inset_0_1px_0_0_rgba(148,163,184,0.1)] lg:group-hover:drop-shadow-lg"></div>
+								<CardHeader className="p-0 z-10 grid gap-4 sm:grid-cols-8 sm:gap-8 md:gap-4">
+									<div className="z-10 sm:order-2 sm:col-span-6">
+										<CardTitle>
+											<h3 className="font-medium leading-snug text-foreground">
+												<span>{cert.title}</span>
+												<span className="inline-block text-primary ms-4"> · {cert.issuer}</span>
+												<span className="inline-block ml-1">
+													<ArrowUpRight className="inline-block h-4 w-4 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 motion-reduce:transition-none ml-1 translate-y-px" />
+												</span>
+											</h3>
+										</CardTitle>
+										<CardDescription className="mt-2 text-sm leading-normal text-muted-foreground">
+											{cert.description}
+										</CardDescription>
+									</div>
+									<div className="z-10 sm:order-1 sm:col-span-2">
+										<Image
+											alt={cert.title}
+											loading="lazy"
+											width="200"
+											height="48"
+											decoding="async"
+											className="rounded border-2 border-muted/50 transition group-hover:border-primary/50 sm:translate-y-1"
+											src={cert.image || "/placeholder.svg"}
+										/>
+									</div>
+								</CardHeader>
+							</Card>
+						</a>
+					</li>
+				))}
+			</ul>
+		</section>
+	)
+}
+
+function MyWorksSection() {
+	return (
+		<section
+			id="works"
+			className="mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
+			aria-label="Selected projects"
+		>
+			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
+				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">My Works</h2>
+			</div>
+			<div>
+				<Maintenance/>
+			</div>
+		</section>
+	)		
 }
