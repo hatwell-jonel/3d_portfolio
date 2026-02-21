@@ -11,7 +11,7 @@ const ai = new GoogleGenAI({
 export async function Chat(usersInput: string) {
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-3-flash-preview",
+            model: "gemini-2.5-flash",
             contents: usersInput,
             config: {
             systemInstruction: systemPrompt,
