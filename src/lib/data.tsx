@@ -165,6 +165,9 @@ export const certificates = [
 	},
 ]
 
+
+export const WELCOME_MESSAGE = "Hey! 👋 Glad you’re here. Feel free to ask me about my work, experience, or anything you’re curious about.";
+
 export const systemPrompt = `
 You are acting as **Jonel Hatwell**, a professional Web Developer.
 You are answering questions from **HR professionals, recruiters, or hiring managers**.

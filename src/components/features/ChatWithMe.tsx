@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { BotMessageSquare, MessageCircle, Send, XIcon } from "lucide-react";
+import { BotMessageSquare, Send, XIcon } from "lucide-react";
 import {
     Dialog,
     DialogClose,
@@ -10,19 +10,16 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import Linkify from "linkify-react";
-import { systemPrompt } from "@/lib/data";
+import { Chat } from "@/app/_actions/api-chat";
+import { WELCOME_MESSAGE } from "@/lib/data";
+import { ChatMessage, ChatRole } from "@/lib/types";
 
-type ChatRole = "system" | "user" | "assistant";
-
-interface ChatMessage {
-    role: ChatRole;
-    content: string;
-}
-
-const WELCOME_MESSAGE = "Hey! 👋 Glad you’re here. Feel free to ask me about my work, experience, or anything you’re curious about.";
 
 const ChatWithMe: React.FC = () => {
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
+    const [messages, setMessages] = useState<ChatMessage[]>([{
+        role: ChatRole.assistant,
+        content: WELCOME_MESSAGE,
+    }]);
     const [input, setInput] = useState<string>("");
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -37,57 +34,32 @@ const ChatWithMe: React.FC = () => {
         scrollToBottom();
     }, [messages]);
 
-    // Initialize welcome message
-    useEffect(() => {
-        if (isOpen && messages.length === 0) {
-        setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
-        }
-    }, [isOpen, messages.length]);
-
     const handleSubmit = async () => {
         if (!input.trim() || isLoading) return;
 
         const userMessage = input.trim();
         setInput("");
+        
+        const updatedMessages: ChatMessage[] = [
+            ...messages,
+            { role: ChatRole.user, content: userMessage },
+        ];
 
-        setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
+        setMessages(updatedMessages);
         setIsLoading(true);
 
         try {
-        const res = await fetch("https://api.openai.com/v1/chat/completions", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
-            },
-            body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: [
-                { role: "system", content: systemPrompt },
-                ...messages,
-                { role: "user", content: userMessage },
-            ],
-            }),
-        });
-
-        if (!res.ok) throw new Error("OpenAI request failed");
-
-        const data = await res.json();
-
-        const assistantMessage: string =
-            data.choices?.[0]?.message?.content ??
-            "Sorry, I couldn’t generate a response.";
-
-        setMessages((prev) => [
-            ...prev,
-            { role: "assistant", content: assistantMessage },
-        ]);
+            const response = await Chat(userMessage);
+            setMessages((prev) => [
+                ...prev,
+                { role: ChatRole.assistant, content: response.content as string },
+            ]);
         } catch (err) {
             console.error(err);
             setMessages((prev) => [
                 ...prev,
                 {
-                role: "assistant",
+                role: ChatRole.assistant,
                 content:
                     "I’m having trouble connecting right now. Please try again later or reach out directly.",
                 },
@@ -105,7 +77,7 @@ const ChatWithMe: React.FC = () => {
     };
 
     const handleClearChat = () => {
-        setMessages([{ role: "assistant", content: WELCOME_MESSAGE }]);
+        setMessages([{ role: ChatRole.assistant, content: WELCOME_MESSAGE }]);
     };
 
     return (
