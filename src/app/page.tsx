@@ -1,16 +1,17 @@
 "use client"
 
-import { Github, Linkedin, Mail, ArrowUpRight, Phone, MessageCircle } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowUpRight, Phone } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Button } from "@/components/ui/button"
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import ChatWithMe from "@/components/features/ChatWithMe"
 import Maintenance from "@/components/features/Maintenance"
 import { aboutMe, certificates, experiences, projects, techStack } from "@/lib/data"
+import { Button } from "@/components/ui/button"
+import ElectricBorder from "@/components/ui/electric-border/ElectricBorder"
 
 
 export default function PortfolioPage() {
@@ -131,6 +132,23 @@ export default function PortfolioPage() {
 								</li>
 								</ul>
 							</nav>
+
+							<Link 
+								href="/3d"
+								className=""
+							>
+								<ElectricBorder
+									color="#ff6661"
+									speed={1}
+									chaos={0.12}
+									style={{ borderRadius: 16 }}
+									className="w-fit"
+								>
+									<Button size="sm" className="px-12 mt-5 hidden lg:block">
+										View in 3D
+									</Button>
+								</ElectricBorder>
+							</Link>
 						</div>
 						<ul className="ml-1 mt-8 flex items-center" aria-label="Social media">
 							<TooltipProvider>
