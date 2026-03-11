@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import ArcadeGame from '@/components/features/ArcadeGames';
-import AboutMe from '@/components/features/AboutMe';
+import AboutMe from '@/components/features/AboutMe__legacy';
 import MyWorks from '@/components/features/MyWorks';
 import BackButton from '@/components/ui/back-button';
 import { ceilingScene, floorScene, neonWallStripsScene, wallScene } from './scenes';

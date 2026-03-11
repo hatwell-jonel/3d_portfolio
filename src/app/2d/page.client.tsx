@@ -200,11 +200,11 @@ export default function PortfolioPage() {
 					{/* Content Area */}
 					<main id="content" className="pt-24 lg:w-1/2 lg:py-24">
 
-					<AboutSection />
-					<ExperienceSection />
-					<TechStackSection />
-					<CertificatesSection />
-					<MyWorksSection />
+						<AboutSection />
+						<ExperienceSection />
+						<TechStackSection />
+						<CertificatesSection />
+						<MyWorksSection />
 
 						<footer className="max-w-md pb-16 text-sm text-muted-foreground sm:pb-0">
 							<blockquote className="italic">
