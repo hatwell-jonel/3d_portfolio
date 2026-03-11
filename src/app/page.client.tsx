@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Image from "next/image"
 import ChatWithMe from "@/components/features/ChatWithMe"
 import Maintenance from "@/components/features/Maintenance"
-import { aboutMe, certificates, experiences, techStack } from "@/lib/data"
+import { aboutMe, certificates, experiences, projects, techStack } from "@/lib/data"
 import { Button } from "@/components/ui/button"
 import ElectricBorder from "@/components/ui/electric-border/ElectricBorder"
 import NavLinks from "@/components/features/NavLinks"
@@ -277,11 +277,65 @@ function MyWorksSection() {
 			aria-label="Selected projects"
 		>
 			<div className="sticky top-0 z-20 -mx-6 mb-4 w-screen bg-background/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0">
-				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">My Works</h2>
+				<h2 className="text-sm font-bold uppercase tracking-widest text-foreground">
+					My Works
+				</h2>
 			</div>
-			<div>
-				<Maintenance/>
-			</div>
+
+			<ul className="group/list">
+				{projects.map((project, index) => (
+					<li key={index} className="mb-12">
+						<Link href={project.link} className="block" target="_blank">
+							<Card className="group relative border-none bg-transparent shadow-none transition-all lg:hover:opacity-100 lg:group-hover/list:opacity-50">
+								<div className="absolute -inset-x-4 -inset-y-4 z-0 hidden rounded-md transition lg:-inset-x-6 lg:block lg:group-hover:bg-muted/50 lg:group-hover:shadow-lg"></div>
+
+								<CardHeader className="p-0 z-10 grid gap-4 sm:grid-cols-8 sm:gap-8 md:gap-4">
+									
+									{/* Project Info */}
+									<div className="z-10 sm:order-2 sm:col-span-6">
+										<CardTitle>
+											<h3 className="font-medium leading-snug text-foreground">
+												<span>{project.title}</span>
+
+												<span className="inline-block ml-2">
+													<ArrowUpRight className="inline-block h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
+												</span>
+											</h3>
+										</CardTitle>
+
+										<CardDescription className="mt-2 text-sm leading-normal text-muted-foreground">
+											{project.description}
+										</CardDescription>
+
+										<CardContent className="mt-3 flex flex-wrap gap-2 p-0">
+											{project.tags.map((tag) => (
+												<Badge
+													key={tag}
+													variant="secondary"
+													className="bg-primary/10 text-primary hover:bg-primary/20"
+												>
+													{tag}
+												</Badge>
+											))}
+										</CardContent>
+									</div>
+
+									{/* Project Image */}
+									<div className="z-10 sm:order-1 sm:col-span-2">
+										<Image
+											src={project.image}
+											alt={project.title}
+											width={200}
+											height={120}
+											className="rounded border-2 border-muted/50 transition group-hover:border-primary/50 sm:translate-y-1"
+										/>
+									</div>
+								</CardHeader>
+							</Card>
+						</Link>
+					</li>
+				))}
+			</ul>
 		</section>
-	)		
+	)
 }

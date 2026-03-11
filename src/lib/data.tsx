@@ -80,27 +80,27 @@ export const techStack = [
 
 export const projects = [
   {
-    title: "Nova Dashboard",
-    description:
-      "A comprehensive analytics platform for modern SaaS companies. Featuring real-time data visualization and customizable reporting modules.",
-    tags: ["React", "Next.js", "Tailwind CSS", "Recharts"],
-    image: "/modern-analytics-dashboard-preview.jpg",
+    title: "Anime Stream",
+    description: "A streaming platform for watching anime with watch progress tracking and saved series.",
+    image: "/assets/image/project-thumbnails/animestream.webp",
+    tags: ["Next.js", "Tailwind", "ShadcnUI", "Typescript", "trpc", "API"],
+    link: "https://animesstream.vercel.app/",
   },
   {
-    title: "Aether CMS",
-    description:
-      "A headless content management system designed for speed and developer experience. Built with a focus on performance and extensibility.",
-    tags: ["TypeScript", "Node.js", "PostgreSQL", "Prisma"],
-    image: "/code-editor-and-cms-interface.jpg",
+    title: "Math Problem Generator with AI",
+    description: "A math problem generator with AI that generates random math problems and provides step-by-step solutions.",
+    image: "/assets/image/project-thumbnails/math-ai.png",
+    tags: ["Next.js", "GenAI", "Tailwind", "AI"],
+    link: "https://ai-math-generator-jonelhatwell.vercel.app/",
   },
   {
-    title: "Lumina Portfolio",
-    description:
-      "An award-winning minimalist portfolio template for creative professionals. Focuses on typography and smooth transitions.",
-    tags: ["Next.js", "Framer Motion", "Tailwind CSS"],
-    image: "/minimalist-typography-portfolio-layout.jpg",
+    title: "Snap Photography",
+    description: "A productivity app for managing daily tasks with drag and drop functionality.",
+    image: "/assets/image/project-thumbnails/snap-photography.png",
+    tags: ["UnplashAPI", "API", "ReactJs"],
+    link: "https://nextjs-snap-photography.vercel.app/",
   },
-];
+]
 
 type Game = {
     name: string
