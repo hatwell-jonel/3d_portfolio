@@ -28,7 +28,7 @@ const TONE_MAPPING_EXPOSURE = 0.75;
 const dialogSizeMap: Record<string, string> = {
   arcade: "max-w-[100px]",
   aboutme: "!max-w-2xl !max-h-[90vh] !overflow-y-auto no-scrollbar no-scrollbar-x",
-  myworks: "max-w-4xl",
+  myworks: "!max-w-4xl",
 }
 
 export default function RoomPortfolio() {
@@ -217,8 +217,9 @@ export default function RoomPortfolio() {
         <DialogContent 
           className={
             twMerge(
-              "max-w-3xl bg-sidebar! border-primary shadow-[0_0_40px_rgba(255,107,107,0.98)] transition-all duration-300 max-h-[90vh] overflow-hidden",
+              "  bg-sidebar! border-primary shadow-[0_0_40px_rgba(255,107,107,0.98)] transition-all duration-300 max-h-[90vh] overflow-scroll",
               showModal ? dialogSizeMap[showModal] : "",
+              "no-scrollbar no-scrollbar-x"
             )
           }
           showCloseButton={false}

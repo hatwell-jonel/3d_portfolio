@@ -14,7 +14,7 @@ interface ProjectsProps {
 
 function ProjectItem({ project }: { project: Project }) {
 	return (
-		<li className="mb-12">
+		<li>
 			<Link href={project.link} className="block" target="_blank">
 				<Card className="group relative border-none bg-transparent shadow-none transition-all lg:hover:opacity-100 lg:group-hover/list:opacity-50">
 				
