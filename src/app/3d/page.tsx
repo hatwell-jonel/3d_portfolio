@@ -1,19 +1,10 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { ArcadeMachine, BedModel, RecordSetup, AirConditioner, Spiderman, ComputerSet } from './models';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
-import ArcadeGame from '@/components/features/ArcadeGames';
-import AboutMe from '@/components/features/AboutMe__legacy';
-import MyWorks from '@/components/features/MyWorks';
+import { ArcadeMachine, BedModel, AirConditioner, Spiderman, ComputerSet } from './models';
 import BackButton from '@/components/ui/back-button';
 import { ceilingScene, floorScene, neonWallStripsScene, wallScene } from './scenes';
-import { twMerge } from 'tailwind-merge';
+import { useModalStore } from '@/lib/stores/modal-store';
 
 const CAMERA_CONFIG = {
   fov: 75, // field of view
@@ -25,11 +16,6 @@ const CAMERA_CONFIG = {
 // Tone mapping exposure controls overall scene brightness
 const TONE_MAPPING_EXPOSURE = 0.75;
 
-const dialogSizeMap: Record<string, string> = {
-  arcade: "max-w-[100px]",
-  aboutme: "!max-w-2xl !max-h-[90vh] !overflow-y-auto no-scrollbar no-scrollbar-x",
-  myworks: "!max-w-4xl",
-}
 
 export default function RoomPortfolio() {
     const mountRef = useRef<HTMLDivElement | null>(null);
@@ -41,7 +27,7 @@ export default function RoomPortfolio() {
       dragStarted: false,
     });
     const [section, setSection] = useState('');
-    const [showModal, setShowModal] = useState<string | null>(null);
+    const setModal = useModalStore((state) => state.setModal);
 
     useEffect(() => {
         const scene = new THREE.Scene();
@@ -102,7 +88,7 @@ export default function RoomPortfolio() {
                 }
 
                 if (obj.userData.section) {
-                  setShowModal(obj.userData.section);
+                  setModal(obj.userData.section);
                   break;
                 }
             }
@@ -206,37 +192,6 @@ export default function RoomPortfolio() {
           </div>
         )}
       </div>
-
-
-      <Dialog
-        open={!!showModal}
-        onOpenChange={(open) => {
-          if (!open) setShowModal(null);
-        }}
-      >
-        <DialogContent 
-          className={
-            twMerge(
-              "  bg-sidebar! border-primary shadow-[0_0_40px_rgba(255,107,107,0.98)] transition-all duration-300 max-h-[90vh] overflow-scroll",
-              showModal ? dialogSizeMap[showModal] : "",
-              "no-scrollbar no-scrollbar-x"
-            )
-          }
-          showCloseButton={false}
-        >
-
-          <DialogHeader className='sr-only'>
-            <DialogTitle className="text-3xl font-bold text-center">
-              TITLE
-            </DialogTitle>
-          </DialogHeader> 
-
-          {showModal === 'arcade' && <ArcadeGame />}
-          {showModal === "aboutme" && <AboutMe />}
-          {showModal === 'myworks' && <MyWorks />}
-        </DialogContent>
-      </Dialog>
-        
     </div>
   );
 }

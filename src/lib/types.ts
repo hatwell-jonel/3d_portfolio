@@ -17,3 +17,8 @@ export type Project = {
     link: string;
     isFeatured?: boolean;
 };
+
+export type ModalType = 
+  'arcade' 
+  | 'aboutme' 
+  | 'myworks';

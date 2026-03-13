@@ -105,20 +105,6 @@ export const projects : Project[] = [
     link: "https://nextjs-snap-photography.vercel.app/",
     isFeatured: true,
   },
-    {
-    title: "Snap Photography",
-    description: "A productivity app for managing daily tasks with drag and drop functionality.",
-    image: "/assets/image/project-thumbnails/snap-photography.png",
-    tags: ["UnplashAPI", "API", "ReactJs"],
-    link: "https://nextjs-snap-photography.vercel.app/",
-  },
-    {
-    title: "Snap Photography",
-    description: "A productivity app for managing daily tasks with drag and drop functionality.",
-    image: "/assets/image/project-thumbnails/snap-photography.png",
-    tags: ["UnplashAPI", "API", "ReactJs"],
-    link: "https://nextjs-snap-photography.vercel.app/",
-  },
 ]
 
 type Game = {

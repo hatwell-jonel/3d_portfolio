@@ -6,6 +6,7 @@ Source: https://sketchfab.com/3d-models/rusty-japanese-arcade-2938ae13a77c46e8af
 Title: Rusty Japanese Arcade
 */
 'use client'
+import { ModalType } from '@/lib/types';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -20,7 +21,7 @@ const addSetupLighting = (model: THREE.Object3D) => {
 };
 
 
-export function ArcadeMachine(scene : THREE.Scene, modalKey : string) {
+export function ArcadeMachine(scene : THREE.Scene, modalKey : ModalType) {
     const loader = new GLTFLoader();
 
     // Helper: make a text texture for sprite

@@ -8,6 +8,7 @@ Title: Computer Setup
 
 'use client';
 
+import { ModalType } from '@/lib/types';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
@@ -31,7 +32,7 @@ const addSetupLighting = (model: THREE.Object3D) => {
     model.add(accent);
 };
 
-export function ComputerSet(scene: THREE.Scene, modalKey : string) {
+export function ComputerSet(scene: THREE.Scene, modalKey : ModalType) {
     const loader = new GLTFLoader();
 
     const createTextCanvas = (text: string) => {

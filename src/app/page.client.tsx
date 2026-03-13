@@ -1,6 +1,6 @@
 "use client"
 
-import {  ArrowUpRight } from "lucide-react"
+import {  ArrowRight, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -12,6 +12,7 @@ import ElectricBorder from "@/components/ui/electric-border/ElectricBorder"
 import NavLinks from "@/components/features/NavLinks"
 import SocialLinks from "@/components/features/SocialLinks"
 import Projects from "@/components/list/projects"
+import { useModalStore } from "@/lib/stores/modal-store"
 
 
 export default function PortfolioPage() {
@@ -187,25 +188,25 @@ function TechStackSection() {
 			</div>
 			<div>
 				<div className="grid grid-cols-1 gap-8">
-				{techStack.map((group) => (
-					<div key={group.category}>
-					<h3 className="text-xs uppercase tracking-wider text-foreground mb-4">
-						{group.category}
-					</h3>
-					<ul className="flex flex-wrap gap-2" aria-label={`${group.category} skills`}>
-						{group.skills.map((skill) => (
-						<li key={skill}>
-							<Badge
-							variant="secondary"
-							className="px-3 py-1 text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-all cursor-default"
-							>
-							{skill}
-							</Badge>
-						</li>
-						))}
-					</ul>
-					</div>
-				))}
+					{techStack.map((group) => (
+						<div key={group.category}>
+						<h3 className="text-xs uppercase tracking-wider text-foreground mb-4">
+							{group.category}
+						</h3>
+						<ul className="flex flex-wrap gap-2" aria-label={`${group.category} skills`}>
+							{group.skills.map((skill) => (
+							<li key={skill}>
+								<Badge
+								variant="secondary"
+								className="px-3 py-1 text-sm font-medium hover:bg-primary hover:text-primary-foreground transition-all cursor-default"
+								>
+								{skill}
+								</Badge>
+							</li>
+							))}
+						</ul>
+						</div>
+					))}
 				</div>
 			</div>
 		</section>
@@ -270,6 +271,9 @@ function CertificatesSection() {
 }
 
 function MyWorksSection() {
+	const setModal = useModalStore((state) => state.setModal);
+	console.log(projects.length)
+	
 	return (
 		<section
 			id="works"
@@ -285,7 +289,19 @@ function MyWorksSection() {
 			<Projects 
 				onlyFeatured={true}
 			/>
-		
+
+			{
+				projects.length > 3 && (
+					<Button
+						variant="outline"
+						className="mt-6 group border-primary/30 hover:border-primary hover:bg-primary/10"
+						onClick={() => setModal("myworks")}
+					>
+						View more projects
+						<ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+					</Button>
+				)
+			}
 		</section>
 	)
 }
