@@ -272,7 +272,6 @@ function CertificatesSection() {
 
 function MyWorksSection() {
 	const setModal = useModalStore((state) => state.setModal);
-	console.log(projects.length)
 	
 	return (
 		<section
