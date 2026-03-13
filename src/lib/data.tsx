@@ -1,6 +1,7 @@
 import { Snake, Sudoku, Tetris } from "@/app/3d/arcade";
 import { MemoryGame, SpaceDodger } from "@jonelhatwell/arcade-games";
 import { link } from "fs";
+import type { Project } from "@/lib/types";
 
 export const aboutMe = [
   <>
@@ -78,13 +79,15 @@ export const techStack = [
   }
 ];
 
-export const projects = [
+
+export const projects : Project[] = [
   {
     title: "Anime Stream",
     description: "A streaming platform for watching anime with watch progress tracking and saved series.",
     image: "/assets/image/project-thumbnails/animestream.webp",
     tags: ["Next.js", "Tailwind", "ShadcnUI", "Typescript", "trpc", "API"],
     link: "https://animesstream.vercel.app/",
+    isFeatured: true,
   },
   {
     title: "Math Problem Generator with AI",
@@ -92,8 +95,24 @@ export const projects = [
     image: "/assets/image/project-thumbnails/math-ai.png",
     tags: ["Next.js", "GenAI", "Tailwind", "AI"],
     link: "https://ai-math-generator-jonelhatwell.vercel.app/",
+    isFeatured: true,
   },
   {
+    title: "Snap Photography",
+    description: "A productivity app for managing daily tasks with drag and drop functionality.",
+    image: "/assets/image/project-thumbnails/snap-photography.png",
+    tags: ["UnplashAPI", "API", "ReactJs"],
+    link: "https://nextjs-snap-photography.vercel.app/",
+    isFeatured: true,
+  },
+    {
+    title: "Snap Photography",
+    description: "A productivity app for managing daily tasks with drag and drop functionality.",
+    image: "/assets/image/project-thumbnails/snap-photography.png",
+    tags: ["UnplashAPI", "API", "ReactJs"],
+    link: "https://nextjs-snap-photography.vercel.app/",
+  },
+    {
     title: "Snap Photography",
     description: "A productivity app for managing daily tasks with drag and drop functionality.",
     image: "/assets/image/project-thumbnails/snap-photography.png",
