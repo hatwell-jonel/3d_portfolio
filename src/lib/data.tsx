@@ -2,6 +2,7 @@ import { Snake, Sudoku, Tetris } from "@/app/3d/arcade";
 import { MemoryGame, SpaceDodger } from "@jonelhatwell/arcade-games";
 import { link } from "fs";
 import type { Project } from "@/lib/types";
+import { title } from "process";
 
 export const aboutMe = [
   <>
@@ -170,6 +171,23 @@ export const certificates = [
 	},
 ]
 
+export const writings = [
+  {
+    link: "https://www.linkedin.com/posts/jonel-hatwell_npm-npmjs-pnpm-activity-7407790141668433920-mPRD/",
+    title: "How to build a library using React 19, Vite, Tsup, and PNPM",
+    date: "12/19/2025",
+  },
+  {
+    link: "https://www.linkedin.com/posts/jonel-hatwell_guide-activity-7409963472979066881-IBHf/",
+    title: "Automating NPM Package Publishing with GitHub Actions",
+    date: "12/25/2025"
+  },
+  {
+    link: "https://www.linkedin.com/posts/jonel-hatwell_git-tag-activity-7412100414797471744-bzR0",
+    title: "Mastering Git Tags: Your Version Release Superpower ",
+    date: "12/31/2025"
+  }
+]
 
 export const WELCOME_MESSAGE = "Hey! 👋 Glad you’re here. Feel free to ask me about my work, experience, or anything you’re curious about.";
 

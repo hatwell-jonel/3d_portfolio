@@ -6,8 +6,9 @@ const NAV_LINKS = [
     { id: "about", label: "Who I am" },
     { id: "experiences", label: "Experiences" },
     { id: "techstack", label: "Tech Stack" },
-    { id: "certificates", label: "Certificates" },
     { id: "works", label: "My Works" },
+    { id: "writings", label: "Writings" },
+    { id: "certificates", label: "Certificates" },
 ] 
 
 type NavItemProps = {
