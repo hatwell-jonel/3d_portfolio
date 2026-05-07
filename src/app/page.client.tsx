@@ -7,8 +7,6 @@ import NavLinks from "@/components/features/NavLinks"
 import SocialLinks from "@/components/features/SocialLinks"
 import {  AboutSection, ExperienceSection, TechStackSection, MyWorksSection } from "./_sections"
 import { CertificatesSection } from "./_sections/Certificate"
-import { WritingsSection } from "./_sections/Writings"
-import { useFeatureFlag } from "@/lib/utils"
 
 
 export default function PortfolioPage() {
