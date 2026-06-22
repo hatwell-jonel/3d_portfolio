@@ -31,21 +31,3 @@ Sites:
 - [spiderman](https://sketchfab.com/3d-models/spiderman-50f26cc035454aa6820ff695a1c769d0)
 ___
  
-
-TODOS: \
-gotchu link \
-portrait pictures \
-About me - chat AI https://www.tiktok.com/@fullstackkai/video/7576299623753518343?_r=1&_t=ZS-92R1b5X6lko\
-music playlist\
-2d\
-
-
-
-test\
-
-Cross-Browser & Device Testing  \
-Motion & Performance Balance \
-prefers-reduced-motion \
-
-
-
