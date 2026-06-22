@@ -1,5 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
-import { ChipRow } from "./Chip";
+import { ChipRow } from "../../components/features/Chip";
 
 type ProjectCardProps = {
   title: string;

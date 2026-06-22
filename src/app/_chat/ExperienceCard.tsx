@@ -1,4 +1,4 @@
-import { ChipRow } from "./Chip";
+import { ChipRow } from "../../components/features/Chip";
 
 type ExperienceCardProps = {
   title: string;

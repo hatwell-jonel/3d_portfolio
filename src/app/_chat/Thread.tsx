@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Linkify from "linkify-react";
 import Turn from "./Turn";
-import { ChipRow } from "./Chip";
+import { ChipRow } from "../../components/features/Chip";
 import ExperienceCard from "./ExperienceCard";
 import ProjectCard from "./ProjectCard";
 import {

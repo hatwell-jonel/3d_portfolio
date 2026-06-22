@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Boxes } from "lucide-react";
 import Sidebar from "./_chat/Sidebar";
 import Thread from "./_chat/Thread";
-import Composer from "./_chat/Composer";
+import Composer from "../components/features/Composer";
 import ThemeToggle from "./_chat/ThemeToggle";
 import { Chat } from "@/app/_actions/api-chat";
 import { profile } from "@/lib/data";
