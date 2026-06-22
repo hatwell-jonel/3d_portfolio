@@ -1,75 +1,88 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import ElectricBorder from "@/components/ui/electric-border/ElectricBorder"
-import NavLinks from "@/components/features/NavLinks"
-import SocialLinks from "@/components/features/SocialLinks"
-import {  AboutSection, ExperienceSection, TechStackSection, MyWorksSection } from "./_sections"
-import { CertificatesSection } from "./_sections/Certificate"
-
+import Link from "next/link";
+import { useState } from "react";
+import { Boxes } from "lucide-react";
+import Sidebar from "./_chat/Sidebar";
+import Thread from "./_chat/Thread";
+import Composer from "../components/features/Composer";
+import ThemeToggle from "./_chat/ThemeToggle";
+import { Chat } from "@/app/_actions/api-chat";
+import { profile } from "@/lib/data";
+import { ChatMessage, ChatRole } from "@/lib/types";
 
 export default function PortfolioPage() {
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-	return (
-		<>
-			{/* Sidebar / Navigation */}
-			<header className="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-24">
-				<div>
-					<h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-						<Link href="/">Jonel Hatwell</Link>
-					</h1>
-					<h2 className="mt-3 text-lg font-medium tracking-tight text-primary sm:text-xl">Web Developer</h2>
-					<p className="mt-4 max-w-xs leading-normal text-muted-foreground">
-						I build websites that work smoothly, look sharp, and make users smile.
-					</p>
+  const handleSend = async (text: string) => {
+    if (isLoading) return;
 
-					<NavLinks />
+    setMessages((prev) => [...prev, { role: ChatRole.user, content: text }]);
+    setIsLoading(true);
 
-					<Link 
-						href="/3d"
-						className=""
-					>
-						<ElectricBorder
-							color="#ff6661"
-							speed={1}
-							chaos={0.12}
-							style={{ borderRadius: 16 }}
-							className="w-fit"
-						>
-							<Button size="sm" className="px-12 mt-5 hidden lg:block">
-								View in 3D
-							</Button>
-						</ElectricBorder>
-					</Link>
-				</div>
-				<SocialLinks />
-			</header>
+    try {
+      const response = await Chat(text);
+      setMessages((prev) => [
+        ...prev,
+        { role: ChatRole.assistant, content: (response.content as string) ?? "" },
+      ]);
+    } catch (err) {
+      console.error("Chat failed:", err);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: ChatRole.assistant,
+          content:
+            "I'm having trouble connecting right now. Please reach out directly via email or LinkedIn.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-			{/* Content Area */}
-			<main id="content" className="pt-24 lg:w-1/2 lg:py-24">
+  return (
+    <div className="fixed inset-0 flex bg-chat-canvas font-inter text-chat-ink">
+      <Sidebar />
 
-				<AboutSection />
-				<ExperienceSection />
-				<TechStackSection />
-				<MyWorksSection />
-				<CertificatesSection />
+      {/* Main panel */}
+      <main className="flex min-w-0 flex-1 flex-col">
+        {/* Top bar */}
+        <header className="flex items-center justify-between border-b border-chat-border bg-chat-canvas/90 px-4 py-3 pl-16 backdrop-blur sm:px-6 lg:pl-6">
+          <div className="flex items-center gap-2">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-chat-accent opacity-60" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-chat-accent" />
+            </span>
+            <span className="text-sm font-medium text-chat-ink">
+              {profile.status}
+            </span>
+          </div>
 
-				<footer className="max-w-md pb-16 text-sm text-muted-foreground sm:pb-0">
-					<blockquote className="italic">
-						<p>
-							“The bridge between knowledge and skill is practice.
-							The bridge between skill and mastery is time.”
-						</p>
-						<footer className="mt-2 not-italic">
-						<cite>Jim Bouchard</cite>
-						</footer>
-					</blockquote>
-				</footer>
-			</main>
-		</>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href="/3d"
+              className="inline-flex items-center gap-1.5 rounded-full border border-chat-border bg-chat-card px-3 py-1.5 text-xs font-medium text-chat-muted transition-colors hover:border-chat-accent hover:text-chat-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-chat-accent/60"
+            >
+              <Boxes className="h-3.5 w-3.5" />
+              View in 3D
+            </Link>
+          </div>
+        </header>
 
-	)
+        {/* Thread (only this scrolls) */}
+        <div
+          id="thread-scroll"
+          className="thread-scroll min-h-0 flex-1 overflow-y-auto"
+        >
+          <Thread chatMessages={messages} isLoading={isLoading} />
+        </div>
+
+        {/* Composer */}
+        <Composer onSend={handleSend} disabled={isLoading} />
+      </main>
+    </div>
+  );
 }
-
-
