@@ -12,6 +12,8 @@ type TurnProps = {
   role?: "assistant" | "user";
   /** stagger animation delay in ms */
   delay?: number;
+  /** unix ms timestamp for live chat messages */
+  time?: number;
   children: React.ReactNode;
 };
 
@@ -21,9 +23,17 @@ export default function Turn({
   meta,
   role = "assistant",
   delay = 0,
+  time,
   children,
 }: TurnProps) {
   const isUser = role === "user";
+
+  function formatTime(ts: number) {
+    return new Date(ts).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
 
   return (
     <section
@@ -55,13 +65,19 @@ export default function Turn({
             isUser && "flex-row-reverse"
           )}
         >
-          <span className="font-medium text-chat-ink">
-            {isUser ? "You" : profile.name}
-          </span>
-          <span className="text-xs text-chat-faint">
-            {label}
-            {meta ? ` · ${meta}` : ""}
-          </span>
+          {isUser ? (
+            <span className="text-xs text-chat-faint">
+              {time ? formatTime(time) : label}
+            </span>
+          ) : (
+            <>
+              <span className="font-medium text-chat-ink">{profile.name}</span>
+              <span className="text-xs text-chat-faint">
+                {time ? formatTime(time) : label}
+                {meta ? ` · ${meta}` : ""}
+              </span>
+            </>
+          )}
         </div>
         <div className={cn("w-full", isUser && "flex justify-end")}>
           {children}

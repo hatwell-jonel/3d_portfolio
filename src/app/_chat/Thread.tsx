@@ -134,39 +134,60 @@ export default function Thread({ chatMessages, isLoading }: ThreadProps) {
         </div>
       </Turn>
 
-      {/* Live chat turns */}
-      {chatMessages.map((m, i) =>
-        m.role === ChatRole.user ? (
-          <Turn key={`chat-${i}`} label="message" role="user">
-            <div className="max-w-[85%] rounded-2xl rounded-tr-sm bg-chat-accent px-4 py-2.5 text-sm leading-relaxed text-white">
-              {m.content}
-            </div>
-          </Turn>
-        ) : (
-          <Turn key={`chat-${i}`} label="reply" role="assistant">
-            <div className="rounded-2xl rounded-tl-sm border border-chat-border bg-chat-card px-4 py-2.5 text-[15px] leading-relaxed text-chat-ink shadow-[0_1px_2px_rgba(34,31,27,0.04)]">
-              <Linkify
-                options={{
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                  className: "text-chat-accent-strong underline underline-offset-2",
-                }}
-              >
-                {m.content}
-              </Linkify>
-            </div>
-          </Turn>
-        )
-      )}
-
-      {isLoading && (
-        <Turn label="typing…" role="assistant">
-          <div className="inline-flex items-center gap-1 rounded-2xl rounded-tl-sm border border-chat-border bg-chat-card px-4 py-3 shadow-[0_1px_2px_rgba(34,31,27,0.04)]">
-            <span className="h-2 w-2 animate-bounce rounded-full bg-chat-faint [animation-delay:-0.3s]" />
-            <span className="h-2 w-2 animate-bounce rounded-full bg-chat-faint [animation-delay:-0.15s]" />
-            <span className="h-2 w-2 animate-bounce rounded-full bg-chat-faint" />
+      {chatMessages.length > 0 && (
+        <>
+          {/* Divider */}
+          <div className="flex items-center gap-3 py-2">
+            <hr className="flex-1 border-chat-border" />
+            <span className="text-xs font-medium text-chat-muted">new chat</span>
+            <hr className="flex-1 border-chat-border" />
           </div>
-        </Turn>
+
+          {/* Live chat turns */}
+          {chatMessages.map((m, i) =>
+            m.role === ChatRole.user ? (
+              <div key={`chat-${i}`} className="flex flex-col items-end">
+                <div className="max-w-[85%] rounded-2xl rounded-br-sm bg-chat-accent px-4 py-2.5 text-sm leading-relaxed text-white">
+                  {m.content}
+                </div>
+                {m.timestamp && (
+                  <span className="mt-0.5 px-1 text-[11px] text-chat-faint">
+                    {new Date(m.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </span>
+                )}
+              </div>
+            ) : (
+              <div key={`chat-${i}`} className="flex flex-col items-start">
+                <div className="max-w-[85%] rounded-2xl rounded-bl-sm border border-chat-border bg-chat-card px-4 py-2.5 text-[15px] leading-relaxed text-chat-ink shadow-[0_1px_2px_rgba(34,31,27,0.04)]">
+                  <Linkify
+                    options={{
+                      target: "_blank",
+                      rel: "noopener noreferrer",
+                      className: "text-chat-accent-strong underline underline-offset-2",
+                    }}
+                  >
+                    {m.content}
+                  </Linkify>
+                </div>
+                {m.timestamp && (
+                  <span className="mt-0.5 px-1 text-[11px] text-chat-faint">
+                    {new Date(m.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </span>
+                )}
+              </div>
+            )
+          )}
+
+          {isLoading && (
+            <div className="flex flex-col items-start">
+              <div className="inline-flex items-center gap-1 rounded-2xl rounded-bl-sm border border-chat-border bg-chat-card px-4 py-3 shadow-[0_1px_2px_rgba(34,31,27,0.04)]">
+                <span className="h-2 w-2 animate-bounce rounded-full bg-chat-faint [animation-delay:-0.3s]" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-chat-faint [animation-delay:-0.15s]" />
+                <span className="h-2 w-2 animate-bounce rounded-full bg-chat-faint" />
+              </div>
+            </div>
+          )}
+        </>
       )}
 
       <div ref={endRef} />

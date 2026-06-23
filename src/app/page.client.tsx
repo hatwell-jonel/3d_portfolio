@@ -18,14 +18,14 @@ export default function PortfolioPage() {
   const handleSend = async (text: string) => {
     if (isLoading) return;
 
-    setMessages((prev) => [...prev, { role: ChatRole.user, content: text }]);
+    setMessages((prev) => [...prev, { role: ChatRole.user, content: text, timestamp: Date.now() }]);
     setIsLoading(true);
 
     try {
       const response = await Chat(text);
       setMessages((prev) => [
         ...prev,
-        { role: ChatRole.assistant, content: (response.content as string) ?? "" },
+        { role: ChatRole.assistant, content: (response.content as string) ?? "", timestamp: Date.now() },
       ]);
     } catch (err) {
       console.error("Chat failed:", err);
@@ -35,6 +35,7 @@ export default function PortfolioPage() {
           role: ChatRole.assistant,
           content:
             "I'm having trouble connecting right now. Please reach out directly via email or LinkedIn.",
+          timestamp: Date.now(),
         },
       ]);
     } finally {

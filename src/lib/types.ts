@@ -6,6 +6,7 @@ export enum ChatRole {
 export interface ChatMessage {
     role: ChatRole;
     content: string;
+    timestamp?: number;
 }
 
 
