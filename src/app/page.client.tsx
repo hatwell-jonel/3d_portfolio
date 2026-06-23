@@ -78,13 +78,13 @@ export default function PortfolioPage() {
 
           <div className="flex items-center gap-2">
             <ThemeToggle />
-            <Link
+            {/* <Link
               href="/3d"
               className="inline-flex items-center gap-1.5 rounded-full border border-chat-border bg-chat-card px-3 py-1.5 text-xs font-medium text-chat-muted transition-colors hover:border-chat-accent hover:text-chat-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-chat-accent/60"
             >
               <Boxes className="h-3.5 w-3.5" />
               View in 3D
-            </Link>
+            </Link> */}
           </div>
         </header>
 

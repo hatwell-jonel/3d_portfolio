@@ -27,7 +27,7 @@ export default function ThemeToggle() {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={label}
       title={label}
-      className="flex h-8 w-8 items-center justify-center rounded-full border border-chat-border bg-chat-card text-chat-muted transition-colors hover:border-chat-accent hover:text-chat-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-chat-accent/60"
+      className="cursor-pointer flex h-8 w-8 items-center justify-center rounded-full border border-chat-border bg-chat-card text-chat-muted transition-colors hover:border-chat-accent hover:text-chat-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-chat-accent/60"
     >
       {mounted ? (
         isDark ? (
