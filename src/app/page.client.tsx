@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Boxes } from "lucide-react";
 import Sidebar from "./_chat/Sidebar";
 import Thread from "./_chat/Thread";
@@ -11,9 +11,24 @@ import { Chat } from "@/app/_actions/api-chat";
 import { profile } from "@/lib/data";
 import { ChatMessage, ChatRole } from "@/lib/types";
 
+const STORAGE_KEY = "portfolio-chat-messages";
+
 export default function PortfolioPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem(STORAGE_KEY);
+      if (stored) setMessages(JSON.parse(stored) as ChatMessage[]);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
+  }, [messages]);
 
   const handleSend = async (text: string) => {
     if (isLoading) return;
