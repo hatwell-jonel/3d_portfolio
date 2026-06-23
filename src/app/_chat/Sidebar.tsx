@@ -4,9 +4,6 @@ import { useEffect, useState } from "react";
 import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { profile, navSections } from "@/lib/data";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import ElectricBorder from "@/components/ui/electric-border/ElectricBorder";
 
 const SOCIALS = [
   {
@@ -101,29 +98,6 @@ function NavList({ onNavigate }: { onNavigate?: () => void }) {
             </li>
           );
         })}
-        <li 
-          className={cn(
-            "flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-chat-accent/60",
-          )}
-        >
-          	<Link 
-						href="/3d"
-						className="w-full!"
-					>
-						<ElectricBorder
-							color="--chat-accent"
-							speed={1}
-							chaos={0.12}
-							style={{ borderRadius: 16 }}
-							className="w-full!"
-						>
-							<Button size="sm" className="w-full!">
-								View in 3D
-							</Button>
-						</ElectricBorder>
-					</Link>
-        </li>
       </ul>
     </nav>
   );
