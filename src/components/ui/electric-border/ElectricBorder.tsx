@@ -11,6 +11,13 @@ interface ElectricBorderProps {
   style?: CSSProperties;
 }
 
+function resolveColor(el: HTMLElement, color: string): string {
+  if (color.startsWith('--')) {
+    return getComputedStyle(el).getPropertyValue(color).trim() || color;
+  }
+  return color;
+}
+
 const ElectricBorder: React.FC<ElectricBorderProps> = ({
   children,
   color = '#5227FF',
@@ -25,6 +32,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
     const animationRef = useRef<number | null>(null);
     const timeRef = useRef(0);
     const lastFrameTimeRef = useRef(0);
+    const resolvedColorRef = useRef(color);
 
     const random = useCallback((x: number): number => {
         return (Math.sin(x * 12.9898) * 43758.5453) % 1;
@@ -191,6 +199,21 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
 
         let { width, height } = updateSize();
 
+        const updateResolvedColor = () => {
+          resolvedColorRef.current = resolveColor(container, color);
+          container.style.setProperty('--electric-border-color', resolvedColorRef.current);
+        };
+        updateResolvedColor();
+
+        const themeObserver = new MutationObserver((mutations) => {
+          for (const mutation of mutations) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+              updateResolvedColor();
+            }
+          }
+        });
+        themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
         const drawElectricBorder = (currentTime: number) => {
         if (!canvas || !ctx) return;
 
@@ -203,7 +226,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.scale(dpr, dpr);
 
-        ctx.strokeStyle = color;
+        ctx.strokeStyle = resolvedColorRef.current;
         ctx.lineWidth = 1;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
@@ -279,6 +302,7 @@ const ElectricBorder: React.FC<ElectricBorderProps> = ({
             cancelAnimationFrame(animationRef.current);
         }
         resizeObserver.disconnect();
+        themeObserver.disconnect();
         };
     }, [color, speed, chaos, borderRadius, octavedNoise, getRoundedRectPoint]);
 
