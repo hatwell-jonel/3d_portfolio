@@ -113,14 +113,6 @@ export const techStack = [
 
 export const projects : Project[] = [
   {
-    title: "Anime Stream",
-    description: "A streaming platform for watching anime with watch progress tracking and saved series.",
-    image: "/assets/image/project-thumbnails/animestream.webp",
-    tags: ["Next.js", "Tailwind", "ShadcnUI", "Typescript", "trpc", "API"],
-    link: "https://animesstream.vercel.app/",
-    isFeatured: true,
-  },
-  {
     title: "Math Problem Generator with AI",
     description: "A math problem generator with AI that generates random math problems and provides step-by-step solutions.",
     image: "/assets/image/project-thumbnails/math-ai.png",
