@@ -24,6 +24,7 @@ export default function ThemeToggle() {
   return (
     <button
       type="button"
+      data-tour="theme-toggle"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={label}
       title={label}

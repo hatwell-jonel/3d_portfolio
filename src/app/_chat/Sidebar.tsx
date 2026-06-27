@@ -158,6 +158,7 @@ export default function Sidebar() {
       {/* Mobile hamburger */}
       <button
         type="button"
+        data-tour="sidebar-mobile"
         onClick={() => setOpen(true)}
         aria-label="Open navigation"
         className="absolute left-4 top-3 z-30 flex h-10 w-10 items-center justify-center rounded-lg border border-chat-border bg-chat-card text-chat-ink lg:hidden"
@@ -166,7 +167,7 @@ export default function Sidebar() {
       </button>
 
       {/* Desktop sidebar */}
-      <aside className="hidden w-67.5 shrink-0 border-r border-chat-border bg-chat-panel lg:block">
+      <aside data-tour="sidebar-desktop" className="hidden w-67.5 shrink-0 border-r border-chat-border bg-chat-panel lg:block">
         <SidebarContent />
       </aside>
 

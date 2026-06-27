@@ -1,12 +1,13 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { Boxes } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import Sidebar from "./_chat/Sidebar";
 import Thread from "./_chat/Thread";
 import Composer from "../components/features/Composer";
 import ThemeToggle from "./_chat/ThemeToggle";
+import Tour from "@/components/features/Tour";
+import TourPrompt from "@/components/features/TourPrompt";
+import { hasTourCompleted, setTourCompleted } from "@/lib/stores/tour-store";
 import { Chat } from "@/app/_actions/api-chat";
 import { profile } from "@/lib/data";
 import { ChatMessage, ChatRole } from "@/lib/types";
@@ -16,6 +17,8 @@ const STORAGE_KEY = "portfolio-chat-messages";
 export default function PortfolioPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [tourActive, setTourActive] = useState(false);
+  const [showPrompt, setShowPrompt] = useState(false);
 
   useEffect(() => {
     try {
@@ -29,6 +32,23 @@ export default function PortfolioPage() {
   useEffect(() => {
     sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages));
   }, [messages]);
+
+  useEffect(() => {
+    if (!hasTourCompleted()) {
+      const timer = setTimeout(() => setShowPrompt(true), 300);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  const handleTourFinish = useCallback(() => {
+    setTourCompleted();
+    setTourActive(false);
+  }, []);
+
+  const handleAcceptTour = useCallback(() => {
+    setShowPrompt(false);
+    setTourActive(true);
+  }, []);
 
   const handleSend = async (text: string) => {
     if (isLoading) return;
@@ -76,7 +96,7 @@ export default function PortfolioPage() {
             </span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1">
             <ThemeToggle />
             {/* <Link
               href="/3d"
@@ -99,6 +119,12 @@ export default function PortfolioPage() {
         {/* Composer */}
         <Composer onSend={handleSend} disabled={isLoading} />
       </main>
+
+      {showPrompt && (
+        <TourPrompt onAccept={handleAcceptTour} />
+      )}
+
+      <Tour active={tourActive} onFinish={handleTourFinish} />
     </div>
   );
 }
