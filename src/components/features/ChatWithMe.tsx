@@ -10,12 +10,12 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import Linkify from "linkify-react";
-import { Chat } from "@/app/_actions/api-chat";
+import { useChat } from "@/hooks/use-chat";
 import { WELCOME_MESSAGE } from "@/lib/data";
-import { ChatMessage, ChatRole } from "@/lib/types";
+import { ChatRole } from "@/lib/types";
+import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 
-
-const SUGGESTIONS : string[] = [
+const SUGGESTIONS: string[] = [
     "Can you tell me about yourself?",
     "What technologies are you currently using?",
     "Can you tell me about your work experience?",
@@ -24,15 +24,16 @@ const SUGGESTIONS : string[] = [
 ];
 
 const ChatWithMe: React.FC = () => {
-    const [messages, setMessages] = useState<ChatMessage[]>([{
-        role: ChatRole.assistant,
-        content: WELCOME_MESSAGE,
-    }]);
     const [input, setInput] = useState<string>("");
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    const { messages, isLoading, sendMessage, clearMessages } = useChat(
+        [{ role: ChatRole.assistant, content: WELCOME_MESSAGE }],
+        { storageKey: "chat-with-me" }
+    );
+
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -42,57 +43,34 @@ const ChatWithMe: React.FC = () => {
         scrollToBottom();
     }, [messages]);
 
-    const handleSubmit = async (input : string = "") => {
-        if (!input.trim() || isLoading) return;
-
-        const userMessage = input.trim();
-        setInput("");
-        
-        const updatedMessages: ChatMessage[] = [
-            ...messages,
-            { role: ChatRole.user, content: userMessage },
-        ];
-
-        setMessages(updatedMessages);
-        setIsLoading(true);
-
-        try {
-            const response = await Chat(userMessage);
-            setMessages((prev) => [
-                ...prev,
-                { role: ChatRole.assistant, content: response.content as string },
-            ]);
-        } catch (err) {
-            console.error(err);
-            setMessages((prev) => [
-                ...prev,
-                {
-                role: ChatRole.assistant,
-                content:
-                    "I’m having trouble connecting right now. Please try again later or reach out directly.",
-                },
-            ]);
-        } finally {
-            setIsLoading(false);
+    useEffect(() => {
+        if (isOpen) {
+            setTimeout(() => inputRef.current?.focus(), 100);
         }
+    }, [isOpen]);
+
+    const handleSubmit = async (text: string = input) => {
+        if (!text.trim() || isLoading) return;
+        setInput("");
+        await sendMessage(text.trim());
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
+            e.preventDefault();
             handleSubmit();
         }
     };
 
     const handleClearChat = () => {
-        setMessages([{ role: ChatRole.assistant, content: WELCOME_MESSAGE }]);
+        clearMessages();
     };
 
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger asChild>
                 <Button
-                    className="text-xl p-0  group on"
+                    className="text-xl p-0 group on"
                 >
                     <span>Chat with me</span>
                     <BotMessageSquare className="ml-1 h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" />
@@ -105,33 +83,29 @@ const ChatWithMe: React.FC = () => {
                 showCloseButton={false}
             >
                 <DialogHeader className="relative px-6 py-4 border-b">
-                <div className="flex items-center justify-between">
-                    <DialogTitle className="flex items-center gap-2">
-                    <BotMessageSquare className="h-5 w-5" />
-                    Jonel Hatwell
-                    </DialogTitle>
-                    <Button variant="ghost" size="sm" onClick={handleClearChat}>
-                    Clear Chat
-                    </Button>
-                </div>
+                    <div className="flex items-center justify-between">
+                        <DialogTitle className="flex items-center gap-2">
+                            <BotMessageSquare className="h-5 w-5" />
+                            Jonel Hatwell
+                        </DialogTitle>
+                        <Button variant="ghost" size="sm" onClick={handleClearChat}>
+                            Clear Chat
+                        </Button>
+                    </div>
 
-                <DialogClose asChild>
-                    <Button
-                    size="icon"
-                    className="absolute right-0 -top-6.25 h-5 w-5 rounded-full"
-                    >
-                    <XIcon />
-                    <span className="sr-only">Close</span>
-                    </Button>
-                </DialogClose>
+                    <DialogClose asChild>
+                        <Button
+                            size="icon"
+                            className="absolute right-0 -top-6.25 h-5 w-5 rounded-full"
+                        >
+                            <XIcon />
+                            <span className="sr-only">Close</span>
+                        </Button>
+                    </DialogClose>
                 </DialogHeader>
 
-                {/* Messages */}
+                <ErrorBoundary>
                 <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
-
-                
-
-
                     {messages.map((m, i) => (
                         <div
                             key={i}
@@ -139,44 +113,41 @@ const ChatWithMe: React.FC = () => {
                                 m.role === "user" ? "justify-end" : "justify-start"
                             }`}
                         >
-                        <div
-                            className={`max-w-[80%] rounded-lg px-4 py-2 text-sm whitespace-pre-wrap ${
-                            m.role === "user"
-                                ? "bg-primary text-primary-foreground"
-                                : "bg-muted"
-                            }`}
-                        >
-                            <Linkify
-                                options={{
-                                    target: "_blank",
-                                    rel: "noopener noreferrer",
-                                    className: "text-blue-600 underline",
-                                }}
+                            <div
+                                className={`max-w-[80%] rounded-lg px-4 py-2 text-sm whitespace-pre-wrap ${
+                                    m.role === "user"
+                                        ? "bg-primary text-primary-foreground"
+                                        : "bg-muted"
+                                }`}
                             >
-                                {m.content}
-                            </Linkify>
-                        </div>
+                                <Linkify
+                                    options={{
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                        className: "text-blue-600 underline",
+                                    }}
+                                >
+                                    {m.content}
+                                </Linkify>
+                            </div>
                         </div>
                     ))}
 
                     {messages.length === 1 && !isLoading && (
                         <div className="space-y-2">
                             <p className="text-sm text-muted-foreground">
-                            Try asking:
+                                Try asking:
                             </p>
                             <div className="flex flex-wrap gap-2">
-                            {SUGGESTIONS.map((suggestion, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => {
-                                        setInput(suggestion);
-                                        setTimeout(() => handleSubmit(suggestion), 0);
-                                    }}
-                                    className=" text-sm px-3 py-1 rounded-full border hover:bg-muted transition hover:text-primary cursor-pointer"
-                                >
-                                    {suggestion}
-                                </button>
-                            ))}
+                                {SUGGESTIONS.map((suggestion, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={() => handleSubmit(suggestion)}
+                                        className="text-sm px-3 py-1 rounded-full border hover:bg-muted transition hover:text-primary cursor-pointer"
+                                    >
+                                        {suggestion}
+                                    </button>
+                                ))}
                             </div>
                         </div>
                     )}
@@ -191,10 +162,12 @@ const ChatWithMe: React.FC = () => {
 
                     <div ref={messagesEndRef} />
                 </div>
+                </ErrorBoundary>
 
                 <div className="border-t px-6 py-4">
                     <div className="flex gap-2">
                         <input
+                            ref={inputRef}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={handleKeyDown}
@@ -203,7 +176,7 @@ const ChatWithMe: React.FC = () => {
                             className="flex-1 px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                         <Button
-                            onClick={() => handleSubmit(input)}
+                            onClick={() => handleSubmit()}
                             disabled={isLoading || !input.trim()}
                         >
                             <Send className="h-4 w-4" />
