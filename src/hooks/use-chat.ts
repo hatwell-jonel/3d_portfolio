@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { ChatMessage, ChatRole } from "@/lib/types";
 
 interface UseChatOptions {
@@ -19,18 +19,24 @@ export function useChat(
 ): UseChatReturn {
   const storageKey = typeof options === "string" ? options : options?.storageKey;
 
-  const [messages, setMessages] = useState<ChatMessage[]>(() => {
-    if (storageKey) {
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const [hydrated, setHydrated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!hydrated && storageKey) {
       try {
         const stored = sessionStorage.getItem(storageKey);
-        if (stored) return JSON.parse(stored) as ChatMessage[];
+        if (stored) {
+          setMessages(JSON.parse(stored) as ChatMessage[]);
+        }
       } catch {
         /* ignore */
       }
+      setHydrated(true);
     }
-    return initialMessages;
-  });
-  const [isLoading, setIsLoading] = useState(false);
+  }, [hydrated, storageKey]);
+
   const [error, setError] = useState<Error | null>(null);
 
   const messagesRef = useRef(messages);
