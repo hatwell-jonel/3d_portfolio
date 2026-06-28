@@ -221,5 +221,6 @@ export const writings = [
 
 
 export { systemPrompt } from "./data/system-prompt";
+export { resumeText } from "./data/resume";
 
 export const WELCOME_MESSAGE = "Hey! 👋 Glad you're here. Feel free to ask me about my work, experience, or anything you're curious about.";
