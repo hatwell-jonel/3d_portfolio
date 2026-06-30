@@ -9,7 +9,11 @@ export const profile = {
   location: "Caloocan City, Metro Manila, Philippines",
   status: "Available for work",
   tagline: "I build websites that work smoothly, look sharp, and make users smile.",
-  email: "jonelhatwell@gmail.com",
+  email: "jonel.hatwell@gmail.com",
+  phone: "+63 908 351 1931",
+  github: "https://github.com/hatwell-jonel",
+  portfolio: "https://jonelhatwell.vercel.app/",
+  linkedin: "https://www.linkedin.com/in/jonel-hatwell/",
 };
 
 export type NavSection = {
@@ -34,35 +38,29 @@ export const skillChips: string[] = [
   "AI Integration",
 ];
 
+
 export const aboutMe = [
   <>
-    Web Developer in Caloocan City, Metro Manila, Philippines with more than 4 years of hands-on experience crafting enterprise-grade web solutions using the Next.js/TypeScript stack. Passionate coder who excels at transforming complex business requirements into scalable, high-performance applications that drive efficiency and user satisfaction. Experienced in delivering reliable systems on schedule, improving codebases for better speed and upkeep, and working effectively with teams to meet project objectives.
+    Full-Stack Web Developer focused on building modern web and AI-powered applications. I specialize in Next.js, React, TypeScript, Node.js, and integrating large language models (LLMs) and AI automation into scalable, user-centric products.
   </>,
-  <>
-    Currently, I&apos;m focused on exploring the potential of AI-driven interfaces and minimalist design systems. I believe that the best products are those that solve complex problems with elegant, simple solutions.
-  </>,
-  <>
-    When I have free time, I enjoy staying up to date with the latest technology trends by reading and watching industry news. I’m also passionate about running, which helps me maintain both my physical health and mental focus. When I need to unwind or manage stress, I take a break by watching TV series or anime, allowing me to recharge and return to my work with fresh energy.
-  </>
 ];
-
 
 export const experiences  = [
   {
-    period: "Aug 2025 - Present",
-    title: "Front-End Developer",
+    period: "Aug 2025 - June 2026",
+    title: "Front-End Developer -> Full-Stack Developer",
     company: "ScaleForge",
     description:
-      "Enhancing client web applications through feature development, performance optimization, and maintenance using Next.js, Svelte, TypeScript, GraphQL, and Apollo.",
-    tags: ["Next.js", "Svelte", "TypeScript", "GraphQL", "Apollo"],
+      "Leveraged OpenCode AI to automate migration file generation for game onboarding workflows. Expanded into full-stack development, implementing game provider APIs and enhancing client-facing web applications using Next.js, Svelte, TypeScript, and GraphQL.",
+    tags: ["Next.js", "Svelte", "TypeScript", "GraphQL", "Apollo", "TanStack Query", "Zustand"],
   },
   {
-    period: "Jun 2024 - Sep 2025",
+    period: "Jun 2024 - Jul 2025",
     title: "Web Developer",
     company: "Cargo Padala Express",
     description:
-      "Designed and built a Next.js-based in-house accounting system from the ground up, integrating DrizzleORM/MySQL. Automated key accounting processes to significantly reduce manual errors and improve data accuracy.",
-    tags: ["Next.js", "DrizzleORM", "MySQL", "TypeScript"],
+      "Designed and developed an in-house Financial Information Management System (FIMS) using Next.js, Drizzle ORM, and MySQL. Automated core accounting workflows, significantly reducing manual data entry errors and improving data accuracy.",
+    tags: ["Next.js", "Drizzle ORM", "MySQL", "TypeScript"],
   },
   {
     period: "Sep 2022 - Apr 2024",
@@ -71,14 +69,6 @@ export const experiences  = [
     description:
       "Played a key role in the maintenance and feature development of core products, including the Academic Information Management System (AIMS), HRIS, and Accounting systems, utilizing Laravel and CodeIgniter 3.",
     tags: ["Laravel", "CodeIgniter 3", "PHP", "MySQL"],
-  },
-  {
-    period: "Apr 2022 - Jun 2022",
-    title: "Internship",
-    company: "Innovative Technical Institute Inc.",
-    description:
-      "Developed the front-end interface for a Gym membership system using modern web technologies.",
-    tags: ["HTML", "CSS", "JavaScript"],
   },
 ]; 
 
@@ -90,7 +80,7 @@ export const techStack = [
   },  
   {
     category: "Backend/APIs",
-    skills: ["Laravel (PHP)", "CodeIgniter", "RESTful APIs", "GraphQL", "AI Integration"],
+    skills: ["Laravel (PHP)", "CodeIgniter", "NestJs", "RESTful APIs", "GraphQL", "AI Integration"],
   },
   {
     category: "Databases & ORM",
@@ -98,7 +88,7 @@ export const techStack = [
   },
   {
     category: "Validation & Tools",
-    skills: ["Zod", "React-Hook-Form", "OpenAI API/Gemini API", "Vercel"],
+    skills: ["Zod", "React-Hook-Form", "OpenAI API/Gemini API", "Claude API", "OpenCode CLI", "Vercel"],
   },
   {
     category: "Styling & UI",
@@ -112,14 +102,14 @@ export const techStack = [
 
 
 export const projects : Project[] = [
-  {
-    title: "Anime Stream",
-    description: "A streaming platform for watching anime with watch progress tracking and saved series.",
-    image: "/assets/image/project-thumbnails/animestream.webp",
-    tags: ["Next.js", "Tailwind", "ShadcnUI", "Typescript", "trpc", "API"],
-    link: "https://animesstream.vercel.app/",
-    isFeatured: true,
-  },
+  // {
+  //   title: "Anime Stream",
+  //   description: "A streaming platform for watching anime with watch progress tracking and saved series.",
+  //   image: "/assets/image/project-thumbnails/animestream.webp",
+  //   tags: ["Next.js", "Tailwind", "ShadcnUI", "Typescript", "trpc", "API"],
+  //   link: "https://animesstream.vercel.app/",
+  //   isFeatured: true,
+  // },
   {
     title: "Math Problem Generator with AI",
     description: "A math problem generator with AI that generates random math problems and provides step-by-step solutions.",
