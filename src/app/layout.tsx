@@ -27,6 +27,9 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   title: "Jonel Hatwell",
   description: "Jonel Hatwell's personal website",
+  icons: {
+    icon: "/site-logo.svg",
+  },
 };
 
 export default function RootLayout({
