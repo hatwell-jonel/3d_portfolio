@@ -5,7 +5,7 @@ import type { Project } from "@/lib/types";
 export const profile = {
   name: "Jonel Hatwell",
   initials: "JH",
-  role: "Web Developer",
+  role: "Full-Stack Developer",
   location: "Caloocan City, Metro Manila, Philippines",
   status: "Available for work",
   tagline: "I build websites that work smoothly, look sharp, and make users smile.",
