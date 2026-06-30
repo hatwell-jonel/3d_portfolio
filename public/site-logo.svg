@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D97757"/>
+      <stop offset="100%" stop-color="#C96442"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="32" height="32" fill="#1A1310" rx="6"/>
+
+  <!-- Accent square -->
+  <rect x="3" y="3" width="26" height="26" fill="url(#g)" rx="4"/>
+
+  <!-- JH monogram -->
+  <text
+    x="16" y="23"
+    font-family="'Courier New', Courier, monospace"
+    font-size="16"
+    font-weight="700"
+    fill="#FAF0E8"
+    text-anchor="middle"
+    letter-spacing="-1"
+  >JH</text>
+</svg>
