@@ -529,17 +529,17 @@
     "ast_hash": "44703ca3944f3cc28c2efc11e4c19fc7",
     "semantic_hash": ""
   },
-  "public/apple-icon.png": {
+  "public/apple-icon.svg": {
     "mtime": 1783176025.270854,
     "ast_hash": "fc6bb8097152a78680f38d60cd1558ed",
     "semantic_hash": ""
   },
-  "public/icon-192x192.png": {
+  "public/icon-192x192.svg": {
     "mtime": 1783176023.8334334,
     "ast_hash": "46b1987d9f83e88aa600f208aeed1039",
     "semantic_hash": ""
   },
-  "public/icon-512x512.png": {
+  "public/icon-512x512.svg": {
     "mtime": 1783176024.4311097,
     "ast_hash": "f91691402270806c312c8289a01523ef",
     "semantic_hash": ""
