@@ -20,18 +20,18 @@
     "semantic_hash": ""
   },
   "eslint.config.mjs": {
-    "mtime": 1783176329.9942012,
-    "ast_hash": "4583dede181f4c949c139f48a6726f7f",
+    "mtime": 1781944250.744619,
+    "ast_hash": "dfa1f5f6a7037bf39dc510f30b180002",
     "semantic_hash": ""
   },
   "next.config.ts": {
-    "mtime": 1783176181.0052588,
-    "ast_hash": "29b3ce9efe857cb9f5435cb60db54bc8",
+    "mtime": 1781944250.744694,
+    "ast_hash": "e73a68a628840a7dee1ea3fa1a1afaab",
     "semantic_hash": ""
   },
   "package.json": {
-    "mtime": 1783176298.0107565,
-    "ast_hash": "f05b8dbe079a003f6df78f181f0c836b",
+    "mtime": 1782656988.947671,
+    "ast_hash": "27bc3fe6e386b46de77d0faa6c45bf9b",
     "semantic_hash": ""
   },
   "postcss.config.mjs": {
@@ -200,8 +200,8 @@
     "semantic_hash": ""
   },
   "src/app/layout.tsx": {
-    "mtime": 1783176222.422688,
-    "ast_hash": "83c41533854a75e010a787990b7e9695",
+    "mtime": 1782789847.7504547,
+    "ast_hash": "8c05fef26db60229f4a82c95276fe37f",
     "semantic_hash": ""
   },
   "src/app/not-found.tsx": {
@@ -375,8 +375,8 @@
     "semantic_hash": ""
   },
   "tsconfig.json": {
-    "mtime": 1783176221.3704875,
-    "ast_hash": "f6a2ebf371c3d291ed19d4b0ab3212de",
+    "mtime": 1781944250.8088868,
+    "ast_hash": "c645c936819a554239c68eb96ce55b9c",
     "semantic_hash": ""
   },
   ".opencode/agents/committer.md": {
@@ -410,8 +410,8 @@
     "semantic_hash": ""
   },
   "pnpm-workspace.yaml": {
-    "mtime": 1783176234.1346097,
-    "ast_hash": "bb7246ce375f63472a43b181d1930ffa",
+    "mtime": 1782138392.2982566,
+    "ast_hash": "77a01ff09b9878bf40c4197eda124469",
     "semantic_hash": ""
   },
   "prompts/system-prompt.txt": {
@@ -507,41 +507,6 @@
   "public/assets/music/relaxing_sound.mp3": {
     "mtime": 1781944250.799972,
     "ast_hash": "ce6a0d012d79e687b8377e25292d4b75",
-    "semantic_hash": ""
-  },
-  "serwist.config.mjs": {
-    "mtime": 1783176275.0534155,
-    "ast_hash": "af1459f9651f8287f73c73ce5f85f2d9",
-    "semantic_hash": ""
-  },
-  "src/app/manifest.ts": {
-    "mtime": 1783176043.510065,
-    "ast_hash": "653bfa322c9b58603f1f72000bc6bc29",
-    "semantic_hash": ""
-  },
-  "src/app/sw.ts": {
-    "mtime": 1783176183.7777877,
-    "ast_hash": "70509c0e8e89c1aff77988e143e1fe10",
-    "semantic_hash": ""
-  },
-  "src/app/~offline/page.tsx": {
-    "mtime": 1783176044.455269,
-    "ast_hash": "44703ca3944f3cc28c2efc11e4c19fc7",
-    "semantic_hash": ""
-  },
-  "public/apple-icon.png": {
-    "mtime": 1783176025.270854,
-    "ast_hash": "fc6bb8097152a78680f38d60cd1558ed",
-    "semantic_hash": ""
-  },
-  "public/icon-192x192.png": {
-    "mtime": 1783176023.8334334,
-    "ast_hash": "46b1987d9f83e88aa600f208aeed1039",
-    "semantic_hash": ""
-  },
-  "public/icon-512x512.png": {
-    "mtime": 1783176024.4311097,
-    "ast_hash": "f91691402270806c312c8289a01523ef",
     "semantic_hash": ""
   }
 }

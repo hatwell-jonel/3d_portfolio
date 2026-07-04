@@ -27,9 +27,5 @@
   "25": "Writings.tsx",
   "26": "Maintenance.tsx",
   "27": "old-version.md",
-  "28": "global.d.ts",
-  "29": "sw.ts",
-  "30": "manifest.ts",
-  "31": "page.tsx",
-  "32": "serwist.config.mjs"
+  "28": "global.d.ts"
 }
