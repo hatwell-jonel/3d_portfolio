@@ -1,8 +1,13 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider"
+import { SerwistProvider } from "@serwist/next/react";
 import "./globals.css";
 import Modal from "@/components/features/Modal";
+
+const APP_NAME = "Jonel Hatwell";
+const APP_DEFAULT_TITLE = "Jonel Hatwell";
+const APP_DESCRIPTION = "Jonel Hatwell's personal portfolio — developer, designer, creator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,11 +30,39 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const metadata: Metadata = {
-  title: "Jonel Hatwell",
-  description: "Jonel Hatwell's personal website",
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: "%s — Jonel Hatwell",
+  },
+  description: APP_DESCRIPTION,
+  applicationName: APP_NAME,
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_DEFAULT_TITLE,
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    siteName: APP_NAME,
+    title: APP_DEFAULT_TITLE,
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: "summary",
+    title: APP_DEFAULT_TITLE,
+    description: APP_DESCRIPTION,
+  },
   icons: {
     icon: "/site-logo.svg",
+    apple: "/apple-icon.png",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#09090b",
 };
 
 export default function RootLayout({
@@ -45,9 +78,11 @@ export default function RootLayout({
       className="scroll-smooth"
     >
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${sourceSerif.variable} antialiased`}
       >
-        <ThemeProvider
+        <SerwistProvider swUrl="/sw.js">
+          <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem
@@ -63,7 +98,8 @@ export default function RootLayout({
           </div>
 
           <Modal />
-        </ThemeProvider>
+          </ThemeProvider>
+        </SerwistProvider>
       </body>
     </html>
   );
